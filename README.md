@@ -7,6 +7,8 @@ It is the central source of truth for SIEM alerting at GoDaddy.
 
 ## Work Flow
 
+![Work Flow Diagram](https://github.com/gdcorp-infosec/siem-documentation/workflow.png)
+
 Writing SIEM rules should follow this high-level work flow:
 
 1. Idea - something was found via threat hunting, a threat intelligence report tipped things off, or an incident identified a gap in coverage
@@ -26,5 +28,6 @@ Writing SIEM rules should follow this high-level work flow:
 ## Getting Started
 
 Here are some helpful guides on rules for specific technologies:
+* [IDS](https://github.secureserver.net/infosec-network/ids-sensor-rules)
 * [Splunk](https://docs.splunk.com/Documentation/Splunk/8.2.0/Alert/Aboutalerts)
 * [Tanium](https://docs.tanium.com/detect/detect/authoring_signals.html)

@@ -7,7 +7,7 @@ It is the central source of truth for SIEM alerting at GoDaddy.
 
 ## Work Flow
 
-![Work Flow Diagram](https://github.com/gdcorp-infosec/siem-documentation/workflow.png)
+![Work Flow Diagram](https://github.com/gdcorp-infosec/siem-documentation/blob/main/workflow.png)
 
 Writing SIEM rules should follow this high-level work flow:
 

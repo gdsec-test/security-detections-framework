@@ -4,20 +4,12 @@
  */
 
 {
-	/* Human-readable description of the alert */
 	"description": "",
-	/* The person currently responsible for maintaining the alert */
 	"owner": "",
-	/* The original creator of the alert */
 	"creator": "",
-	/* The GoDaddy team responsible for handling the alert */
 	"team": "",
-	/* Current version for this specific alert */
 	"version": "",
-	/* Date of last update in SQL form (YYYY-MM-DD) */
 	"lastUpdate": "",
-	/* Relevant MITRE ATT&CK categories (0 or more) */
 	"attack": [],
-	/* The time interval between regularly scheduled runs */
 	"interval": {}
 }

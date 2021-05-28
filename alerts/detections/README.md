@@ -11,7 +11,7 @@ The name is built from four components:
 
 1. Environment (PCI, PKI, DEV, etc.)
 2. Platform (Windows, Linux, Splunk, Okta, etc.)
-3. [MITRE ATT&CK](https://attack.mitre.org/tactics/enterprise/) Category ()
+3. [MITRE ATT&CK](https://attack.mitre.org/tactics/enterprise/) Category (Execution, Impact, etc.)
 4. The purpose in five words or less (e.g. "Logs Failing")
 
 These four components have their spaces replaced with dashes and are concatenated together with underscores. As an example:

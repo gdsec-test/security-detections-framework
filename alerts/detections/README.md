@@ -22,3 +22,18 @@ These four components have their spaces replaced with dashes and are concatenate
 4. Purpose: Factor Reset-Add
 
 Becomes: **PCI_Okta_Credential-Access_Factor-Reset-Add**
+
+## Metadata
+
+Each detection must have a metadata file in JSON format included. The fields in the template are as defined:
+
+* `description`: Human-readable description of the alert
+* `owner`: The person currently responsible for maintaining the alert
+* `creator`: The original creator of the alert
+* `team`: The GoDaddy team responsible for handling the alert
+* `version`: Current version for this specific alert
+* `lastUpdate`: Date of last update in ISO form (YYYY-MM-DD)
+* `attack`: Relevant [MITRE ATT&CK categories](https://attack.mitre.org/tactics/enterprise/) (0 or more)
+* `interval`: The time interval between regularly scheduled runs
+
+Find the template for the JSON metadata file [here](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/templates/metadata.json).

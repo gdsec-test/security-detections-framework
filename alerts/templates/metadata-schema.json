@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product.schema.json",
+  "title": "GoDaddy Detection Metadata",
+  "description": "Metadata describing a detection rule",
+  "type": "object",
+  "properties": {
+    "description": {
+      "description": "Human-readable description of the alert",
+      "type": "string"
+    },
+    "owner": {
+      "description": "The person currently responsible for maintaining the alert",
+      "type": "string"
+    },
+    "creator": {
+      "description": "The original creator of the alert",
+      "type": "string"
+    },
+    "team": {
+      "description": "The GoDaddy team responsible for handling the alert",
+      "type": "string"
+    },
+    "version": {
+      "description": "Current version for this specific alert",
+      "type": "string"
+    },
+    "lastUpdate": {
+      "description": "Date of last update in ISO form (YYYY-MM-DD)",
+      "type": "string",
+      "format": "date"
+    },
+    "attack": {
+      "description": "Relevant MITRE ATT&CK categories (0 or more)",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "interval": {
+      "description": "The time interval between regularly scheduled runs",
+      "type": "object",
+      "properties": {
+        "span": {
+          "type": "number"
+        },
+        "unit": {
+          "enum": [ "second", "minute", "hour", "day", "week", "month", "year" ]
+        }
+      },
+      "required": [ "span", "unit" ]
+    }
+  },
+  "required": [ "description", "owner", "creator", "team", "version", "lastUpdate" ]
+}

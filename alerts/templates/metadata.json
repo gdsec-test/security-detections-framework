@@ -4,6 +4,13 @@
  */
 
 {
+	"name": {
+		"full": "",
+		"environment": "",
+		"platform": "",
+		"attack": "",
+		"purpose": ""
+	},
 	"description": "",
 	"owner": "",
 	"creator": "",
@@ -11,5 +18,9 @@
 	"version": "",
 	"lastUpdate": "",
 	"attack": [],
-	"interval": {}
+	"interval": {},
+	"test": {
+		"archive": "",
+		"exception": ""
+	}
 }

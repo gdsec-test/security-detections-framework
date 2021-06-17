@@ -5,6 +5,33 @@
   "description": "Metadata describing a detection rule",
   "type": "object",
   "properties": {
+    "name": {
+      "description": "The structure of the alert name",
+      "type": "object",
+      "properties": {
+        "full": {
+          "description": "The full, properly formatted alert name based on the four following pieces of information",
+          "type": "string"
+        },
+        "environment":{
+          "description": "The full, properly formatted alert name based on the four following pieces of information",
+          "type": "string"
+        },
+        "platform":{
+          "description": "",
+          "type": "string"
+        },
+        "attack":{
+          "description": "One MITRE ATT&CK TTP that this alert exemplifies",
+          "type": "string"
+        },
+        "purpose":{
+          "description": "The specific type of event being detected",
+          "type": "string"
+        },
+      },
+      "required": [ "full", "environment", "platform", "attack", "purpose" ]
+    }
     "description": {
       "description": "Human-readable description of the alert",
       "type": "string"
@@ -50,7 +77,14 @@
         }
       },
       "required": [ "span", "unit" ]
+    },
+  "test": {
+    "description": "Alert-specific testing information",
+    "type": "object",
+    "properties": {
+      "archive": "File name of the archive containing the test and any associated artifacts",
+      "exception": "A justification why this alert is exempt from testing requirements"
     }
   },
-  "required": [ "description", "owner", "creator", "team", "version", "lastUpdate" ]
+  "required": [ "name", "description", "owner", "creator", "team", "version", "lastUpdate", "test" ]
 }

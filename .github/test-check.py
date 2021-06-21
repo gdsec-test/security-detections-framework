@@ -37,7 +37,7 @@ def test_check():
                     print(filepath + " file doesn't have tests")
                     continue
 
-    if files == test_passed:
+    if file_count == test_passed:
         return True
     else:
         return False
@@ -46,5 +46,5 @@ def test_check():
 if __name__ == "__main__":
     if test_check() is False:
         sys.exit(1)
-    else:
-        sys.exit(0)
+    # else:
+    #     sys.exit(0)

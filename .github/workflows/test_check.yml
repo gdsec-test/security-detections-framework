@@ -3,7 +3,7 @@ name: Test Check
 on:
   workflow_dispatch:
   pull_request:
-    branches: [ develop ] # Trigger workflow on all pushes to develop branch
+    branches: [ main ] # Trigger workflow on all pushes to main branch
 
 jobs:
   test_check:

@@ -52,5 +52,8 @@
       "required": [ "span", "unit" ]
     }
   },
-  "required": [ "description", "owner", "creator", "team", "version", "lastUpdate" ]
+  "required": [ "description", "owner", "creator", "team", "version", "lastUpdate" ],
+  "test": {
+    "exception":"Exception Test"
+  }
 }

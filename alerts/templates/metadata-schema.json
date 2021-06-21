@@ -54,6 +54,7 @@
   },
   "required": [ "description", "owner", "creator", "team", "version", "lastUpdate" ],
   "test": {
+    "archive": "",
     "exception":"Exception Test"
   }
 }

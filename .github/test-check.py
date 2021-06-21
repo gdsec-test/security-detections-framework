@@ -45,6 +45,7 @@ def test_check():
 
 if __name__ == "__main__":
     if test_check() is False:
+        print("Check in Tests/ Exceptions for above files !!")
         sys.exit(1)
-    # else:
-    #     sys.exit(0)
+    else:
+        print("All tests/ exceptions passed!!")

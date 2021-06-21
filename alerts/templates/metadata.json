@@ -16,6 +16,6 @@
 	"interval": {},
 	"test": {
 		"archive": "",
-		"exception": "Test Exception"
+		"exception": ""
 	}
 }

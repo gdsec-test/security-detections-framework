@@ -21,4 +21,4 @@ jobs:
       - name: Run Test Check
         run: |
           cd .github
-          python3 test_check.py
+          python3 test-check.py

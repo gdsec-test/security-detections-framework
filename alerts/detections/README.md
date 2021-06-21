@@ -23,10 +23,17 @@ These four components have their spaces replaced with dashes and are concatenate
 
 Becomes: **PCI_Okta_Credential-Access_Factor-Reset-Add**
 
+Keep all four components and the final name handy because they will go into the required metadata as explained in the following section.
+
 ## Metadata
 
 Each detection must have a metadata file in JSON format included. The fields in the template are as defined:
 
+* `name`
+  * `full`: The properly formatted string as specified in the above section
+  * `environment`: How this is being applied (PCI, PKI, DEV, etc.)
+  * `attack`: The main, motivating MITRE ATT&CK TTP
+  * `purpose`: A more specific focus of the alert
 * `description`: Human-readable description of the alert
 * `owner`: The person currently responsible for maintaining the alert
 * `creator`: The original creator of the alert
@@ -35,5 +42,8 @@ Each detection must have a metadata file in JSON format included. The fields in 
 * `lastUpdate`: Date of last update in ISO form (YYYY-MM-DD)
 * `attack`: Relevant [MITRE ATT&CK categories](https://attack.mitre.org/tactics/enterprise/) (0 or more)
 * `interval`: The time interval between regularly scheduled runs
+* `test` (One of the following)
+  * `archive`: Name of an archive file in the same directory that contains all testing information
+  * `exception`: An explanation of why this alert is exempt from testing requirements
 
 Find the template for the JSON metadata file [here](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/templates/metadata.json).

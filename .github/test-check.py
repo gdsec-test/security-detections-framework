@@ -46,3 +46,5 @@ def test_check():
 if __name__ == "__main__":
     if test_check() is False:
         sys.exit(1)
+    else:
+        sys.exit(0)

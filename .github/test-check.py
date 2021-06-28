@@ -62,7 +62,7 @@ def test_check():
 
 if __name__ == "__main__":
     if test_check() is False:
-        print("Check in Tests/ Exceptions for above files !!")
+        print("Check \"alerts/templates\" to remidiate the errors")
         sys.exit(1)
     else:
         print("All tests/ exceptions passed!!")

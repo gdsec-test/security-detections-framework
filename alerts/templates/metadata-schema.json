@@ -30,13 +30,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "full",
-        "environment",
-        "platform",
-        "attack",
-        "purpose"
-      ]
+      "required": [ "full", "environment", "platform", "attack", "purpose" ]
     },
     "description": {
       "description": "Human-readable description of the alert",

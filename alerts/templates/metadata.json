@@ -13,10 +13,7 @@
 	"version": "",
 	"lastUpdate": "",
 	"attack": [],
-	"interval": {
-		"span": 1,
-		"unit": "second"
-	},
+	"interval": {},
 	"test": {
 		"archive": "",
 		"exception": ""

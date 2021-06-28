@@ -1,15 +1,15 @@
 #!/usr/bin/envpython3
 
 """\
-Programmatically check if the json has test or exception to it
+Programmatically check if json given validates against the schema
 """
 
 import json
-import jsonschema
-from jsonschema import validate
 import os
 import sys
 
+from jsonschema import validate
+from jsonschema.exceptions import ValidationError
 
 def get_schema():
     with open('alerts/templates/metadata-schema.json', 'r') as file:
@@ -22,7 +22,7 @@ def validate_json(json_data):
 
     try:
         validate(instance=json_data, schema=execute_api_schema)
-    except jsonschema.exceptions.ValidationError as err:
+    except ValidationError as err:
         print(err)
         return False
 
@@ -30,9 +30,6 @@ def validate_json(json_data):
 
 
 def test_check():
-    """\
-    Consolidate
-    """
     file_count = 0
     test_passed = 0
 
@@ -41,7 +38,7 @@ def test_check():
         if subdir == "templates":
             continue
         for filename in files:
-            filepath = subdir + os.sep + filename
+            filepath = os.path.join(subdir, filename)
             if filepath.endswith(".json"):
                 file_count += 1
                 with open(filepath, "r") as file:

@@ -14,8 +14,7 @@
 	"lastUpdate": "",
 	"attack": [],
 	"interval": {
-		"span": 1,
-		"unit": "second"
+		"span": 1
 	},
 	"test": {
 		"exception": "Splunk test exception"

@@ -12,7 +12,7 @@ import sys
 
 
 def get_schema():
-    with open('../alerts/detections/templates/metadata.json', 'r') as file:
+    with open('../alerts/detections/templates/metadata-schema.json', 'r') as file:
         schema = json.load(file)
     return schema
 

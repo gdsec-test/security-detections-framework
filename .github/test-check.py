@@ -12,7 +12,7 @@ import sys
 
 
 def get_schema():
-    with open('../alerts/detections/templates/metadata-schema.json', 'r') as file:
+    with open('alerts/templates/metadata-schema.json', 'r') as file:
         schema = json.load(file)
     return schema
 
@@ -36,11 +36,13 @@ def test_check():
     test_passed = 0
 
     # Change paths as required
-    for subdir, _, files in os.walk("../alerts/detections/splunk"):
+    for subdir, _, files in os.walk("alerts/detections/splunk"):
         for filename in files:
+            print(filename)
             file_count += 1
             filepath = subdir + os.sep + filename
-            if filepath.endswith("json"):
+            if filepath.endswith(".json"):
+                print(filepath)
                 with open(filepath, "r") as file:
                     json_data = json.load(file)
 

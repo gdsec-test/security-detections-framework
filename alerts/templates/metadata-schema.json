@@ -13,25 +13,31 @@
           "description": "The full, properly formatted alert name based on the four following pieces of information",
           "type": "string"
         },
-        "environment":{
+        "environment": {
           "description": "The full, properly formatted alert name based on the four following pieces of information",
           "type": "string"
         },
-        "platform":{
+        "platform": {
           "description": "",
           "type": "string"
         },
-        "attack":{
+        "attack": {
           "description": "One MITRE ATT&CK TTP that this alert exemplifies",
           "type": "string"
         },
-        "purpose":{
+        "purpose": {
           "description": "The specific type of event being detected",
           "type": "string"
-        },
+        }
       },
-      "required": [ "full", "environment", "platform", "attack", "purpose" ]
-    }
+      "required": [
+        "full",
+        "environment",
+        "platform",
+        "attack",
+        "purpose"
+      ]
+    },
     "description": {
       "description": "Human-readable description of the alert",
       "type": "string"
@@ -73,18 +79,41 @@
           "type": "number"
         },
         "unit": {
-          "enum": [ "second", "minute", "hour", "day", "week", "month", "year" ]
+          "enum": [
+            "second",
+            "minute",
+            "hour",
+            "day",
+            "week",
+            "month",
+            "year"
+          ]
         }
       },
-      "required": [ "span", "unit" ]
+      "required": [
+        "span",
+        "unit"
+      ]
     },
-  "test": {
-    "description": "Alert-specific testing information",
-    "type": "object",
-    "properties": {
-      "archive": "File name of the archive containing the test and any associated artifacts",
-      "exception": "A justification why this alert is exempt from testing requirements"
-    }
-  },
-  "required": [ "name", "description", "owner", "creator", "team", "version", "lastUpdate", "test" ]
+    "test": {
+      "description": "Alert-specific testing information",
+      "type": "object",
+      "properties": {
+        "archive": "File name of the archive containing the test and any associated artifacts",
+        "exception": "A justification why this alert is exempt from testing requirements"
+      }
+    },
+    "required": [
+      "name",
+      "description",
+      "owner",
+      "creator",
+      "team",
+      "version",
+      "lastUpdate",
+      "test"
+    ]
+  }
 }
+
+

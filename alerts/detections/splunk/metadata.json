@@ -6,6 +6,7 @@
 		"attack": "",
 		"purpose": ""
 	},
+	"description": "",
 	"owner": "",
 	"creator": "",
 	"team": "",
@@ -15,6 +16,6 @@
 	"interval": {},
 	"test": {
 		"archive": "",
-		"exception": "test exception"
+		"exception": ""
 	}
 }

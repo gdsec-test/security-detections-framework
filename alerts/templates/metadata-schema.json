@@ -86,9 +86,5 @@
       "exception": "A justification why this alert is exempt from testing requirements"
     }
   },
-  "required": [ "name", "description", "owner", "creator", "team", "version", "lastUpdate", "test" ],
-  "test": {
-    "archive": "",
-    "exception":"Exception Test"
-  }
+  "required": [ "name", "description", "owner", "creator", "team", "version", "lastUpdate", "test" ]
 }

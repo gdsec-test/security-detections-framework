@@ -18,7 +18,15 @@ jobs:
           python-version: 3.9.0
           architecture: 'x64'
 
+      - name: Setup Python Environment
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -U pip
+          pip install jsonschema
+
       - name: Run Test Check
         run: |
+          source venv/bin/activate
           cd .github
           python3 test-check.py

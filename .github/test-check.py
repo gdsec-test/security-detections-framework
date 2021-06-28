@@ -62,7 +62,7 @@ def test_check():
 
 if __name__ == "__main__":
     if test_check() is False:
-        print("Check \"alerts/templates\" to remidiate the errors")
+        print("Check \"alerts/templates\" for schema and a successful validation")
         sys.exit(1)
     else:
         print("All tests/ exceptions passed!!")

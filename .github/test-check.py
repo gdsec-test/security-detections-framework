@@ -23,6 +23,7 @@ def validate_json(json_data):
     try:
         validate(instance=json_data, schema=execute_api_schema)
     except jsonschema.exceptions.ValidationError as err:
+        print(err)
         return False
 
     return True
@@ -38,11 +39,9 @@ def test_check():
     # Change paths as required
     for subdir, _, files in os.walk("alerts/detections/splunk"):
         for filename in files:
-            print(filename)
-            file_count += 1
             filepath = subdir + os.sep + filename
             if filepath.endswith(".json"):
-                print(filepath)
+                file_count += 1
                 with open(filepath, "r") as file:
                     json_data = json.load(file)
 

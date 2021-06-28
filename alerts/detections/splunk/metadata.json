@@ -13,9 +13,11 @@
 	"version": "",
 	"lastUpdate": "",
 	"attack": [],
-	"interval": {},
+	"interval": {
+		"span": 1,
+		"unit": "second"
+	},
 	"test": {
-		"archive": "",
-		"exception": ""
+		"exception": "Splunk test exception"
 	}
 }

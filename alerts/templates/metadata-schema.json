@@ -99,14 +99,6 @@
       "description": "Alert-specific testing information",
       "type": "object",
       "properties": {
-        "archive": "File name of the archive containing the test and any associated artifacts",
-        "exception": "A justification why this alert is exempt from testing requirements"
-      }
-    },
-    "test": {
-      "description": "Alert-specific testing information",
-      "type": "object",
-      "properties": {
         "archive": {
           "description": "File name of the archive containing the test and any associated artifacts",
           "type": "string"
@@ -114,32 +106,32 @@
         "exception": {
           "description": "A justification why this alert is exempt from testing requirements",
           "type": "string"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "archive"
+          ]
         },
-        "oneOf": [
-          {
-            "required": [
-              "archive"
-            ]
-          },
-          {
-            "required": [
-              "exception"
-            ]
-          }
-        ]
-      }
-    },
-    "required": [
-      "name",
-      "description",
-      "owner",
-      "creator",
-      "team",
-      "version",
-      "lastUpdate",
-      "test"
-    ]
-  }
+        {
+          "required": [
+            "exception"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "owner",
+    "creator",
+    "team",
+    "version",
+    "lastUpdate",
+    "test"
+  ]
 }
 
 

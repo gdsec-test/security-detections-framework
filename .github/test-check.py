@@ -36,8 +36,10 @@ def test_check():
     file_count = 0
     test_passed = 0
 
-    # Change paths as required
-    for subdir, _, files in os.walk("alerts/detections/splunk"):
+    # Change paths as required - currently runs for all folders withing detections
+    for subdir, _, files in os.walk("alerts/detections"):
+        if subdir == "templates":
+            continue
         for filename in files:
             filepath = subdir + os.sep + filename
             if filepath.endswith(".json"):

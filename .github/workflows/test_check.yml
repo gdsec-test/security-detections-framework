@@ -27,6 +27,6 @@ jobs:
 
       - name: Run Test Check
         run: |
+          pwd
           source venv/bin/activate
-          cd .github
-          python3 test-check.py
+          python3 ./.github/test-check.py

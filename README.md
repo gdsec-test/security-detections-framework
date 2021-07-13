@@ -14,7 +14,7 @@ Writing SIEM rules should follow this high-level work flow:
 1. Idea - something was found via threat hunting, a threat intelligence report tipped things off, or an incident identified a gap in coverage
 2. Identify the appropriate tool - this repository organizes rules first by tool
 3. Check this repository for existing rule coverage
-4. Write rule
+4. Write rule - [How to Write Splunk Alert](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/examples/How%20to%20create%20alert%20in%20splunk.docx) 
    1. Branch off of this repository's main branch
    2. Adhere to the rule naming schema, 
      For More information see [Naming Schema](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections#naming) 

@@ -1,0 +1,20 @@
+{
+	"name": {
+		"full": "OKTA_External-Remote-Services_Unauthorized-China-VPN",
+		"environment": "",
+		"platform": "OKTA",
+		"attack": "External-Remote-Services",
+		"purpose": "Unauthorized-China-VPN"
+	},
+	"description": "",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "threat",
+	"version": "1.0",
+	"lastUpdate": "07/13/2021",
+	"attack": [],
+	"interval": {1h},
+	"test": {
+		"archive": "[](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/detections/splunk/Trend-Micro_Malicious-File_unable-to-remove/Testing%20-%2007-13-2021%20-%20.png)",
+		"exception": ""
+	}

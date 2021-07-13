@@ -17,8 +17,10 @@ Writing SIEM rules should follow this high-level work flow:
 4. Write rule
    1. Branch off of this repository's main branch
    2. Adhere to the rule naming schema
-   3. Create the corresponding metadata
-   4. Export your rule in a text-based format (plaintext, XML, JSON, YAML, etc.)
+      a. For More information see [Naming Schema](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections#metadata) 
+   4. Create the corresponding metadata
+      a. For more information see [Meta Data Examples](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections#metadata)    
+   6. Export your rule in a text-based format (plaintext, XML, JSON, YAML, etc.)
 6. Test rule
    1. Include your test cases in the repository
    2. Provide links to any necessary artifacts

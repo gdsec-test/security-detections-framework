@@ -10,9 +10,10 @@
 	"owner": "",
 	"creator": "",
 	"team": "",
-	"version": "",
-	"lastUpdate": "",
-	"attack": [],
+	"version": "N.N.N",
+	"lastUpdate": "YYYY-MM-DD",
+	"attack": [ "TNNN" ],
+	"cves": [ "CVE-YYYY-NNNN" ],
 	"interval": {},
 	"test": {
 		"archive": "",

@@ -6,15 +6,15 @@
 		"attack": "External-Remote-Services",
 		"purpose": "Unauthorized-China-VPN"
 	},
-	"description": "",
+	"description": "When users come from unauthorized China-based VPNs.",
 	"owner": "twhipple1@godaddy.com",
 	"creator": "twhipple1@godaddy.com",
 	"team": "threat",
-	"version": "1.0",
-	"lastUpdate": "07/13/2021",
+	"version": "1.0.0",
+	"lastUpdate": "2021-07-13",
 	"attack": [],
 	"interval": {1h},
 	"test": {
-		"archive": "[](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/detections/splunk/OKTA_External-Remote-Services_Unauthorized-China-VPN/China-VPN-Test.png)",
-		"exception": ""
+		"archive": "[](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/detections/splunk/OKTA_External-Remote-Services_Unauthorized-China-VPN/China-VPN-Test.png)"
 	}
+}

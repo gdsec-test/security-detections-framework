@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/product.schema.json",
-  "title": "GoDaddy Detection Metadata",
+  "$id": "https://godaddy.com/siem-repo.schema.json",
+  "title": "GoDaddy SIEM Repository Metadata",
   "description": "Metadata describing a detection rule",
   "type": "object",
   "properties": {
@@ -68,7 +68,17 @@
       "type": "array",
       "minItems": 0,
       "items": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^T[0-0]{4}(\\.[0-9]{3})?$"
+      }
+    },
+    "cves": {
+      "description": "Vulnerabilities identified by this alert (0 or more)",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string",
+        "pattern": "^CVE-[0-9]{4}-[0-9]+$"
       }
     },
     "interval": {

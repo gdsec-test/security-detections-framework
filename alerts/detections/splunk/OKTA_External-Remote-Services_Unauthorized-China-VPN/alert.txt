@@ -1,7 +1,6 @@
 index="oktalogs" displayMessage="Reset*" "actor.alternateId"!="02d769kuqxc6A@godaddy.com" "actor.alternateId"!="02d769kuqxc6B@godaddy.com"
 | where 'actor.id'!='target{}.id'
 | dedup _time, src_ip
-| bucket _time span=1h
-| stats count by date_mday, date_month, actor.alternateId, target{}.alternateId _time
+| stats count by date_mday, date_month, actor.alternateId, target{}.alternateId
 | where count > 2
 | eval user='target{}.alternateId'

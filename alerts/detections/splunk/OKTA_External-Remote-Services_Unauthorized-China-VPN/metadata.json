@@ -12,8 +12,11 @@
 	"team": "threat",
 	"version": "1.0.0",
 	"lastUpdate": "2021-07-13",
-	"attack": [],
-	"interval": {1h},
+	"attack": [ "T1133" ],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
 	"test": {
 		"archive": "[](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/detections/splunk/OKTA_External-Remote-Services_Unauthorized-China-VPN/China-VPN-Test.png)"
 	}

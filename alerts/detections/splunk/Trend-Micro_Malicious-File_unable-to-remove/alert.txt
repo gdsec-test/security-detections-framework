@@ -1,0 +1,4 @@
+index="on_prem" sourcetype="deepsecurity" alert="*" filePath="*" TrendMicroDsFileMD5="*"
+| search NOT act IN ("Pass", "Delete", "deleted", "renamed", "DenyAccess", "Terminate", "updated", "created")
+| stats values(filePath) values(alert) values(result) dc(dvchost) as InfectedHostsCount values(dvchost) as host count as EventsCount by TrendMicroDsFileMD5 
+| sort - EventsCount

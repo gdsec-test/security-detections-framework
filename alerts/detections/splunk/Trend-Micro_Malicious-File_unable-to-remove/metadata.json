@@ -6,15 +6,18 @@
 		"attack": "Malicious-File",
 		"purpose": "unable-to-remove"
 	},
-	"description": "",
+	"description": "When Trend Micro is unable to remove a file from an endpoint.",
 	"owner": "twhipple1@godaddy.com",
 	"creator": "twhipple1@godaddy.com",
 	"team": "threat",
-	"version": "1.0",
-	"lastUpdate": "07/13/2021",
-	"attack": [],
-	"interval": {1h},
+	"version": "1.0.0",
+	"lastUpdate": "2021-07-13",
+	"attack": [ "T1204.002" ],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
 	"test": {
 		"archive": "[](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/detections/splunk/Trend-Micro_Malicious-File_unable-to-remove/Testing%20-%2007-13-2021%20-%20.png)",
-		"exception": ""
 	}
+}

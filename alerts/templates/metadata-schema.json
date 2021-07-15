@@ -46,6 +46,10 @@
       "description": "The person currently responsible for maintaining the alert",
       "type": "string"
     },
+    "external": {
+      "description": "URL to a community-provided rule that served as the starting point for this alert",
+      "type": "string"
+    },
     "creator": {
       "description": "The original creator of the alert",
       "type": "string"

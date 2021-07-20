@@ -67,6 +67,16 @@
       "type": "string",
       "format": "date"
     },
+    "lifeCycleStage": {
+      "description": "Which stage in the lifecycle the detection currently is",
+      "type": "string",
+      "enum": [
+        "development",
+        "production",
+        "deprecated",
+        "retired"
+      ]
+    },
     "attack": {
       "description": "Relevant MITRE ATT&CK categories (0 or more)",
       "type": "array",
@@ -144,6 +154,7 @@
     "team",
     "version",
     "lastUpdate",
+    "lifeCycleStage",
     "test"
   ]
 }

@@ -1,7 +1,8 @@
-# Golden Containers Governance
+# Security Detection Framework Governance
 
 * [Purpose](#purpose)
 * [Definitions](#definitions)
+* [Scope](#scope)
 * [Governance Roles/Responsibilities](#governance-rolesresponsibilities)
 * [Repository Owners](#repository-owners)
 * [Governance Committee Process](#governance-committee)
@@ -26,19 +27,24 @@
 ## Purpose
 
 This document describes the Governance Model for a Governance Committee to provide decisioning and approval for changes
-made to the Golden Container Images policies and process
-
+made to the Security Detections Framework
 ## Definitions
 
 * _PR_ - Pull Request
 * See: [Image Tiers]
 * See: [Golden Container Definitions](./golden_container_contribution.md#definitionsterms) for additional definitions
 
+## Scope
+
+This repo is intended to list any detections which Godaddy is direcly responsible for maintaining. Third party detections which are maintained by the external entity do not need to be added to this repo unless there is a modification, required internal support, or specific knowledge that needs to be documented for other teams. 
+
+
+
 ## Governance Roles/Responsibilities
 
 | Role                 | Description                                  | Accountabilities & Responsibilities         |
 | :------------------- | :------------------------------------------- | :------------------------------------------ |
-| Repository Owners    | Repository maintainers - [Cloud-Automation]  | Coding standards enforcement                |
+| Detection Owners     | Detection maintainers - [Cloud-Automation]   | Coding standards enforcement                |
 |                      |                                              | Process standards enforcement               |
 |                      |                                              | Maintenance of process                      |
 |                      |                                              | Maintenance of documentation                |
@@ -56,9 +62,11 @@ made to the Golden Container Images policies and process
 |                      |                                              | Resolves handling of abandoned GCIs         |
 | Observers            | Non-voting individuals                       | None                                        |
 
-## Repository Owners
+## Detection Owners
 
-Repository Owners are responsible for operationalizing Governance Committee decisions, enforcing coding/process
+Detection Owners are responsible for 
+
+operationalizing Governance Committee decisions, enforcing coding/process
 standards, and maintaining the health of the repository and its associated features (issues, projects, etc).
 
 Repository Owners will default to [Cloud-Automation] but can be changed by the Governance Committee. Should a change be
@@ -112,45 +120,10 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 
 | Governance Committee Member | Term Start Date |
 | :-------------------------- | :-------------- |
-| [Demetrius Comes](https://github.secureserver.net/dcomes)                      | February 17, 2021 |
-| [Jarrett Cruger](https://github.secureserver.net/jcruger)                      | February N, 2021  |
-| [Jeremiah Gowdy](https://github.secureserver.net/jgowdy) (SME)                 | February N, 2021 |
-| [Mark Henry](https://github.secureserver.net/mxhenry) (Cloud-Automation Rep)   | February 17, 2021 |
-| [Steven Feltner](https://github.secureserver.net/sfeltner) (App-Services Rep ) | February 17, 2021 |
-| [Victoria Tang](https://github.secureserver.net/ytang1) (Product-Security Rep) | February 26, 2021 |
-| TBD GCI customer rep 3                                                         | February N, 2021 |
+| TBD                                          
 
-#### Past Members
 
-| Past Repository Owners  |
-| :----------------- |
-| | |
 
-| Past Governance Committee Member | Term End Date |
-| :-------------------------- | :------------ |
-| | |
-
-## Meeting Logistics/Cadence
-
-### Voting
-
-Votes follow the common format of majority rule unless otherwise stated. That is, if there are more favorable votes
-than unfavorable ones, the issue is considered to have passed -- regardless of the number of votes in each category. (
-If the number of votes seems too small to be representative of a community consensus, the issue is typically not
-pursued.)
-
-### Typical Meeting Agenda
-
-* Review list of images to be retired and up/down vote
-* Review list of new images to be converted to "base" and up/down vote
-* Review list of proposed process/policy change PRs and up/down vote
-
-### Meeting Cadence
-
-During early adoption, meetings will be weekly to discuss issues. Governance Committee can make changes to candence and
-vote on them at their discretion. This section should reflect the current meeting cadence.
-
-Upcoming meetings should be posted to [golden_containers].
 
 ## Observers
 
@@ -165,18 +138,6 @@ Interested in helping grow GCIs? Open a PR with your name in this list as a way 
 * Observers will be added to the [Governance Committee private slack channel] but are asked not to post to the channel
   unless asked to do so by a Committee member.
 
-### Current Observers
-
-| Observers                   |
-| :-------------------------- |
-| [Oleg Gomozov](https://github.secureserver.net/ogomozov) (Product Security Rep )|
-| Shawn Jacoby|
-| |
-
-## Golden Container Images Exceptions
-
-If team can not use the approved Golden Container Images, they will need to submit an
-exception: [Exception Request Handling](https://confluence.godaddy.com/display/VM/Exception+Request+Handling)
 
 ## On-/Off-boarding
 
@@ -203,14 +164,6 @@ The ex-member is:
 * Not allowed to call themselves a Governance Committee member any more, nor allowed to imply this to be the case
 * If needed, we reserve the right to publicly announce removal
 
-## Retired images
-
-| Image Name | Retirement date | Note |
-| ---------- | --------------- | ---- |
-| alpine v3.10 | 04 May 2021 | EOL'd by upstream on 01 May 2021 [https://endoflife.date/alpine] |
-| alpine v3.11 | 10 May 2021 | Scheduled for EOL by upstream on 01 Nov 2021 [https://endoflife.date/alpine] |
-| alpine-node (Node 15 tag) | 03 June 2021 | [EOL'd by upstream on 01 June 2021] & [https://github.com/nodejs/docker-node/pull/1491] |
-| alpine-node-s6 (Node 15 tag) | 03 June 2021 | [EOL'd by upstream on 01 June 2021] & [https://github.com/nodejs/Release] |
 
 ## Attribution
 

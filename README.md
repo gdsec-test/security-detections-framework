@@ -34,3 +34,6 @@ Here are some helpful guides on rules for specific technologies:
 * [IDS](https://github.secureserver.net/infosec-network/ids-sensor-rules)
 * [Splunk](https://docs.splunk.com/Documentation/Splunk/8.2.0/Alert/Aboutalerts)
 * [Tanium](https://docs.tanium.com/detect/detect/authoring_signals.html)
+
+## Access Process
+* [Get Splunk Access](https://x.co/getsplunk)

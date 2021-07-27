@@ -37,4 +37,5 @@ To create a ticket in **Service Now** , the Splunk to SNOW App can be used to in
 
 ![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Snow%20settings%202.png)
 ![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Snow%20settings%203.png)
+
 ![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/snow%20settings%204.png)

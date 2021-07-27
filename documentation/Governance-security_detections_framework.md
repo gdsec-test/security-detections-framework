@@ -23,7 +23,7 @@
 
 ## Purpose
 
-This document describes the Governance Model for a Governance Committee to provide decisioning and approval for changes
+* This document describes the Governance Model for a Governance Committee to provide decisioning and approval for changes
 made to the Security Detections Framework
 
 ## Definitions
@@ -32,7 +32,7 @@ made to the Security Detections Framework
 
 ## Scope
 
-This repo is intended to list any detections which Godaddy is direcly responsible for maintaining. Third party detections which are maintained by the external entity do not need to be added to this repo unless there is a modification, required internal support, or specific knowledge that needs to be documented for other teams. 
+* This repo is intended to list any detections which Godaddy is direcly responsible for maintaining. Third party detections which are maintained by the external entity do not need to be added to this repo unless there is a modification, required internal support, or specific knowledge that needs to be documented for other teams. 
 
 
 ## Governance Roles/Responsibilities

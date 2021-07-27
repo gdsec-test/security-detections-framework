@@ -28,7 +28,14 @@ made to the Security Detections Framework
 
 ## Definitions
 
-* Detection: Threat detection is the practice of analyzing the entirety of a security ecosystem to identify any malicious activity that could compromise the network. If a threat is detected, then mitigation efforts must be enacted to properly neutralize the threat before it can exploit any present vulnerabilities.
+- **Detection**
+  - Any rule within an alerting platform which is used to detect specific activities.
+  - _Example: When a login attempt occurs, a rule_ _detects_ _if it is authorized or not._
+- **Alert**
+  - Any detection which has been configured to notify a defined individual, group, team, etc.
+  - _Example: When an unauthorized login is_ _detected__, an_ _alert_ _notifies the account owner._
+- **Detection Repository**
+  - A location which stores details about configured detections.
 
 ## Scope
 
@@ -95,14 +102,17 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 
 | Governance Committee Member | Term Start Date |
 | :-------------------------- | :-------------- |
-| [Thomas Whipple](https://github.secureserver.net/twhipple1-godaddy)    | 07/26/2021      |  
-| [Jason White](https://github.secureserver.net/jwhite-godaddy)          | 07/26/2021      | 
+| [David Dubois](https://github.secureserver.net/ddubois-godaddy)        | 07/26/2021     |  
+| [Partric Green](https://github.secureserver.net/pgreen-godaddy)        | 07/26/2021     |  
+| [Jonathan Wade](https://github.secureserver.net/jwade-godaddy)         | 07/26/2021     |  
+| [Thomas Whipple](https://github.secureserver.net/twhipple1-godaddy)    | 07/26/2021     |  
+| [Jason White](https://github.secureserver.net/jwhite-godaddy)          | 07/26/2021     | 
 
 
 
 | Observers                   |
 | :-------------------------- |
-| [Oleg Gomozov](https://github.secureserver.net/ogomozov) (Product Security Rep )|
+| [Courtney Falk](https://github.secureserver.net/cfalk-godaddy) (Product Security Rep )|
 | |
 | |
 

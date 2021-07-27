@@ -14,6 +14,7 @@
 | Alert is broken | | RA	 | CI |
 | Alert firing excessively	| C | RA | CI |
 | Repository permissions problem	| RAC | | |	
+| Ensuring Maintinance | | | A |
 
 ### Definitions
 * [Deteciton Owner](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#detection-owners)

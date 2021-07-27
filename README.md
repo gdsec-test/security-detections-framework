@@ -38,9 +38,9 @@ Here are some helpful guides for specific technologies:
 * [How to Write Splunk Detection](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/How_to_Create_a_Splunk_Alert.md) 
 * [How to Test Detection](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Detection_Testing.md)
 * External Documentation
-      * [IDS](https://github.secureserver.net/infosec-network/ids-sensor-rules)
-      * [Splunk](https://docs.splunk.com/Documentation/Splunk/8.2.0/Alert/Aboutalerts)
-      * [Tanium](https://docs.tanium.com/detect/detect/authoring_signals.html)
+    * [IDS](https://github.secureserver.net/infosec-network/ids-sensor-rules)
+    * [Splunk](https://docs.splunk.com/Documentation/Splunk/8.2.0/Alert/Aboutalerts)
+    * [Tanium](https://docs.tanium.com/detect/detect/authoring_signals.html)
 
 ## Process'
 * [Get Splunk Access](https://x.co/getsplunk)

@@ -40,3 +40,4 @@ Here are some helpful guides on rules for specific technologies:
 
 ## Other Important Documents
 * [Governance](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md)
+* [Detection Lifecycle](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentatnion/Detection_Lifecycle_Framework.md)

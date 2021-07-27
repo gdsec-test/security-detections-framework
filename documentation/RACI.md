@@ -1,5 +1,4 @@
 # Responsible, Accountable, Consulted, and Informed (RACI)
-* Created by Courtney Falk, last modified on Jun 07, 2021Go to start of metadata
 
 
 ### These are the RACI responsibilities as they pertain to the detections framework.

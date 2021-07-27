@@ -43,7 +43,7 @@ _**[Out-of-Band Actions 4](#_Toc75345622)**_
 
 # Lifecycle
 
-![](RackMultipart20210727-4-1av054s_html_7ba88b2c4e55562.png)
+![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Lifecycle.png)
 
 # Creation
 

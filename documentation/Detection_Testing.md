@@ -41,7 +41,7 @@
           | bucket _time span=15m
           | stats values(Domain) as Domain values(AccountName) as AccountName count by MachineName _time
           | where count > 10 
-          ```
+          
      See the added 'Bucket' and '_time' peramaters added to the query. this will now create a full table with time stamps of every time the alert would have created a ticket in the last 30 days without actually outputing to a 3rd party
           
 

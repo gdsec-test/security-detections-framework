@@ -41,5 +41,5 @@ Here are some helpful guides on rules for specific technologies:
 
 ## Process'
 * [Get Splunk Access](https://x.co/getsplunk)
-* [Rule Creation Assistance Request (Place Holder)](https://jira.godaddy.com/browse/ATLSNADMIN-8989)
+* [Rule Creation Assistance Request (Coming Soon)](https://jira.godaddy.com/browse/ATLSNADMIN-8989)
 

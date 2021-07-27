@@ -42,36 +42,27 @@ This repo is intended to list any detections which Godaddy is direcly responsibl
 
 ## Governance Roles/Responsibilities
 
-| Role                 | Description                                  | Accountabilities & Responsibilities         |
-| :------------------- | :------------------------------------------- | :------------------------------------------ |
-| Detection Owners     | Detection maintainers - [Cloud-Automation]   | Coding standards enforcement                |
-|                      |                                              | Process standards enforcement               |
-|                      |                                              | Maintenance of process                      |
-|                      |                                              | Maintenance of documentation                |
-|                      |                                              | Scheduling & running retros                 |
-|                      |                                              | Identifying and remediating process gaps    |
-|                      |                                              | Will have a permanent representative/seat at the Governance Committee |
-|                      |                                              | Representative on the Governance Committee will be an active participant in said Committee |
-|                      |                                              | Engaging Governance Committee for decisions under the Committee's responsibilities |
-| Governance Committee | Business representatives from across GoDaddy | Determines and documents criteria for promotion/demotion of images between Tiers |
-|                      |                                              | Determines if a GCI should be demoted from [Tier 1] |
-|                      |                                              | Determines if a GCI should be promoted to [Tier 1] |
-|                      |                                              | Drives identification & retirement of GCIs  |
-|                      |                                              | Approves proposed retirement of GCIs        |
-|                      |                                              | Drives adoption of GCIs                     |
-|                      |                                              | Resolves handling of abandoned GCIs         |
-| Observers            | Non-voting individuals                       | None                                        |
+* Observers, Detection Creators, Detection Owners, and Governance Committee. 
+* Access to any of these roles can be granted by creating a PR to add themselves to the corelating group. PR request are subject to approval by a member of the Governance Committee
+
+### Observers
+
+A member of the Security Detections Framework with read only access. 
+
+### Detection Creators
+* listed as a knowledge resource containing information regarding the oregin of the alert. Not responsible for ongoing maintinance of the alert, but may remain an important asset in modifying the alert in the future. 
 
 ## Detection Owners
 
-Detection Owners are responsible for 
+* Detection Owners are responsible for validating the detection folder contains a file with complete [Meta Data](https://github.com/gdcorp-infosec/security-detections-framework/tree/main/alerts/detections#metadata), and follows the proper [Naming Schema](https://github.com/gdcorp-infosec/security-detections-framework/tree/main/alerts/detections#naming)
 
-operationalizing Governance Committee decisions, enforcing coding/process
-standards, and maintaining the health of the repository and its associated features (issues, projects, etc).
+* Detection owners are also responsible for maintaning Testing data following the Testing guidelines
 
-Repository Owners will default to [Cloud-Automation] but can be changed by the Governance Committee. Should a change be
-implemented, [Cloud-Automation] will assist the Governance Committee in transferring ownership of the repository to the
-new owning team and onboarding the new team to the role.
+* Detection owners are not necessarily the detection creator, there are a number of scenarios in which a detection may be created by another team in support of a joint effort and ownership assigned to the owning authority.  (i.e. A detection request was sent to Threat-Research by the IR team while responding to an incident, the Threat-Research team would quickly create the alert, but ownership would remain with IR.)
+
+### Governance Committee
+* As the framework goes into continued use cycles, the Governance Committee will need to conduct quarterly reviews to validate Rules are operational, testing is recent and relevant, and rule ownership is properly assigned. 
+
 
 ## Governance Committee
 
@@ -90,11 +81,10 @@ A [Governance Committee private slack channel] will be available to the Committe
 
 * A person desiring membership on the Governance Committee can create a PR adding themselves to the
   [Current Membership](#current-membership-alphabetical).
-  * PR is approved/rejected using standard [voting](#voting)
+  * PR is approved/rejected by a Governance Comittee Member
 * A person can be nominated to membership via PR by being added to
   the [Current Membership](#current-membership-alphabetical).
-  * PR is approved/rejected using standard [voting](#voting)
-    and the approval of the nominee
+  * PR is approved/rejected by a Governance Comittee Member
 
 Once a member joins, the [onboarding](#onboarding) procedure is applied.
 
@@ -105,9 +95,7 @@ Once a member joins, the [onboarding](#onboarding) procedure is applied.
   in [Past Members](#past-members) (if they so choose)
 * Failure to participate in six consecutive votes will result in a vote to remove the individual from the Governance
   Committee
-* Team members can be removed by supermajority vote on the team mailing list.
-  * For this vote, the member in question is not eligible to vote and does not count towards the quorum.
-  * Any removal vote can cover only one single person.
+* Team members can be removed by any Governance Comittee Member
 * Upon death of a member, they leave the team automatically
 
 In case a member leaves, the [offboarding](#offboarding) procedure is applied.
@@ -120,23 +108,10 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 
 | Governance Committee Member | Term Start Date |
 | :-------------------------- | :-------------- |
-| TBD                                          
+| Twhipple1@godaddy.com       | 07/26/2021      |                                       
 
 
 
-
-## Observers
-
-Interested in helping grow GCIs? Open a PR with your name in this list as a way to start the conversation.
-
-* A person desiring to be an observer can create a PR adding themselves to the [Current Observers](#current-observers).
-* Merging is handled by standard [voting](#voting)
-* Once merged the user is considered to be an `Observer`
-* Observer privileges can be revoked, in part or whole, by a simple majority vote of the Governance Committee
-* Observers will be included in the invitation list for Governance Committee meetings and can join the meetings to
-  watch/listen, but are not permitted to Zoom chat/speak unless invited to do so by a Governance Committee member.
-* Observers will be added to the [Governance Committee private slack channel] but are asked not to post to the channel
-  unless asked to do so by a Committee member.
 
 
 ## On-/Off-boarding
@@ -145,10 +120,9 @@ Interested in helping grow GCIs? Open a PR with your name in this list as a way 
 
 The new member is:
 
-* Added to [@appservices/goldenimage-governance].
-* Added to the team mailing list [gci-governance@godaddy.com].
-* Announced on [golden_containers] by an existing team member. Ideally, the new member replies in this thread,
-  acknowledging team membership.
+* Added to [@gdcorp-infosec/security-detections-framework].
+* Added to the team mailing list [threat@godaddy.com].
+
 
 ### Offboarding
 

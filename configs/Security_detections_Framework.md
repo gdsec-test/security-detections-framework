@@ -4,21 +4,18 @@
 * [Definitions](#definitions)
 * [Scope](#scope)
 * [Governance Roles/Responsibilities](#governance-rolesresponsibilities)
-* [Repository Owners](#repository-owners)
+  * [Observers](#observers)
+  * [Detection Creators](#detection-creators)
+  * [Detection Owners](#detection-owners)
 * [Governance Committee Process](#governance-committee)
   * [Governance Committee Membership](#governance-committee-membership)
     * [Joining/Leaving/Removal](#joiningleavingremoval)
       * [Joining](#joining)
       * [Leaving/Removal](#leavingremoval)
     * [Current Membership (alphabetical)](#current-membership-alphabetical)
-    * [Past Members](#past-members)
   * [Meeting Logistics/Cadence \- markdown file for this](#meeting-logisticscadence---markdown-file-for-this)
-  * [Voting](#voting)
   * [Typical Meeting Agenda](#typical-meeting-agenda)
   * [Meeting Cadence](#meeting-cadence)
-* [Observers](#observers)
-  * [Current Observers](#current-observers)
-* [Golden Container Images Exceptions](#golden-container-images-exceptions)
 * [On\-/Off\-boarding](#on-off-boarding)
   * [Onboarding](#onboarding)
   * [Offboarding](#offboarding)
@@ -39,17 +36,16 @@ made to the Security Detections Framework
 This repo is intended to list any detections which Godaddy is direcly responsible for maintaining. Third party detections which are maintained by the external entity do not need to be added to this repo unless there is a modification, required internal support, or specific knowledge that needs to be documented for other teams. 
 
 
-
-## Governance Roles/Responsibilities
+### Governance Roles/Responsibilities
 
 * Observers, Detection Creators, Detection Owners, and Governance Committee. 
 * Access to any of these roles can be granted by creating a PR to add themselves to the corelating group. PR request are subject to approval by a member of the Governance Committee
 
-### Observers
+## Observers
 
 A member of the Security Detections Framework with read only access. 
 
-### Detection Creators
+## Detection Creators
 * listed as a knowledge resource containing information regarding the oregin of the alert. Not responsible for ongoing maintinance of the alert, but may remain an important asset in modifying the alert in the future. 
 
 ## Detection Owners
@@ -60,16 +56,12 @@ A member of the Security Detections Framework with read only access.
 
 * Detection owners are not necessarily the detection creator, there are a number of scenarios in which a detection may be created by another team in support of a joint effort and ownership assigned to the owning authority.  (i.e. A detection request was sent to Threat-Research by the IR team while responding to an incident, the Threat-Research team would quickly create the alert, but ownership would remain with IR.)
 
-### Governance Committee
-* As the framework goes into continued use cycles, the Governance Committee will need to conduct quarterly reviews to validate Rules are operational, testing is recent and relevant, and rule ownership is properly assigned. 
-
 
 ## Governance Committee
 
-The Governance Committee shall be responsible for deciding GCI [Image Tiers], image deprecation and will help drive
-image adoption by GoDaddy teams. They will also assist in ensuring active GCIs have owning SMEs/teams.
+As the framework goes into continued use cycles, the Governance Committee will need to conduct quarterly reviews to validate Rules are operational, testing is recent and relevant, and rule ownership is properly assigned. 
 
-The Governance Committee allow approves/rejects changes to the GCI process, and governance.
+The Governance Committee allow approves/rejects changes to any Detection Framework process, and governance.
 
 A [Governance Committee private slack channel] will be available to the Committee
 
@@ -102,16 +94,33 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 
 #### Current Membership (alphabetical)
 
-| Repository Owners  |
-| :----------------- |
-| [Cloud-Automation] |
-
 | Governance Committee Member | Term Start Date |
 | :-------------------------- | :-------------- |
-| Twhipple1@godaddy.com       | 07/26/2021      |                                       
+| [Thomas Whipple](https://github.secureserver.net/twhipple1-godaddy)    | 07/26/2021      |                                       
 
 
+| Observers                   |
+| :-------------------------- |
+| [Oleg Gomozov](https://github.secureserver.net/ogomozov) (Product Security Rep )|
+| Shawn Jacoby|
+| |
 
+
+## Meeting Logistics/Cadence
+
+
+### Typical Meeting Agenda
+
+* Review list of Alerts to be retired and up/down vote
+* Review Alert Testing to identify if there is a time gap exceeding 365 days
+* Review list of proposed process/policy change PRs and up/down vote
+
+### Meeting Cadence
+
+During early adoption, meetings will be weekly to discuss issues. Governance Committee can make changes to candence and
+vote on them at their discretion. This section should reflect the current meeting cadence.
+
+Upcoming meetings should be posted to [golden_containers].
 
 
 ## On-/Off-boarding

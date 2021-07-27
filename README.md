@@ -30,10 +30,13 @@ Splunk Example Rule: [Trend-Micro_Malicious-File_unable-to-remove](https://githu
 ## Getting Started
 
 Here are some helpful guides on rules for specific technologies:
-* [How to Write Splunk Alert](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/examples/How%20to%20create%20alert%20in%20splunk.docx) 
+* [How to Write Splunk Alert](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/How_to_Create_a_Splunk_Alert.md) 
 * [IDS](https://github.secureserver.net/infosec-network/ids-sensor-rules)
 * [Splunk](https://docs.splunk.com/Documentation/Splunk/8.2.0/Alert/Aboutalerts)
 * [Tanium](https://docs.tanium.com/detect/detect/authoring_signals.html)
 
 ## Access Process
 * [Get Splunk Access](https://x.co/getsplunk)
+
+##Other Important Documents
+* [Governance](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md)

@@ -20,7 +20,7 @@
  * This Method will demonstrait within splunk every time the alert would have fired without sending any output. 
  * Thise Method requires the use of a Stats command within the search query, as well as a threashold limitation. 
  
-          In this example, this search query uses a stats command, and is set to run every 15 minutes.
+     In this example, this search query uses a stats command, and is set to run every 15 minutes.
  
           ```
           earliest=-15m latest=now()
@@ -30,7 +30,7 @@
           | where count > 10 
           ```
           
-          if we expand the time window out to 30 days, Counts of events may be much greater than 10. in this scenario, we would add a 'Bucket' for the time to exist within to limit our count threshold to the same time window the alert should be running on
+     If we expand the time window out to 30 days, Counts of events may be much greater than 10. in this scenario, we would add a 'Bucket' for the time to exist within to limit our count threshold to the same time window the alert should be running on
           
           ``` 
           earliest=-30d latest=now()
@@ -40,7 +40,7 @@
           | stats values(Domain) as Domain values(AccountName) as AccountName count by MachineName _time
           | where count > 10 
           ```
-          see the added 'Bucket' and '_time' peramaters added to the query. this will now create a full table with time stamps of every time the alert would have created a ticket in the last 30 days without actually outputing to a 3rd party
+     See the added 'Bucket' and '_time' peramaters added to the query. this will now create a full table with time stamps of every time the alert would have created a ticket in the last 30 days without actually outputing to a 3rd party
           
 
           

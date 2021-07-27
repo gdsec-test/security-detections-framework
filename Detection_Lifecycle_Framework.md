@@ -13,9 +13,9 @@ Draft Document for Working Efforts - [IRT-507](https://jira.godaddy.com/browse/I
 * [Review](#Review)
 * [Retirement](#Retirement)
 * [Removal](#Removal)
-* [Out-of-Band Actions](#Out-of-Band Actions)
-* [Tuning Requests](#Tuning Requests)
-* [Emergency Detections](#Emergency Detections)
+* [Out-of-Band Actions](#Out-of-Band-Actions)
+* [Tuning Requests](#Tuning-Requests)
+* [Emergency Detections](#Emergency-Detections)
 
 # Document Definitions
 

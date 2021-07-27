@@ -27,6 +27,10 @@ Writing SIEM rules should follow this high-level work flow:
 
 Splunk Example Rule: [Trend-Micro_Malicious-File_unable-to-remove](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections/splunk/Trend-Micro_Malicious-File_unable-to-remove)
 
+## Important Documents
+* [Governance](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md)
+* [Detection Lifecycle](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentatnion/Detection_Lifecycle_Framework.md)
+
 ## Getting Started
 
 Here are some helpful guides on rules for specific technologies:
@@ -38,6 +42,3 @@ Here are some helpful guides on rules for specific technologies:
 ## Access Process
 * [Get Splunk Access](https://x.co/getsplunk)
 
-## Other Important Documents
-* [Governance](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md)
-* [Detection Lifecycle](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentatnion/Detection_Lifecycle_Framework.md)

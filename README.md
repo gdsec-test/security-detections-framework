@@ -39,6 +39,7 @@ Here are some helpful guides on rules for specific technologies:
 * [Splunk](https://docs.splunk.com/Documentation/Splunk/8.2.0/Alert/Aboutalerts)
 * [Tanium](https://docs.tanium.com/detect/detect/authoring_signals.html)
 
-## Access Process
+## Process'
 * [Get Splunk Access](https://x.co/getsplunk)
+* [Rule Creation Assistance Request (Place Holder)](https://jira.godaddy.com/browse/ATLSNADMIN-8989)
 

@@ -1,4 +1,4 @@
-# SIEM Documentation
+# Detection Framework Overview
 
 ## Purpose
 

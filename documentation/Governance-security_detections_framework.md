@@ -112,7 +112,7 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 
 | Observers                   |
 | :-------------------------- |
-| [Courtney Falk](https://github.secureserver.net/cfalk-godaddy) (Product Security Rep )|
+| [Courtney Falk](https://github.secureserver.net/cfalk-godaddy) |
 | |
 | |
 

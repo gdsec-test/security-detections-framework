@@ -4,18 +4,18 @@ Draft Document for Working Efforts - [IRT-507](https://jira.godaddy.com/browse/I
 
 # Table of Contents
 
-**[Definitions](#Definitions)
-**[Lifecycle](#Lifecycle)
-**[Creation](#Creation)
-**[Testing 4](#Testing)
-**[Implementation 4](#Implementation)
-**[Maintenance](#Maintenance)
-**[Review](#Review)
-**[Retirement](#Retirement)
-**[Removal](#Removal)
-**[Out-of-Band Actions](#Out-of-Band Actions)
-**[Tuning Requests](#Tuning Requests)
-**[Emergency Detections](#Emergency Detections)
+* [Definitions](#Definitions)
+* [Lifecycle](#Lifecycle)
+* [Creation](#Creation)
+* [Testing 4](#Testing)
+* [Implementation 4](#Implementation)
+* [Maintenance](#Maintenance)
+* [Review](#Review)
+* [Retirement](#Retirement)
+* [Removal](#Removal)
+* [Out-of-Band Actions](#Out-of-Band Actions)
+* [Tuning Requests](#Tuning Requests)
+* [Emergency Detections](#Emergency Detections)
 
 # Document Definitions
 

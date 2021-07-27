@@ -25,30 +25,29 @@
 
 This document describes the Governance Model for a Governance Committee to provide decisioning and approval for changes
 made to the Security Detections Framework
+
 ## Definitions
 
-* _PR_ - Pull Request
-* See: [Image Tiers]
-* See: [Golden Container Definitions](./golden_container_contribution.md#definitionsterms) for additional definitions
+* Detection: Threat detection is the practice of analyzing the entirety of a security ecosystem to identify any malicious activity that could compromise the network. If a threat is detected, then mitigation efforts must be enacted to properly neutralize the threat before it can exploit any present vulnerabilities.
 
 ## Scope
 
 This repo is intended to list any detections which Godaddy is direcly responsible for maintaining. Third party detections which are maintained by the external entity do not need to be added to this repo unless there is a modification, required internal support, or specific knowledge that needs to be documented for other teams. 
 
 
-### Governance Roles/Responsibilities
+## Governance Roles/Responsibilities
 
 * Observers, Detection Creators, Detection Owners, and Governance Committee. 
 * Access to any of these roles can be granted by creating a PR to add themselves to the corelating group. PR request are subject to approval by a member of the Governance Committee
 
-## Observers
+### Observers
 
 A member of the Security Detections Framework with read only access. 
 
-## Detection Creators
+### Detection Creators
 * listed as a knowledge resource containing information regarding the oregin of the alert. Not responsible for ongoing maintinance of the alert, but may remain an important asset in modifying the alert in the future. 
 
-## Detection Owners
+### Detection Owners
 
 * Detection Owners are responsible for validating the detection folder contains a file with complete [Meta Data](https://github.com/gdcorp-infosec/security-detections-framework/tree/main/alerts/detections#metadata), and follows the proper [Naming Schema](https://github.com/gdcorp-infosec/security-detections-framework/tree/main/alerts/detections#naming)
 
@@ -96,13 +95,15 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 
 | Governance Committee Member | Term Start Date |
 | :-------------------------- | :-------------- |
-| [Thomas Whipple](https://github.secureserver.net/twhipple1-godaddy)    | 07/26/2021      |                                       
+| [Thomas Whipple](https://github.secureserver.net/twhipple1-godaddy)    | 07/26/2021      |  
+| [Jason White](https://github.secureserver.net/jwhite-godaddy)          | 07/26/2021      | 
+
 
 
 | Observers                   |
 | :-------------------------- |
 | [Oleg Gomozov](https://github.secureserver.net/ogomozov) (Product Security Rep )|
-| Shawn Jacoby|
+| |
 | |
 
 
@@ -138,7 +139,7 @@ The new member is:
 The ex-member is:
 
 * Removed from [Current Membership](#current-membership-alphabetical) (required) and placed
-  in [Past Members](#past-members) (if they so choose).
+  in Past Members (if they so choose).
   * Ideally by sending a PR of their own, at least approving said PR
   * In case of forced removal, no approval is needed
 * Removed from [@appservices/goldenimage-governance]

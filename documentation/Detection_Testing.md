@@ -1,7 +1,11 @@
 # Detection Testing
 
 #### table of contents
- ** []
+ * [Splunk Testing](#splunk-testing)
+    * [Manipulate Time Window](#manipulate-time-window)
+    * [Modify Time bucket](#modify-the-time-bucket) 
+    * [Populate Example Data](#Populate-Example-Data)
+ * [Tanium Testing](#Tanium-Testing) 
  
 ## Splunk Testing
 
@@ -44,5 +48,34 @@
           
      See the added 'Bucket' and '_time' peramaters added to the query. this will now create a full table with time stamps of every time the alert would have created a ticket in the last 30 days without actually outputing to a 3rd party
           
+### Populate Example Data
 
-          
+* This method requires access to Originating Log source, Or manipulating the source query with false data using the 'makeresults' function within splunk
+* Usually best to have a full log example
+* Should only be used if no true positive event can be found in historical data
+
+If we have a log output example, we can use the 'makeresults' function to create a query to match the final output. 
+
+   Original search
+  
+    index=on_prem sourcetype=tanium "Computer Name"="snow-tanium.cloud.phx3.gdg" 
+    | stats count by "Last Logged In User"
+   
+  Example Log from source but not within splunk
+   
+    {"Computer Name":"snow-tanium.cloud.phx3.gdg","Name":"N/A on Linux","Path":"","Status":"","Type":"","Permissions":"","Last Logged In User":"dallmon","Count":"1"}
+    
+   Make results example
+   
+    | makeresults
+    | eval json='{"Computer Name":"snow-tanium.cloud.phx3.gdg","Name":"N/A on Linux","Path":"","Status":"","Type":"","Permissions":"","Last Logged In User":"dallmon","Count":"1"}'
+    | spath input=json
+    | search "Computer Name"="snow-tanium.cloud.phx3.gdg" 
+    | stats count by "Last Logged In User"
+   
+   This creates a JSON field with the required log data, and then SPATH's out the fields within the data. then we can apply our search query after the data is cashed and apply our logic against it. 
+   
+   
+## Tanium Testing
+
+[TBD]

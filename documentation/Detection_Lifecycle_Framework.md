@@ -1,4 +1,4 @@
-# Incident Detection Lifecycle Framework 
+# Incident Detection Lifecycle 
 
 Draft Document for Working Efforts - [IRT-507](https://jira.godaddy.com/browse/IRT-507)
 

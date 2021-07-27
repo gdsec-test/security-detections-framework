@@ -58,6 +58,8 @@ Exception will be made to the lifecycle and will be decided by management. Where
 
 Testing of a detection will also include an effort to continuously define the logic and baseline to ensure it is tuned properly for the best possible results.
 
+For explination in how to test a detection counsult [Detection Testing](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Detection_Testing.md)
+
 # Implementation
 
 Once a detection is deployed; the relevant teams should be informed to start monitoring the relevant performance and alerts. Where required, the teams must also be briefed on the SOPs when the detections are triggered. GCSO (Global Cyber Security Operations) or the monitoring team must also be alerted about the new detection and provided with a playbook to handle future alerts.
@@ -108,7 +110,7 @@ The final life cycle of a detection involves the removal of a detection form it 
 
 Emergency detections may need to be implemented to support high-priority activities such as threat hunting or incident response. Due to the urgency of this activities, it may not be possible to undergo the standard onboarding process for these detections. However, effort should be made to ensure that detections made in these situations are eventually put through the appropriate rigor to prevent them from becoming orphaned detections.
 
-Examples of situations which may warrant the emergency creation of a detection are as follows:
+Examples of situations which may warrant the emergency creation of a detection are as follows but not limited to:
 
 - An active threat to the company is identified.
 - A short-term detection is needed to prove a theory of root cause.

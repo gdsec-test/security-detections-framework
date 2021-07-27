@@ -4,29 +4,18 @@ Draft Document for Working Efforts - [IRT-507](https://jira.godaddy.com/browse/I
 
 # Table of Contents
 
-_**[Definitions 3](#_Toc75345613)**_
-
-_**[Lifecycle 3](#_Toc75345614)**_
-
-_**[Creation 4](#_Toc75345615)**_
-
-_**[Testing 4](#_Toc75345616)**_
-
-_**[Implementation 4](#_Toc75345617)**_
-
-_**[Maintenance 4](#_Toc75345618)**_
-
-_**[Review 4](#_Toc75345619)**_
-
-_**[Retirement 4](#_Toc75345620)**_
-
-_**[Removal 4](#_Toc75345621)**_
-
-_**[Out-of-Band Actions 4](#_Toc75345622)**_
-
-**[Tuning Requests 4](#_Toc75345623)**
-
-**[Emergency Detections 4](#_Toc75345624)**
+**[Definitions](#Definitions)
+**[Lifecycle](#Lifecycle)
+**[Creation](#Creation)
+**[Testing 4](#Testing)
+**[Implementation 4](#Implementation)
+**[Maintenance](#Maintenance)
+**[Review](#Review)
+**[Retirement](#Retirement)
+**[Removal](#Removal)
+**[Out-of-Band Actions](#Out-of-Band Actions)
+**[Tuning Requests](#Tuning Requests)
+**[Emergency Detections](#Emergency Detections)
 
 # Document Definitions
 
@@ -115,7 +104,7 @@ The final life cycle of a detection involves the removal of a detection form it 
 
 ## Emergency Detections
 
-![](RackMultipart20210727-4-1av054s_html_720cf162cd45addd.png)
+![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Emergency%20Detections.png)
 
 Emergency detections may need to be implemented to support high-priority activities such as threat hunting or incident response. Due to the urgency of this activities, it may not be possible to undergo the standard onboarding process for these detections. However, effort should be made to ensure that detections made in these situations are eventually put through the appropriate rigor to prevent them from becoming orphaned detections.
 

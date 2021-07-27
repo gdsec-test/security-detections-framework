@@ -38,5 +38,5 @@ Here are some helpful guides on rules for specific technologies:
 ## Access Process
 * [Get Splunk Access](https://x.co/getsplunk)
 
-##Other Important Documents
+## Other Important Documents
 * [Governance](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md)

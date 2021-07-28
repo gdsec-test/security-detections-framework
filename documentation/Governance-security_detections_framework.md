@@ -29,13 +29,14 @@ made to the Security Detections Framework
 ## Definitions
 
 - **Detection**
-  - Any rule within an alerting platform which is used to detect specific activities.
-  - Example: When a login attempt occurs, a rule detects if it is authorized or not.
+  - Activity from a single event or a series of events that might indicate malicious activity is or may be occurring
 - **Alert**
-  - Any detection which has been configured to notify a defined individual, group, team, etc.
+  - Notification of a event, a series of events, a detection, or a series of detections
   - Example: When an unauthorized login is detected, an alert notifies the account owner.
 - **Detection Repository**
   - A location which stores details about configured detections.
+* Other definitions 
+  * https://confluence.godaddy.com/display/ITSecurity/Term+Definitions
 
 ## Scope
 

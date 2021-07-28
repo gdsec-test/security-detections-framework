@@ -21,7 +21,6 @@
 *Provide the folliwng information
 
 
-| | |
 | :---- | :------------- | 
 | Location of deteciton in framework | |
 | Detection Owner | |

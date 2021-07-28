@@ -103,9 +103,9 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 | Governance Committee Member | Term Start Date |
 | :-------------------------- | :-------------- |
 | Bindi Davé     | 07/27/2021     | 
-| [David Dubois](https://github.secureserver.net/ddubois-godaddy)        | 07/26/2021     |  
-| [Partric Green](https://github.secureserver.net/pgreen-godaddy)        | 07/26/2021     |  
-| [Jonathan Wade](https://github.secureserver.net/jwade-godaddy)         | 07/26/2021     |  
+| David Dubois   | 07/26/2021     |  
+| Partric Green  | 07/26/2021     |  
+| Jonathan Wade  | 07/26/2021     |  
 | [Thomas Whipple](https://github.secureserver.net/twhipple1-godaddy)    | 07/26/2021     |  
 | [Jason White](https://github.secureserver.net/jwhite-godaddy)          | 07/26/2021     | 
 

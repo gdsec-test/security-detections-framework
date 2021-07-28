@@ -23,8 +23,8 @@
  
  ### Modify the time Bucket
  
- * This Method will demonstrait within splunk every time the alert would have fired without sending any output. 
- * Thise Method requires the use of a Stats command within the search query, as well as a threashold limitation. 
+ * This Method will demonstrate within splunk every time the alert would have fired without sending any output. 
+ * This Method requires the use of a Stats command within the search query, as well as a threshold limitation. 
  
      In this example, this search query uses a stats command, and is set to run every 15 minutes.
  

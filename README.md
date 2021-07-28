@@ -32,6 +32,7 @@ Splunk Example Rule: [Trend-Micro_Malicious-File_unable-to-remove](https://githu
 ## Important Documents
 * [Governance](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md)
 * [RACI](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/RACI.md)
+* [DACI](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/DACI.md)
 
 ## Getting Started
 

@@ -18,7 +18,7 @@
 
 ### Meeting Agenda
 
-*Provide the folliwng information
+* Provide the folliwng information
 
 | | |
 | :---- | :------------- | 
@@ -49,5 +49,13 @@
 | are there any failure points in the detection | |
 | is there a main vector for tuning | |
 
+## ORR Outcomes (date review meeting held)
+Attendees: 
 
+The purpose of this meeting is to gauge the readiness of the deployment and make a go/no-go decision on moving forward with this detection. It's important that we document any take-aways from this meeting into a list that clearly says which category:
+
+* `BLOCKER` - must do before we deploy
+* `FAST FOLLOW` - must do asap after deploy, which could be 1-30 days
+* `SHOULD` - should do at some point, to be prioritized with opportunity costs
+* `DONE MM/DD` - change to green/done when completed
 

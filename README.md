@@ -16,7 +16,7 @@ Writing SIEM rules should follow this high-level work flow:
 1. Idea - something was found via threat hunting, a threat intelligence report tipped things off, or an incident identified a gap in coverage
 2. Identify the appropriate tool - this repository organizes rules first by tool
 3. Check this repository for existing rule coverage
-4. Write rule 
+4. Write Detection 
    1. Branch off of this repository's main branch
    2. Adhere to the rule [Naming Schema](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections#naming) 
    3. Create the corresponding [Meta Data ](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections#metadata)    
@@ -26,6 +26,7 @@ Writing SIEM rules should follow this high-level work flow:
    2. Provide links to any necessary artifacts
 7. Provide dashboards - include any dashboards that correspond to the new rule
 8. Commit your changes to this repository
+9. Notify Responding Teams (GCSO, IR) of New Detection
 
 Splunk Example Rule: [Trend-Micro_Malicious-File_unable-to-remove](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections/splunk/Trend-Micro_Malicious-File_unable-to-remove)
 

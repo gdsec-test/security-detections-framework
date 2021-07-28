@@ -105,7 +105,13 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 | :-------------------------- | :-------------- |
 | Bindi Davé     | 07/27/2021     | 
 | David Dubois   | 07/26/2021     |  
-| Partric Green  | 07/26/2021     |  
+| [Courtney Falk](https://github.com/cfalk-godaddy) | 07/26/2021     |  
+| Kavita Gandhi  | 07/27/2021 |
+| Brian Gosch    |  07/27/2021 |
+| Patrick Green  | 07/26/2021     |  
+| Chris Hauser   |07/27/2021 |  
+| Paul Muller    | 07/27/2021 |
+| Sarah Neiswonger| 07/27/2021 |
 | Jonathan Wade  | 07/26/2021     |  
 | [Thomas Whipple](https://github.com/twhipple1-godaddy)    | 07/26/2021     |  
 | [Jason White](https://github.com/jwhite-godaddy)          | 07/26/2021     | 
@@ -114,7 +120,7 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 
 | Observers                   |
 | :-------------------------- |
-| [Courtney Falk](https://github.com/cfalk-godaddy) |
+| |
 | |
 | |
 

@@ -58,7 +58,7 @@ A member of the Security Detections Framework with read only access.
 
 * Detection Owners are responsible for validating the detection folder contains a file with complete [Meta Data](https://github.com/gdcorp-infosec/security-detections-framework/tree/main/alerts/detections#metadata), and follows the proper [Naming Schema](https://github.com/gdcorp-infosec/security-detections-framework/tree/main/alerts/detections#naming)
 
-* Detection owners are also responsible for maintaning Testing data following the Testing guidelines
+* Detection owners are also responsible for maintaining Testing data following the Testing guidelines
 
 * Detection owners are not necessarily the detection creator, there are a number of scenarios in which a detection may be created by another team in support of a joint effort and ownership assigned to the owning authority.  (i.e. A detection request was sent to Threat-Research by the IR team while responding to an incident, the Threat-Research team would quickly create the alert, but ownership would remain with IR.)
 

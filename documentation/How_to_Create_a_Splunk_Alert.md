@@ -1,4 +1,4 @@
-You can create an alert from any searches you run in  **Splunk Web**. The searches can be as complex or simple as you can create, can inject visualizations, tables or \_raw data directly to your outputted desire. These searches can be scheduled on a CRON or standard timing interval.
+You can create an alert from any searches you run in **Splunk Web**. The searches can be as complex or simple as you want. You can inject visualizations, tables or raw data directly to your outputted desire. These searches can be scheduled on a CRON or standard timing interval.
 
  In this example we will show you how to create an alert that will be triggered if the number of search results is greater than 100.
 

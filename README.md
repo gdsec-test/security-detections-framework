@@ -21,7 +21,7 @@ Writing SIEM rules should follow this high-level work flow:
    2. Adhere to the rule [Naming Schema](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections#naming) 
    3. Create the corresponding [Meta Data ](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections#metadata)    
    4. Export your rule in a text-based format (plaintext, XML, JSON, YAML, etc. [Metadata text](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/templates/metadata.json))
-6. Test rule ([How to test in splunk])
+6. Test rule 
    1. Include your test cases in the repository 
    2. Provide links to any necessary artifacts
 7. Provide dashboards - include any dashboards that correspond to the new rule

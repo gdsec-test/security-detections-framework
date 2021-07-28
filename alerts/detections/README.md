@@ -40,6 +40,7 @@ Each detection must have a metadata file in JSON format included. The fields in 
 * `team`: The GoDaddy team responsible for handling the alert
 * `version`: Current version for this specific alert
 * `lastUpdate`: Date of last update in ISO form (YYYY-MM-DD)
+* `lifeCycleStage`:Description": "Which stage in the lifecycle the detection currently is; development, production, deprecated, retired
 * `attack`: Relevant [MITRE ATT&CK categories](https://attack.mitre.org/tactics/enterprise/) (0 or more)
 * `interval`: The time interval between regularly scheduled runs
 * `test` (One of the following)

@@ -30,10 +30,10 @@ made to the Security Detections Framework
 
 - **Detection**
   - Any rule within an alerting platform which is used to detect specific activities.
-  - _Example: When a login attempt occurs, a rule_ _detects_ _if it is authorized or not._
+  - Example: When a login attempt occurs, a rule detects if it is authorized or not.
 - **Alert**
   - Any detection which has been configured to notify a defined individual, group, team, etc.
-  - _Example: When an unauthorized login is_ _detected__, an_ _alert_ _notifies the account owner._
+  - Example: When an unauthorized login is detected, an alert notifies the account owner.
 - **Detection Repository**
   - A location which stores details about configured detections.
 
@@ -52,7 +52,7 @@ made to the Security Detections Framework
 A member of the Security Detections Framework with read only access. 
 
 ### Detection Creators
-* listed as a knowledge resource containing information regarding the oregin of the alert. Not responsible for ongoing maintinance of the alert, but may remain an important asset in modifying the alert in the future. 
+* listed as a knowledge resource containing information regarding the origin of the alert. Not responsible for ongoing maintenance of the alert, but may remain an important asset in modifying the alert in the future.
 
 ### Detection Owners
 
@@ -65,7 +65,7 @@ A member of the Security Detections Framework with read only access.
 
 ## Governance Committee
 
-As the framework goes into continued use cycles, the Governance Committee will need to conduct quarterly reviews to validate Rules are operational, testing is recent and relevant, and rule ownership is properly assigned. 
+As the framework goes into continued use cycles, the Governance Committee will need to conduct quarterly reviews to validate that rules are operational, testing is recent and relevant, and rule ownership is properly assigned.
 
 The Governance Committee allow approves/rejects changes to any Detection Framework process, and governance.
 
@@ -102,6 +102,7 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 
 | Governance Committee Member | Term Start Date |
 | :-------------------------- | :-------------- |
+| [Bindi Davé]
 | [David Dubois](https://github.secureserver.net/ddubois-godaddy)        | 07/26/2021     |  
 | [Partric Green](https://github.secureserver.net/pgreen-godaddy)        | 07/26/2021     |  
 | [Jonathan Wade](https://github.secureserver.net/jwade-godaddy)         | 07/26/2021     |  

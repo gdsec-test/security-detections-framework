@@ -12,7 +12,7 @@
 | :------------------------ | :---------------- | :-------------- | :------------------ | :--- |
 | Schedule Governance Meetings| D               |	I               |	C  | A | 
 | Change to Framwork          | C               | I	              | D  | A |
-| Updating File in repository | I               | C               | D  | A |
+| Updating File in repository | I               | D               | C  | A |
 
 
 ### Definitions

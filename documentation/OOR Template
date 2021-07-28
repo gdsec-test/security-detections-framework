@@ -19,8 +19,8 @@
 ### Meeting Agenda
 
 *Provide the folliwng information
-
-| :-------- | :------- |
+| | |
+| :---- | :------------- | 
 | Location of deteciton in framework | |
 | Detection Owner | |
 |Target Release| |
@@ -34,7 +34,7 @@
 * Go over the following questions 
 
 | Questions | Answers  |
-| :-------- | :------- |
+| :---- | :------------- | 
 | Where Does the Detecton live | |
 | What are the primary data sources | |
 | Expected Fire Frequency | |

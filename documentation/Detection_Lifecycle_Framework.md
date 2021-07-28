@@ -42,19 +42,19 @@ The first part of creating a detection is to identify where the detection method
 - The Logic that will drive the events to be considered.
 - The action that will be taken when the logic and or conditions are met.
 
-Once the above have been considered it important to identify teams within Security with ownership of the preferred tool / skillset to bring the detection(s) alive. The choice of tool should be one that can help design and map with the framework of choice as well as to provide with the ability to prioritize and focus on threats faced by the business. If an individual finds themselves capable of creating a detection, it is still mandatory to contact the tool owners for awareness, technical guidance as well as to aid them keep track of all additions and deletions of detections.
+Once the above have been considered it is important to identify teams within Security with ownership of the preferred tool / skillset to bring the detection(s) alive. The choice of tool should be one that can help design and map with the framework of choice as well as provide the ability to prioritize and focus on threats faced by the business. If an individual finds themselves capable of creating a detection, it is still mandatory to contact the tool owners for awareness, technical guidance, and updates to all additions and deletions of detections.
 
 As part of the creation stage, it is also vital to check with other tool owners to identify similar detections that could potentially be phased out or used as an enhancement for a new detection as well as to avoid duplicates.
 
 # Testing
 
-The defined logic and baseline can be tested is tested here. Testing should be carried out in the development environment where possible before being moved into the production environment. Based on the test results further tuning can be conducted to reduce noise. The outcome of testing can be used to optimize the baselines to build the detection(s).
+The defined logic and baseline can be tested here. When possible, testing should be carried out in the development environment before being moved into the production environment. Based on the test results, further tuning can be conducted to reduce noise. The outcome of testing can be used to optimize the baselines to build the detection(s).
 
-Exception will be made to the lifecycle and will be decided by management. Where there is an urgent need for a detection to be implemented, the relevant team will be contacted and authorized by management to implement the detection bypassing the standard lifecycle. Example of such exceptions include:
+Exceptions will be made to the lifecycle and will be decided by management. Where there is an urgent need for a detection to be implemented, the relevant team will be contacted and authorized by management to implement the detection bypassing the standard lifecycle. Example of such exceptions include:
 
-- A high-risk vulnerability
-- An immediate threat is identified
-- To prove a theory
+- Detection of a high-risk vulnerability
+- Identification of an immediate threat
+- Need to prove a theory
 
 Testing of a detection will also include an effort to continuously define the logic and baseline to ensure it is tuned properly for the best possible results.
 
@@ -62,7 +62,7 @@ For explination in how to test a detection counsult [Detection Testing](https://
 
 # Implementation
 
-Once a detection is deployed; the relevant teams should be informed to start monitoring the relevant performance and alerts. Where required, the teams must also be briefed on the SOPs when the detections are triggered. GCSO (Global Cyber Security Operations) or the monitoring team must also be alerted about the new detection and provided with a playbook to handle future alerts.
+Once a detection is deployed; the relevant teams should be informed to start monitoring the relevant performance and alerts. When required, the teams must also be briefed on the SOPs when the detections are triggered. GCSO (Global Cyber Security Operations) or the monitoring team must also be alerted about the new detection and provided with a playbook to handle future alerts.
 
 # Maintenance
 
@@ -70,7 +70,7 @@ Infrastructure environments do not stay the same for long, they are constantly e
 
 - The detection is still functional as required.
 - The detection is still required.
-- If there is a need to update the detection.
+- The detection needs to be updated. 
 - The right detections are in place.
 
 If a detection is identified as no longer required, the relevant teams must be informed before the detection is updated or removed.
@@ -98,7 +98,7 @@ The relevant team(s) must be informed before a detection is retired following al
 
 # Removal
 
-The final life cycle of a detection involves the removal of a detection form it repository and the tool. It must be ensured that all the relevant teams that require a detection are informed and updated on the need to remove a detection following all the appropriate processes and procedures.
+The final life cycle of a detection involves the removal of a detection form it repository and the tool. All the relevant teams that require a detection must be informed and updated on the need to remove a detection following all the appropriate processes and procedures.
 
 # Out-of-Band Actions
 
@@ -108,7 +108,7 @@ The final life cycle of a detection involves the removal of a detection form it 
 
 ![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Emergency%20Detections.png)
 
-Emergency detections may need to be implemented to support high-priority activities such as threat hunting or incident response. Due to the urgency of this activities, it may not be possible to undergo the standard onboarding process for these detections. However, effort should be made to ensure that detections made in these situations are eventually put through the appropriate rigor to prevent them from becoming orphaned detections.
+Emergency detections may need to be implemented to support high-priority activities such as threat hunting or incident response. Due to the urgency of these activities, it may not be possible to undergo the standard onboarding process for these detections. However, effort should be made to ensure that detections made in these situations are eventually put through the appropriate rigor to prevent them from becoming orphaned detections.
 
 Examples of situations which may warrant the emergency creation of a detection are as follows but not limited to:
 

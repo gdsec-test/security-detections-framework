@@ -34,7 +34,7 @@ Each detection must have a metadata file in JSON format included. The fields in 
   * `environment`: How this is being applied (PCI, PKI, DEV, etc.)
   * `attack`: The main, motivating MITRE ATT&CK TTP
   * `purpose`: A more specific focus of the alert
-* `description`: Human-readable description of the alert, as well as a desired outcome or goal for responce
+* `description`: Human-readable description of the alert, as well as a desired outcome or goal for response
 * `owner`: The person currently responsible for maintaining the alert
 * `creator`: The original creator of the alert
 * `team`: The GoDaddy team responsible for handling the alert

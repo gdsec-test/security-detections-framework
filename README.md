@@ -26,7 +26,7 @@ Writing SIEM rules should follow this high-level work flow:
    2. Provide links to any necessary artifacts
 7. Provide dashboards - include any dashboards that correspond to the new rule
 8. Commit your changes to this repository
-9. Notify Responding Teams (GCSO, IR) of New Detection through [ORR Meeting](#https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/OOR_Template.md)
+9. Notify Responding Teams (GCSO, IR) of New Detection through [ORR Meeting](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/OOR_Template.md)
 
 Splunk Example Rule: [Trend-Micro_Malicious-File_unable-to-remove](https://github.com/gdcorp-infosec/siem-documentation/tree/main/alerts/detections/splunk/Trend-Micro_Malicious-File_unable-to-remove)
 

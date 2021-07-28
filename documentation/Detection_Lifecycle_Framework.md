@@ -9,12 +9,13 @@ Draft Document for Working Efforts - [IRT-507](https://jira.godaddy.com/browse/I
 * [Creation](#Creation)
 * [Testing](#Testing)
 * [Implementation](#Implementation)
-* [Maintenance](#Maintenance)
-* [Review](#Review)
+* [Maintenance & Review](#Maintenance-&-review)
 * [Retirement](#Retirement)
 * [Removal](#Removal)
 * [Out-of-Band Actions](#Out-of-Band-Actions)
-* [Tuning Requests](#Tuning-Requests)
+* [Tuning](#tuning)
+  * [Tuning Requests](#Tuning-Requests)
+  * [Monthly Review](#monthly-review)
 * [Emergency Detections](#Emergency-Detections)
 
 # Document Definitions
@@ -64,24 +65,13 @@ For explination in how to test a detection counsult [Detection Testing](https://
 
 Once a detection is deployed; the relevant teams should be informed to start monitoring the relevant performance and alerts. When required, the teams must also be briefed on the SOPs when the detections are triggered. GCSO (Global Cyber Security Operations) or the monitoring team must also be alerted about the new detection and provided with a playbook to handle future alerts.
 
-# Maintenance
+# Maintenance & Review
 
 Infrastructure environments do not stay the same for long, they are constantly evolving overtime with innovative technology, diverse types of data sources, as well as new compliance requirements. It is therefore important to perform periodic audits of detections to best identify that:
 
 - The detection is still functional as required.
 - The detection is still required.
 - The detection needs to be updated. 
-- The right detections are in place.
-
-If a detection is identified as no longer required, the relevant teams must be informed before the detection is updated or removed.
-
-# Review
-
-Infrastructure environments do not stay the same for long, they are constantly evolving overtime with innovative technology, diverse types of data sources, as well as new compliance requirements. It is therefore important to perform periodic audits of detections to best identify that:
-
-- The detection is still functional as required.
-- The detection is still required.
-- If there is a need to update the detection.
 - The right detections are in place.
 
 If a detection is identified as no longer required, the relevant teams must be informed before the detection is updated or removed.
@@ -102,7 +92,25 @@ The final life cycle of a detection involves the removal of a detection form it 
 
 # Out-of-Band Actions
 
-## Tuning Requests
+## Tuning 
+
+### Tuning Request
+
+A request can be sent to the rule owner directly at any point through an email with the following items
+
+* Rule name
+*	Example Service Now Ticket or Report
+*	List of items or pattern to be tuned out of the alert
+
+As many rule owners may be busy, they will have a standard sprint cycle to get back to the request. 
+
+### Montly Review
+
+A report generated from Service Now listing all events flagged as false positive with their name, ticket number, and closed by should be generated and sent to the governance team. 
+
+If any event is closed as false positive with the same reasoning more than a handful of times, the detection logic will need the tunning added, or reworked to reduce the number of events generated for GCSO. [Governance Comittee](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#current-membership-alphabetical) will review and assign the work out as needed to the various rule owners. 
+
+
 
 ## Emergency Detections
 

@@ -129,10 +129,8 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 
 ### Meeting Cadence
 
-During early adoption, meetings will be weekly to discuss issues. Governance Committee can make changes to candence and
+During early adoption, meetings will be quarterly to discuss issues. Governance Committee can make changes to cadence and
 vote on them at their discretion. This section should reflect the current meeting cadence.
-
-Upcoming meetings should be posted to [golden_containers].
 
 
 ## On-/Off-boarding

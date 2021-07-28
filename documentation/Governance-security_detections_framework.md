@@ -107,14 +107,14 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 | David Dubois   | 07/26/2021     |  
 | Partric Green  | 07/26/2021     |  
 | Jonathan Wade  | 07/26/2021     |  
-| [Thomas Whipple](https://github.secureserver.net/twhipple1-godaddy)    | 07/26/2021     |  
-| [Jason White](https://github.secureserver.net/jwhite-godaddy)          | 07/26/2021     | 
+| [Thomas Whipple](https://github.com/twhipple1-godaddy)    | 07/26/2021     |  
+| [Jason White](https://github.com/jwhite-godaddy)          | 07/26/2021     | 
 
 
 
 | Observers                   |
 | :-------------------------- |
-| [Courtney Falk](https://github.secureserver.net/cfalk-godaddy) |
+| [Courtney Falk](https://github.com/cfalk-godaddy) |
 | |
 | |
 

@@ -2,14 +2,14 @@
 
 * This serves as a template for an OOR, this will be conducted as a meeting prior to any alert moving to production
 
-## OOR Prerequisites 
+## ORR Prerequisites 
 
 * Detection logic has been created
 * Detection has been Properly added in Security Detections Framework
 * Detection has been tested 
 * Detection has been placed in Dev 
 
-## OOR Meeting 
+## ORR Meeting 
 
 ### Scheduling
 

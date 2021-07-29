@@ -10,16 +10,19 @@
 
 | Action|Threat Research | Detection Owner | Governance Comittee | Detection Consumer (e.g. GCSO/IR) | 
 | :---- | :------------- | :-------------- | :------------------ | :------ |
-| New alert is created and follows framework schemas            | I |	RA |	C | I |
-| Alert is Tested                 | I | RA |  C | I |
-| Reporting an Alert issue        | C | A  |    | R |
-| Repairing broken alerts         |   | RA | CI | I |
-| Alert firing excessively	      | C | RA | CI | I |
-| Tuning Request                  | C | RA | I  | R |
-| Removing Outdated Detections    | C | R  | A   | I |
-| Setting up Governance Meetings  |   | R  | ACI| I |
-| Assign tasks from Governace Meetings | C | CI | RA | |
-| Repository permissions problem	| RAC |  |    |	I |
+| New alert is created and follows framework schemas     | I |	RA |	C | I |
+| Alert is tested                 | I | RA |  C | I |
+| Reporting an alert issue        | C | A  |    | R |
+| Repairing alert issue           | C | RA | CI | I |
+| Alert firing excessively	      | C | RA | CI | R |
+| Submitting tuning request       | C | A  | I  | R |
+| Tuning an alert                 | C | RA | CI | I |
+| Removing outdated detections    | C | R  | A   | I |
+| Setting up governance meetings  |   | R  | AC |  |
+| Assign tasks from governace meetings | C | CI | RA | |
+| Review false positive report    |   | R  | AC | I |
+| Assign work from FP report      | C | CI | RA | I |
+| Repository permissions problem	| RAC |  |    |   |
 
 ### Definitions
 * [Deteciton Owner](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#detection-owners)

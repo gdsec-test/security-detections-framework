@@ -66,7 +66,7 @@ For explination in how to test a detection counsult [Detection Testing](https://
 
 Once a detection is deployed; the relevant teams should be informed to start monitoring the relevant performance and alerts. When required, the teams must also be briefed on the SOPs when the detections are triggered. GCSO (Global Cyber Security Operations) or the monitoring team must also be alerted about the new detection and provided with a playbook to handle future alerts.
 
-## ORR Meeting 
+### ORR Meeting 
 
 Use this meeting [template](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/OOR_Meeting_Template.md) to conduct a meeting with the desired responce team (IR, GCSO, etc.). All stakeholders in the meeting must agree the rule is ready for implimentation prior to sending to production
 

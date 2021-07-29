@@ -38,14 +38,16 @@
 | Expected Fire Frequency | 
 | What is the Goal of Detection | 
 | what is the MITRE ATT&CK category | 
+| Has all relivent data been uploaded to the Repo|
 | What team is responding to the alert? | 
 | Are there any potential failure points in the detection | 
 | Are there potential fields relevant for tuning | 
+| Does everyone agree the rule is good|
 
 ## ORR Outcomes Email Response Template
 
 The purpose of this meeting is to gauge the readiness of the deployment and make a go/no-go decision on moving forward with this detection. It's important that we document any take-aways from this meeting into a list that clearly says which category:
 
-* `YES` - must do before we deploy
-* `NO` - 
+* `GO` - Send out email response to meeting group verifying atendee aproval
+* `NO-GO` - Send out email response to meeting group with atendee rejection and rejection reasons, if necessary, follow up with changes to rule in future ORR Meeting. 
 

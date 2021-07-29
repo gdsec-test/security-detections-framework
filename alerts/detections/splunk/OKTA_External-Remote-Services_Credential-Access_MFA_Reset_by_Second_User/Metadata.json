@@ -1,0 +1,23 @@
+{
+	"name": {
+		"full": "OKTA_External-Credential-Access_MFA_Reset_by_Second_User",
+		"environment": "",
+		"platform": "OKTA",
+		"attack": ["Exploitation for Credential Access", "External-Remote-Services"],
+		"purpose": "Unauthorized-China-VPN"
+	},
+	"description": "A User has Reset the MFA of another user in the environment. Determine if this is an insider threat action, or legitimate business activyt. May need to make contact with the affected user.",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "threat",
+	"version": "1.0.0",
+	"lastUpdate": "2021-07-13",
+	"attack": [ "T1212", "T1133" ],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": "[](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/detections/splunk/OKTA_External-Remote-Services_Unauthorized-China-VPN/China-VPN-Test.png)"
+	}
+}

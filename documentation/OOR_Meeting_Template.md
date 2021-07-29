@@ -44,7 +44,7 @@
 | Are there potential fields relevant for tuning | 
 | Does everyone agree the rule is good|
 
-## ORR Outcomes Email Response Template
+## ORR Outcomes Email Response 
 
 The purpose of this meeting is to gauge the readiness of the deployment and make a go/no-go decision on moving forward with this detection. It's important that we document any take-aways from this meeting into a list that clearly says which category:
 

@@ -14,6 +14,7 @@
 | Change to Governance Document| I               |                 | DC                  | A    |
 | Change to Governance Members | I               |                 | DC                  | A    |
 | Change to Deteciton Lifecycle| I               | I               | DC                  | A    |
+| Change to Required Metadata  | I               | I               | DC                  | A    |
 
 
 ### Definitions

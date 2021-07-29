@@ -8,13 +8,18 @@
 | :-------------- | :------------- | :----------- | :----------- |
 |Those who do the work to complete the task.| The one ultimately answerable for the completion of the task, the one who ensures the prerequisites of the task are met and who delegates the work to those responsible.|	Those whose opinions are sought, typically subject matter experts; and with whom there is two-way communication.|Those who are kept up-to-date on progress, often only on completion of the task or deliverable.|
 
-| Action|Threat Research | Detection Owner | Governance Comittee |
-| :---- | :------------- | :--------------- | :------------------ |
-| New alert is created | I |	RA |	CI |
-| Alert is broken | | RA	 | CI |
-| Alert firing excessively	| C | RA | CI |
-| Repository permissions problem	| RAC | | |	
-| Ensuring Maintinance | | R | ACI |
+| Action|Threat Research | Detection Owner | Governance Comittee | Detection Consumer (e.g. GCSO/IR) | 
+| :---- | :------------- | :-------------- | :------------------ | :------ |
+| New alert is created and follows framework schemas            | I |	RA |	C | I |
+| Alert is Tested                 | I | RA |  C | I |
+| Reporting an Alert issue        | C | A  |    | R |
+| Repairing broken alerts         |   | RA | CI | I |
+| Alert firing excessively	      | C | RA | CI | I |
+| Tuning Request                  | C | RA | I  | R |
+| Removing Outdated Detections    | C | R  | A   | I |
+| Setting up Governance Meetings  |   | R  | ACI| I |
+| Assign tasks from Governace Meetings | C | CI | RA | |
+| Repository permissions problem	| RAC |  |    |	I |
 
 ### Definitions
 * [Deteciton Owner](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#detection-owners)

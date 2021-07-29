@@ -18,6 +18,6 @@
 		"unit": "hour"
 	},
 	"test": {
-		"archive": "[](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/detections/splunk/OKTA_External-Remote-Services_Unauthorized-China-VPN/China-VPN-Test.png)"
+		"archive": "[](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/detections/splunk/OKTA_External-Remote-Services_Credential-Access_MFA_Reset_by_Second_User/Testing.png)"
 	}
 }

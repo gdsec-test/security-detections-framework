@@ -20,8 +20,7 @@
 | Setting up governance meetings  |   | R  | AC |  |
 | Assign tasks from governace meetings | I | CI | RA | |
 | Review false positive report    |   | R  | AC | I |
-| Assign work from FP report      | C | CI | RA | I |
-| Repository permissions problem	| RAC |  |    |   |
+| Repository permissions problem	| RAC |  |  I |   |
 
 ### Definitions
 * [Deteciton Owner](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#detection-owners)

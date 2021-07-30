@@ -14,10 +14,9 @@
 | Alert is tested                 | I | RA |  C | I |
 | Reporting an alert issue        | C | A  |    | R |
 | Repairing alert issue           | C | RA | CI | I |
-| Alert firing excessively	      | C | RA | CI | R |
 | Submitting tuning request       | C | A  | I  | R |
 | Tuning an alert                 | C | RA | CI | I |
-| Removing outdated detections    | C | R  | A   | I |
+| Removing outdated detections    | C | R  | A   | IC |
 | Setting up governance meetings  |   | R  | AC |  |
 | Assign tasks from governace meetings | C | CI | RA | |
 | Review false positive report    |   | R  | AC | I |

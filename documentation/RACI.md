@@ -25,3 +25,4 @@
 ### Definitions
 * [Deteciton Owner](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#detection-owners)
 * [Governance Comittee](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#governance-committee)
+* [Detection Consumer](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#detection-consumers)

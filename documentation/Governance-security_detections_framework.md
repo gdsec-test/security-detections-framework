@@ -7,6 +7,7 @@
   * [Observers](#observers)
   * [Detection Creators](#detection-creators)
   * [Detection Owners](#detection-owners)
+  * [Detection Consumers](#detection-consumers)
 * [Governance Committee Process](#governance-committee)
   * [Governance Committee Membership](#governance-committee-membership)
     * [Joining/Leaving/Removal](#joiningleavingremoval)

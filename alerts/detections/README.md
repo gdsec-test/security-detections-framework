@@ -49,4 +49,5 @@ Each detection must have a metadata file in JSON format included. The fields in 
   * `exception`: An explanation of why this alert is exempt from testing requirements
 
 Find the template for the JSON metadata file [here](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/templates/metadata.json).
+
 For a full list of MetaData options, click [here](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/alerts/templates/metadata-schema.json)

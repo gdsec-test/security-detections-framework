@@ -63,6 +63,9 @@ A member of the Security Detections Framework with read only access.
 
 * Detection owners are not necessarily the detection creator, there are a number of scenarios in which a detection may be created by another team in support of a joint effort and ownership assigned to the owning authority.  (i.e. A detection request was sent to Threat-Research by the IR team while responding to an incident, the Threat-Research team would quickly create the alert, but ownership would remain with IR.)
 
+### Detection Consumers
+
+* Those who receive and action the final output of a detection alert. Detection Consumers input can be valuable in identifying false positives, as well as workflow issues with each alert; as such their approval is required prior to an alert being enabled.
 
 ## Governance Committee
 

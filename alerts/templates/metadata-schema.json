@@ -12,6 +12,7 @@
         "full": {
           "description": "The full, properly formatted alert name based on the four following pieces of information",
           "type": "string"
+          "pattern" : "PCI|PKI|CORP|PROD|MGMT|CMH|MAH|AWS|ALL"
         },
         "environment": {
           "description": "The full, properly formatted alert name based on the four following pieces of information",
@@ -60,6 +61,10 @@
     },
     "version": {
       "description": "Current version for this specific alert",
+      "type": "string"
+    },
+    "dependencies": {
+      "description": "Any other detection or tools required for this to operate",
       "type": "string"
     },
     "lastUpdate": {

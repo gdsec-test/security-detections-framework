@@ -18,7 +18,7 @@
 | Tuning an alert                 | C | RA | CI | I |
 | Removing outdated detections    | C | R  | A   | IC |
 | Setting up governance meetings  |   | R  | AC |  |
-| Assign tasks from governace meetings | C | CI | RA | |
+| Assign tasks from governace meetings | I | CI | RA | |
 | Review false positive report    |   | R  | AC | I |
 | Assign work from FP report      | C | CI | RA | I |
 | Repository permissions problem	| RAC |  |    |   |

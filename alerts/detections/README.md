@@ -31,7 +31,7 @@ Each detection must have a metadata file in JSON format included. The fields in 
 
 * `name`
   * `full`: The properly formatted string as specified in the above section
-  * `environment`: How this is being applied (PCI, PKI, DEV, etc.)
+  * `environment`: How this is being applied (PCI, PKI, CORP, PROD, MGMT, CMH, MAH, AWS, ALL)
   * `attack`: The main, motivating MITRE ATT&CK TTP
   * `purpose`: A more specific focus of the alert
 * `description`: Human-readable description of the alert, as well as a desired outcome or goal for response
@@ -39,6 +39,7 @@ Each detection must have a metadata file in JSON format included. The fields in 
 * `creator`: The original creator of the alert
 * `team`: The GoDaddy team responsible for handling the alert
 * `version`: Current version for this specific alert
+* `dependencies`: Any other detection or tools required for this to operate
 * `lastUpdate`: Date of last update in ISO form (YYYY-MM-DD)
 * `lifeCycleStage`: Which stage in the lifecycle the detection currently is; development, production, deprecated, retired
 * `attack`: Relevant [MITRE ATT&CK categories](https://attack.mitre.org/tactics/enterprise/) (0 or more)
@@ -48,3 +49,4 @@ Each detection must have a metadata file in JSON format included. The fields in 
   * `exception`: An explanation of why this alert is exempt from testing requirements
 
 Find the template for the JSON metadata file [here](https://github.com/gdcorp-infosec/siem-documentation/blob/main/alerts/templates/metadata.json).
+For a full list of MetaData options, click [here](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/alerts/templates/metadata-schema.json)

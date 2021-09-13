@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "PROD_SPLUNK_Data-Manipulation_Delete",
+		"environment": "PROD",
+		"platform": "Splunk",
+		"attack": ["Stored Data Manipulation"],
+		"purpose": "Splunk Log Deleted"
+	},
+	"description": "the Delete command was run in splunk, logs removed",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"lastUpdate": "2021-09-13",
+	"attack": [ "T1565.001", "T1133" ],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	}
+}

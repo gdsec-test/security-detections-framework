@@ -1,7 +1,7 @@
 {
 	"name": {
 		"full": "ALL_OKTA_External-Credential-Access_MFA-Reset-by-Second-User",
-		"environment": "",
+		"environment": "ALL",
 		"platform": "OKTA",
 		"attack": ["Exploitation for Credential Access", "External-Remote-Services"],
 		"purpose": "MFA-Reset-by-Second-User"

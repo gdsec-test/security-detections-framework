@@ -1,0 +1,1 @@
+index="oktalogs" eventType="user.lifecycle.activate" user!="system@okta.com" user!="csvoboda@godaddy.com" user!="jpeoples@godaddy.com" | dedup _time, eventType | table _time, actor.alternateId, target{}.alternateId, displayMessage, eventType, outcome.result

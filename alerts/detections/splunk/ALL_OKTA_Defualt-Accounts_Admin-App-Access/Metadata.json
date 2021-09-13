@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "ALL_OKTA_External-Credential-Access_MFA-Reset-by-Second-User",
+		"environment": "",
+		"platform": "OKTA",
+		"attack": ["Valid Default account Access", "External-Remote-Services"],
+		"purpose": "Admin App Access"
+	},
+	"description": "Weekly review of admin okta account being accessed by user/department.",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"lastUpdate": "2021-09-13",
+	"attack": [ "T1078.001" ],
+	"interval": {
+		"span": 1,
+		"unit": "week"
+	},
+	"test": {
+		"archive": ""
+	}
+}

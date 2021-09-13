@@ -1,0 +1,8 @@
+  
+index=oktalogs displayMessage="User accessing Okta admin app"
+| table user
+| join user
+    [ search index=oktausers earliest=-90d@d
+    | table user, profile.title, profile.department]
+| dedup user
+| table user, profile.title, profile.department

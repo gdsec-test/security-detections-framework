@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "ALL_OKTA_Valid-Domain-account_log-in-wihthout-MFA",
+		"environment": "ALL",
+		"platform": "OKTA",
+		"attack": ["Valid-Domain-account", "External-Remote-Services"],
+		"purpose": "log-in-wihthout-MFA"
+	},
+	"description": "Account successfully logged on without using MFA.",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"lastUpdate": "2021-07-13",
+	"attack": [ "T1078.002", "T1133" ],
+	"interval": {
+		"span": 1,
+		"unit": "day"
+	},
+	"test": {
+		"archive": ""
+	}
+}

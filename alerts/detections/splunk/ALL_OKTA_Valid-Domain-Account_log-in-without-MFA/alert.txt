@@ -1,0 +1,4 @@
+index=oktalogs eventType!="user.authentication.sso" action=success "outcome.reason"!="Automatically unlocked" "actor.alternateId"!="system@okta.com" user!=ADService@godaddy.com user=*@godaddy.com eventType!=user.session.start eventType!=user.session.end (user!=02d769kuqxc6B@godaddy.com AND eventType!=user.session.clear)
+| stats count(eventType) values(eventType) as eventType by user
+| mvcombine delim=" ; " eventType
+| search eventType!=*user.authentication.auth_via_mfa*

@@ -1,0 +1,1 @@
+index=_audit action=delete | bucket _time span=1h | stats count by action user _time

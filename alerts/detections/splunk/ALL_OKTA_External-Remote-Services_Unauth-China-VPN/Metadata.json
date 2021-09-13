@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "ALL_OKTA_External-Credential-Access_Unauth-China-VPN",
+		"environment": "ALL",
+		"platform": "OKTA",
+		"attack": ["Exploitation for Credential Access", "External-Remote-Services"],
+		"purpose": "Unauthorized-Cinese-VPN-Access"
+	},
+	"description": "Access successful from unauthorized chinese VPN source.",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "threat",
+	"version": "1.1.0",
+	"dependencies": "none",
+	"lastUpdate": "2021-07-13",
+	"attack": [ "T1212", "T1133" ],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	}
+}

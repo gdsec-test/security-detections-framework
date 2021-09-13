@@ -1,0 +1,16 @@
+| rest /services/authorization/roles splunk_server=local 
+| table title srchInd* 
+| eval indexes=mvappend(srchIndexesAllowed,srchIndexesDefault) 
+| table title indexes 
+| mvexpand indexes 
+| dedup title indexes 
+| eval indexes_orig=indexes 
+| join indexes max=0 type=left 
+    [| rest /services/data/indexes 
+    | stats count by title 
+    | table title 
+    | eval indexes=if(match(title,"^_"),"_*","*") 
+    | rename title as indexes_new] 
+| eval indexes=if(indexes_orig!=indexes_new,indexes_new, indexes_orig)
+| search indexes=on_prem title!=security title!=user-threatapi
+| fields - indexes_new indexes_orig

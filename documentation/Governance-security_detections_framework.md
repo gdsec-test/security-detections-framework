@@ -28,7 +28,6 @@
 made to the Security Detections Framework
 
 ## Definitions
-
 - **Detection**
   - Activity from a single event or a series of events that might indicate malicious activity is or may be occurring
 - **Alert**
@@ -36,7 +35,7 @@ made to the Security Detections Framework
   - Example: When an unauthorized login is detected, an alert notifies the account owner.
 - **Detection Repository**
   - A location which stores details about configured detections.
-* Other definitions 
+* Updated definition detail can be tracked here: 
   * https://confluence.godaddy.com/display/ITSecurity/Term+Definitions
 
 ## Scope
@@ -54,7 +53,7 @@ made to the Security Detections Framework
 A member of the Security Detections Framework with read only access. 
 
 ### Detection Creators
-* listed as a knowledge resource containing information regarding the origin of the alert. Not responsible for ongoing maintenance of the alert, but may remain an important asset in modifying the alert in the future.
+* listed as a knowledge resource containing information regarding the origin of the alert. Not responsible for ongoing maintenance of the alert, but may remain an important asset in modifying the alert in the future. Anybody in Information Security, and product teams at GoDaddy can become a detection creator. Additionally, the current Information Security charters describe that the org's verticals have primary responsibility to create detections for their teams areas of expertise. This includes Security Risks & Assessments, Customer Security, Employee Workforce Security, and Product Security. Threat Research can provide advanced detection support and Incident Response teams are also able to help contribute.
 
 ### Detection Owners
 

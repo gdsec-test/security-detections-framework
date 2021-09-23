@@ -53,7 +53,7 @@ made to the Security Detections Framework
 A member of the Security Detections Framework with read only access. 
 
 ### Detection Creators
-* listed as a knowledge resource containing information regarding the origin of the alert. Not responsible for ongoing maintenance of the alert, but may remain an important asset in modifying the alert in the future. Anybody in Information Security, and product teams at GoDaddy can become a detection creator. Additionally, the current Information Security charters describe that the org's verticals have primary responsibility to create detections for their teams areas of expertise. This includes Security Risks & Assessments, Customer Security, Employee Workforce Security, and Product Security. Threat Research can provide advanced detection support and Incident Response teams are also able to help contribute.
+* Listed as a knowledge resource containing information regarding the origin of the alert. Not responsible for ongoing maintenance of the alert, but may remain an important asset in modifying the alert in the future. Anybody in Information Security, and product teams at GoDaddy can become a detection creator. Additionally, the current Information Security charters describe that the org's verticals have primary responsibility to create detections for their teams areas of expertise. This includes Security Risks & Assessments, Customer Security, Employee Workforce Security, and Product Security. Threat Research can provide advanced detection support and Incident Response teams are also able to help contribute.
 
 ### Detection Owners
 
@@ -179,6 +179,3 @@ and [containerd Goverance](https://github.com/containerd/project/blob/master/GOV
 [@appservices/goldenimage-governance]: https://github.secureserver.net/orgs/appservices/teams/goldenimage-governance
 [golden_containers]: https://godaddy.slack.com/archives/CLE1RE39C
 [Image Tiers]: ./golden_container_contribution.md#image-tiers
-[Governance Committee private slack channel]: https://godaddy.slack.com/archives/G01PJG2FW11
-[EOL'd by upstream on 01 May 2021]: https://endoflife.date/alpine
-[EOL'd by upstream on 01 June 2021]: https://github.com/nodejs/Release

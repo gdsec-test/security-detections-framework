@@ -1,0 +1,118 @@
+<form version="1.1">
+  <label>Sharepoint Sharing</label>
+  <fieldset submitButton="true" autoRun="true">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Sharepoint Files\Folders vs OneDrive Files\Folders Share Link Created For Anonymous Access</title>
+      <chart>
+        <title>Last 30 Days</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" Operation=AnonymousLinkCreated | timechart span=1d count by Workload</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+        <option name="height">386</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Sharepoint Files\Folders vs OneDrive Files\Folders Share Link Created For Anonymous Access</title>
+      <chart>
+        <title>Page Time Filter Applied</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" Operation=AnonymousLinkCreated | stats count by Workload</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="height">385</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Sharepoint File\Folders Anonymous Link Created By User\Location</title>
+      <table>
+        <title>Page Time Filter Applied</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" Operation=AnonymousLinkCreated | stats count by UserId,Workload | sort -count,UserId</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="Workload">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Links Created That Don't Require User To Log In To Access</title>
+      <table>
+        <title>Page Time Filter Applied</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" Operation=AnonymousLinkCreated | table CreationTime,Operation,Workload,ObjectId,ClientIP,SiteUrl,SourceFileName,SourceRelativeUrl,UserId,UserKey,Application,DeviceName,FileSize,Id,RecordType,Sensitivity*,* | sort -CreationTime</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="Workload">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Anonymous Links Used</title>
+      <table>
+        <title>Page Time Filter Applied</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" Operation=AnonymousLinkUsed | table ObjectId, UserId, Workload | stats count by ObjectId,Workload,UserId | sort -count,UserId</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="Workload">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Files Downloaded By Non-GoDaddy Accounts</title>
+      <table>
+        <title>Page Time Filter Applies</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" UserId="*urn:spo:anon*" OR UserId="*urn:spo:guest*"  Operation=FileDownloaded | table CreationTime,Operation,ClientIP,SiteUrl,SourceFileName,SourceRelativeUrl,UserId,UserKey,Workload,Application,DeviceName,FileSize,Id,ObjectId,RecordType,Sensitivity*,* | sort -CreationTime | stats values(*) as * by UserId | table CreationTime,UserId, Workload,Operation,ObjectId,*</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="Workload">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,94 @@
+<form>
+  <label>GCSO-IDS</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="filter" searchWhenChanged="true">
+      <label>Filter</label>
+      <default>$filter$</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>Top 10 - IDS Rules</title>
+        <search>
+          <query>index=on_prem sourcetype=ids $filter$
+| rex field=_raw "(?&lt;month&gt;\w+)\s+(?&lt;date&gt;\d+)\s+(?&lt;time&gt;[0-9:]+)\ (?&lt;ids&gt;\w*) suricata.*\[\d+:(?&lt;sig_id&gt;.*?):\d+\] (?&lt;signature&gt;.*?) \[Classification:.*?\{(?&lt;proto&gt;.*?)\} (?&lt;src_ip&gt;.*?):(?&lt;src_port&gt;.*?) \-\&gt; (?&lt;dest_ip&gt;.*?):(?&lt;dest_port&gt;.*)"
+| search `IDSExclusions`
+| search NOT (signature="match TLSv*" OR signature="*dst-protect*" OR signature="Suricata Health Monitoring Testing")
+| top signature</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <set token="filter">$click.value$</set>
+        </drilldown>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Top 10 - Source IP's</title>
+        <search>
+          <query>index=on_prem sourcetype=ids $filter$
+| rex field=_raw "(?&lt;month&gt;\w+)\s+(?&lt;date&gt;\d+)\s+(?&lt;time&gt;[0-9:]+)\ (?&lt;ids&gt;\w*) suricata.*\[\d+:(?&lt;sig_id&gt;.*?):\d+\] (?&lt;signature&gt;.*?) \[Classification:.*?\{(?&lt;proto&gt;.*?)\} (?&lt;src_ip&gt;.*?):(?&lt;src_port&gt;.*?) \-\&gt; (?&lt;dest_ip&gt;.*?):(?&lt;dest_port&gt;.*)"
+| search `IDSExclusions`
+| search NOT (signature="match TLSv*" OR signature="*dst-protect*" OR signature="Suricata Health Monitoring Testing")
+| top src_ip</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <set token="filter">$click.value$</set>
+        </drilldown>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>IDS-AllAlerts-GCSO</title>
+        <search>
+          <query>index=on_prem sourcetype=ids $filter$
+| rex field=_raw "(?&lt;month&gt;\w+)\s+(?&lt;date&gt;\d+)\s+(?&lt;time&gt;[0-9:]+)\ (?&lt;ids&gt;\w*) suricata.*\[\d+:(?&lt;sig_id&gt;.*?):\d+\] (?&lt;signature&gt;.*?) \[Classification:.*?\{(?&lt;proto&gt;.*?)\} (?&lt;src_ip&gt;.*?):(?&lt;src_port&gt;.*?) \-\&gt; (?&lt;dest_ip&gt;.*?):(?&lt;dest_port&gt;.*)"
+| search `IDSExclusions`
+| search NOT (signature="match TLSv*" OR signature="*dst-protect*" OR signature="Suricata Health Monitoring Testing")
+| stats count by _time signature dest_ip dest_port src_ip ids
+| fields - count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <single>
+        <title>Total - Alerts</title>
+        <search>
+          <query>index=on_prem sourcetype=ids $filter$
+| rex field=_raw "(?&lt;month&gt;\w+)\s+(?&lt;date&gt;\d+)\s+(?&lt;time&gt;[0-9:]+)\ (?&lt;ids&gt;\w*) suricata.*\[\d+:(?&lt;sig_id&gt;.*?):\d+\] (?&lt;signature&gt;.*?) \[Classification:.*?\{(?&lt;proto&gt;.*?)\} (?&lt;src_ip&gt;.*?):(?&lt;src_port&gt;.*?) \-\&gt; (?&lt;dest_ip&gt;.*?):(?&lt;dest_port&gt;.*)"
+| search `IDSExclusions`
+| search NOT (signature="match TLSv*" OR signature="*dst-protect*" OR signature="Suricata Health Monitoring Testing")
+| stats count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+</form>

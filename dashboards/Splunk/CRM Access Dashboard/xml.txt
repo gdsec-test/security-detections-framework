@@ -1,0 +1,237 @@
+<form theme="dark">
+  <label>CRM Access Dashboard</label>
+  <description>Provides a method for the IR Team to quickly evaluate and investigate CRM Validation data from the SSO (Auth) platform.</description>
+  <fieldset submitButton="false" autoRun="false">
+    <input type="time" token="timespan" searchWhenChanged="true">
+      <label>Timespan</label>
+      <default>
+        <earliest>-7d@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="outcome" searchWhenChanged="true">
+      <label>Outcome</label>
+      <choice value="*">All</choice>
+      <choice value="success">Successes</choice>
+      <choice value="failure">Failures</choice>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="text" token="user" searchWhenChanged="true">
+      <label>User</label>
+      <default>$user$</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+          <strong>How to Use this Dashboard</strong>
+          <ul>
+          <li>The Timeframe will filter all panels. Top10's will be based on entirety of the selected Timeframe.</li>
+          <li>By clicking a slice in the Top 10 charts you can filter to that User.</li>
+          <li>The Outcomes dropdown allows filtering on status of access attempts.</li>
+          </ul>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Top 10 Agents w/ Successful Validations</title>
+      <chart>
+        <search>
+          <query>index=on_prem service.name="sso" event.action="validate" user.name="$user$" event.outcome="success"
+| top limit=10 user.name</query>
+          <earliest>$timespan.earliest$</earliest>
+          <latest>$timespan.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.1</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <drilldown>
+          <set token="user">$click.value$</set>
+        </drilldown>
+      </chart>
+    </panel>
+    <panel>
+      <title>Top 10 Agents w/ Failed Validations</title>
+      <chart>
+        <search>
+          <query>index=on_prem service.name="sso" event.action="validate" user.name="$user$" event.outcome="failure"
+| top limit=10 user.name</query>
+          <earliest>$timespan.earliest$</earliest>
+          <latest>$timespan.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <drilldown>
+          <set token="user">$click.value$</set>
+        </drilldown>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>All Validations by Outcome - User($user$)</title>
+      <chart>
+        <search>
+          <query>index=on_prem service.name="sso" event.action="validate" "$user$"
+| search "$outcome$"
+| timechart count by event.outcome usenull=f</query>
+          <earliest>$timespan.earliest$</earliest>
+          <latest>$timespan.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CRM Account Access - User ($user$)</title>
+      <table>
+        <search>
+          <query>index=on_prem service.name="sso" event.action="validate" user.name="$user$"
+| table _time, user.name, user.id, source.ip, event.outcome, event.action, sso.method</query>
+          <earliest>$timespan.earliest$</earliest>
+          <latest>$timespan.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>User Skips over Time</title>
+        <search>
+          <query>index=on_prem service.name="sso" event.action="validate" user.name=$user$ event.outcome="success" sso.method="skip"
+|timechart count(user.name) by user.name useother=f</query>
+          <earliest>$timespan.earliest$</earliest>
+          <latest>$timespan.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <set token="user">$click.name2$</set>
+        </drilldown>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Total Skips Last 7 Days</title>
+        <search>
+          <query>index=on_prem service.name="sso" event.action="validate" event.outcome="success" sso.method="skip" user.name=$user$ | search "$outcome$"
+| timechart count by event.outcome usenull=f</query>
+          <earliest>$timespan.earliest$</earliest>
+          <latest>$timespan.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

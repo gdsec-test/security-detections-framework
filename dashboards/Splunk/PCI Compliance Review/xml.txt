@@ -1,0 +1,246 @@
+<form theme="dark">
+  <label>PCI Compliance Review</label>
+  <description>Review PCI Compliance Metrics</description>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="dropdown" token="user" searchWhenChanged="true">
+      <label>User Search - Full Email Address</label>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <choice value="*">All</choice>
+      <fieldForLabel>principalUser</fieldForLabel>
+      <fieldForValue>principalUser</fieldForValue>
+      <search>
+        <query>index=pci_aws_cloudtrail principalUser=* | dedup principalUser | table principalUser</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+    </input>
+    <input type="dropdown" token="user_role" searchWhenChanged="true">
+      <label>User Role</label>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <choice value="*">All</choice>
+      <fieldForLabel>userName</fieldForLabel>
+      <fieldForValue>userName</fieldForValue>
+      <search>
+        <query>index=pci_aws_cloudtrail userName=* | dedup userName | table userName</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+    </input>
+    <input type="dropdown" token="chosen_product" searchWhenChanged="true">
+      <label>Product</label>
+      <choice value="*">All</choice>
+      <fieldForLabel>product</fieldForLabel>
+      <fieldForValue>product</fieldForValue>
+      <search>
+        <query>index=pci_aws_cloudtrail product=*
+| fields product
+| stats values(product) as product
+| mvexpand product</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="dropdown" token="env" searchWhenChanged="true">
+      <label>Environment</label>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <choice value="*">All</choice>
+      <fieldForLabel>environment</fieldForLabel>
+      <fieldForValue>environment</fieldForValue>
+      <search>
+        <query>index=pci_aws_cloudtrail environment=* | dedup environment | table environment</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+    </input>
+    <input type="time" token="chosen_time" searchWhenChanged="true">
+      <label>Time</label>
+      <default>
+        <earliest>-1d@d</earliest>
+        <latest>@d</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Timechart of User Activity</title>
+      <chart>
+        <search>
+          <query>index="pci_aws_cloudtrail" principalUser="$user$" userName="$user_role$" environment="$env$" product="$chosen_product$" | timechart span=1h count by principalUser</query>
+          <earliest>$chosen_time.earliest$</earliest>
+          <latest>$chosen_time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">seriesCompare</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Login Addresses</title>
+      <table>
+        <search>
+          <query>index="pci_aws_cloudtrail"   principalUser="$user$" userName=$user_role$ product="$chosen_product$" environment="$env$" "userIdentity.type"=SAMLUser
+| stats count by src</query>
+          <earliest>$chosen_time.earliest$</earliest>
+          <latest>$chosen_time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>User Access</title>
+      <table>
+        <search>
+          <query>index="pci_aws_cloudtrail"  principalUser="$user$" userName=$user_role$ product="$chosen_product$" environment="$env$" | stats count by principalUser | rename principalUser as "User" count as "Count" |sort -Count</query>
+          <earliest>$chosen_time.earliest$</earliest>
+          <latest>$chosen_time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Assumed Roles</title>
+      <table>
+        <search>
+          <query>index="pci_aws_cloudtrail"  principalUser="$user$" userName="$user_role$" product="$chosen_product$" environment="$env$" NOT [search index="pci_aws_cloudtrail" principalUser="*" userName="*"  |regex userName=".*\@.*" |table userName| format ] | stats count by userName | rename userName as "Assumed Role" count as "Count" |sort -Count</query>
+          <earliest>$chosen_time.earliest$</earliest>
+          <latest>$chosen_time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>PCI Account</title>
+      <table>
+        <search>
+          <query>index="pci_aws_cloudtrail" principalUser="$user$" userName="$user_role$" product="$chosen_product$"
+| dedup product
+| table product</query>
+          <earliest>$chosen_time.earliest$</earliest>
+          <latest>$chosen_time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>5m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Event Actions</title>
+      <table>
+        <search>
+          <query>index="pci_aws_cloudtrail"  principalUser="$user$" userName="$user_role$" product="$chosen_product$" environment="$env$"| stats count by eventName | rename eventName as "Action" count as "Count" |sort -Count</query>
+          <earliest>$chosen_time.earliest$</earliest>
+          <latest>$chosen_time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>User Logins - Logs</title>
+      <table>
+        <search>
+          <query>index="pci_aws_cloudtrail"  principalUser="$user$" userName="$user_role$" product="$chosen_product$" environment="$env$" | table start_time product recipientAccountId principalUser userName userIdentity.type eventType eventName environment | rename start_time as "Time" product as "Product" recipientAccountId as "Account" principalUser as "User" userName as "Role" userIdentity.type as "User Identity" eventType as "Method" eventName as "Action" environment as "Environment"</query>
+          <earliest>$chosen_time.earliest$</earliest>
+          <latest>$chosen_time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search ref="Security Group Review - Changes"></search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</form>

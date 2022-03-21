@@ -1,0 +1,369 @@
+<form theme="dark">
+  <label>DeepSecurity AntiVirus</label>
+  <description>A one stop shop for DSM AV alerts and deeper thoughts</description>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="dropdown" token="hostname_token">
+      <label>Specify Hostname:</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>host</fieldForLabel>
+      <fieldForValue>host</fieldForValue>
+      <search>
+        <query>index=on_prem sourcetype=deepsecurity dvchost=*
+| fields dvchost
+| stats values(dvchost) as host
+| mvexpand host</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="time" token="field1" searchWhenChanged="true">
+      <label>Enter Time to review:</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="alert" searchWhenChanged="true">
+      <label>Alert</label>
+      <default>*</default>
+    </input>
+    <input type="text" token="fpath" searchWhenChanged="true">
+      <label>File Path</label>
+      <default>*</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>HIPS AV Top Actions</title>
+        <search>
+          <query>index=on_prem sourcetype=deepsecurity (act=Quarantine OR act=Delete) dvchost="$hostname_token$" alert=$alert$ filePath=$fpath$
+| fields act
+| timechart span=30m count by act
+| rename act as Action</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel id="topTenPanel">
+      <table>
+        <title>Top 10 Detections</title>
+        <search>
+          <query>index=on_prem sourcetype="deepsecurity" dvchost="$hostname_token$" filePath=$fpath$ alert=$alert$ (act=Delete OR act=Quarantine)
+| top limit=20 alert
+| eval count=toString(count,"commas")
+| fields - percent</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel id="hipsAVPanel">
+      <table>
+        <title>HIPS AV</title>
+        <search>
+          <query>index=on_prem sourcetype="deepsecurity" (act=Delete OR act=Quarantine) dvchost="$hostname_token$" alert=$alert$ filePath=$fpath$
+| fields _time alert act dvchost filePath
+| rename _time as Time, alert as Alert, act as Action, dvchost as Hostname, filePath as "File Path"
+| eval Time=strftime(Time,"%B %d, %Y %I:%M:%S")
+| table Time Alert Action Hostname "File Path"</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>HIPS Eicar</title>
+        <search>
+          <query>index=on_prem sourcetype="deepsecurity" alert=Eicar_test_file dvchost="$hostname_token$"
+| table _time dvchost msg alert filePath act
+| sort -_time</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <single>
+        <title>Eicar File Count</title>
+        <search>
+          <query>index=on_prem sourcetype="deepsecurity" alert="Eicar_test_file" dvchost="$hostname_token$"
+| stats count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="height">115</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trellis.splitBy">_aggregation</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Intelligence Gathering and Threat Hunting in Trend DSM AV</title>
+      <input type="dropdown" token="hash_token" searchWhenChanged="true">
+        <label>Choose MD5 Hash:</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>TrendMicroDsFileMD5</fieldForLabel>
+        <fieldForValue>TrendMicroDsFileMD5</fieldForValue>
+        <search>
+          <query>index=on_prem sourcetype=deepsecurity TrendMicroDsFileMD5="*"
+| search act=$action_token|s$
+| stats values(TrendMicroDsFileMD5) as TrendMicroDsFileMD5
+| mvexpand TrendMicroDsFileMD5</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </input>
+      <table>
+        <title>HIPS MD5</title>
+        <search>
+          <query>index=on_prem sourcetype="deepsecurity" alert=$alert$ filePath=$fpath$ TrendMicroDsFileMD5="$hash_token$" act="$action_token$" dvchost=$hostname_token|s$
+| fields TrendMicroDsFileMD5
+| stats values(TrendMicroDsFileMD5) as "MD5 Hash"
+| mvexpand "MD5 Hash"</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>MD5 Hash Total</title>
+      <single>
+        <title>How Many Times a Hash Value Was Seen</title>
+        <search>
+          <query>index=on_prem sourcetype="deepsecurity" alert=$alert$ filePath=$fpath$ TrendMicroDsFileMD5="$hash_token$" act="$action_token$" dvchost=$hostname_token|s$
+| fields TrendMicroDsFileMD5
+| stats count(TrendMicroDsFileMD5) as Count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0x53a051"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">MD5 Hash Count</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>HIPS MD5 Action Count</title>
+      <input type="dropdown" token="action_token" searchWhenChanged="true">
+        <label>Chooose AV Action:</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>Action</fieldForLabel>
+        <fieldForValue>Action</fieldForValue>
+        <search>
+          <query>index=on_prem sourcetype=deepsecurity act=* dvchost=$hostname_token|s$
+| search TrendMicroDsFileMD5=$hash_token|s$
+| stats values(act) as Action
+| mvexpand Action</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </input>
+      <table>
+        <title>MD5 Action Taken</title>
+        <search>
+          <query>index=on_prem sourcetype="deepsecurity" alert=$alert$ filePath=$fpath$ TrendMicroDsFileMD5="$hash_token$" act="$action_token$" dvchost=$hostname_token|s$
+| fields TrendMicroDsFileMD5 act
+| stats count(TrendMicroDsFileMD5) as Count by act
+| sort -Count
+| eval Count=toString(Count,"commas")</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>HIPS Action Chart</title>
+      <chart>
+        <title>Action Chart</title>
+        <search>
+          <query>index=on_prem sourcetype="deepsecurity" alert=$alert$ filePath=$fpath$ TrendMicroDsFileMD5="*" dvchost=$hostname_token|s$
+| fields TrendMicroDsFileMD5 act
+| chart count(TrendMicroDsFileMD5) as Count by act
+| sort -Count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisStart</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>HIPS AV Hash and EXE</title>
+        <search>
+          <query>index=on_prem sourcetype="deepsecurity" alert=$alert$ filePath=$fpath$ TrendMicroDsFileMD5="$hash_token$" TrendMicroDsFileSHA1="*" TrendMicroDsFileSHA256="*" dvchost="$hostname_token$" act="$action_token$"
+| fields TrendMicroDsFileMD5 TrendMicroDsFileSHA1 TrendMicroDsFileSHA256 alert filePath act dvchost
+| search filePath=*.exe
+| stats values(act) as "Action", values(filePath) as "File Path", values(dvchost) as "Hostname" by TrendMicroDsFileMD5</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

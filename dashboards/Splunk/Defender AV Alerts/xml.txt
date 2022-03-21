@@ -1,0 +1,124 @@
+<form version="1.1" theme="dark">
+  <label>Defender AV Alerts</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="time_pick">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <single>
+        <search>
+          <query>index=on_prem source=s3://gd-security-prod-aggregated-logs/fluent-logs/SECURITY/GEN/ALL/DEFENDER/PROD* detectionSource=WindowsDefenderAv |
+eval OS=if(match(investigationState,"UnsupportedOs"),"MacOS","Windows") |
+search threatFamilyName!=*Webshell* threatName!=*PHP* threatName!=*ASP* evidence{}.fileName!="GET Help.exe" severity!="Informational" evidence{}.sha256!=null | stats  estdc(computerDnsName) as AffectedHosts</query>
+          <earliest>$time_pick.earliest$</earliest>
+          <latest>$time_pick.latest$</latest>
+        </search>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xcba700","0xdc4e41"]</option>
+        <option name="rangeValues">[0,10]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="trendInterval">-24h</option>
+        <option name="underLabel">AffectedHosts</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <search>
+          <query>index=on_prem source=s3://gd-security-prod-aggregated-logs/fluent-logs/SECURITY/GEN/ALL/DEFENDER/PROD* detectionSource=WindowsDefenderAv |
+eval OS=if(match(investigationState,"UnsupportedOs"),"MacOS","Windows") |
+search threatFamilyName!=*Webshell* threatName!=*PHP* threatName!=*ASP* evidence{}.fileName!="GET Help.exe" severity!="Informational" evidence{}.sha256!=null | stats  estdc(threatName) as UniqueThreats</query>
+          <earliest>$time_pick.earliest$</earliest>
+          <latest>$time_pick.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xdc4e41"]</option>
+        <option name="rangeValues">[0,10]</option>
+        <option name="underLabel">UniqueThreats</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Affected Machines</title>
+        <search>
+          <query>index=on_prem source=s3://gd-security-prod-aggregated-logs/fluent-logs/SECURITY/GEN/ALL/DEFENDER/PROD* detectionSource=WindowsDefenderAv |
+eval OS=if(match(investigationState,"UnsupportedOs"),"MacOS","Windows") |
+search threatFamilyName!=*Webshell* threatName!=*PHP* threatName!=*ASP* evidence{}.fileName!="GET Help.exe" severity!="Informational" evidence{}.sha256!=null |
+stats count by computerDnsName</query>
+          <earliest>$time_pick.earliest$</earliest>
+          <latest>$time_pick.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Top Threats</title>
+        <search>
+          <query>index=on_prem source=s3://gd-security-prod-aggregated-logs/fluent-logs/SECURITY/GEN/ALL/DEFENDER/PROD* detectionSource=WindowsDefenderAv |
+eval OS=if(match(investigationState,"UnsupportedOs"),"MacOS","Windows") |
+search threatFamilyName!=*Webshell* threatName!=*PHP* threatName!=*ASP* evidence{}.fileName!="GET Help.exe" severity!="Informational" evidence{}.sha256!=null |
+stats count by threatName</query>
+          <earliest>$time_pick.earliest$</earliest>
+          <latest>$time_pick.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Alerts - Low Severity and Higher</title>
+      <table>
+        <search>
+          <query>index=on_prem source=s3://gd-security-prod-aggregated-logs/fluent-logs/SECURITY/GEN/ALL/DEFENDER/PROD* detectionSource=WindowsDefenderAv |
+eval OS=if(match(investigationState,"UnsupportedOs"),"MacOS","Windows") |
+search threatFamilyName!=*Webshell* threatName!=*PHP* threatName!=*ASP* evidence{}.fileName!="GET Help.exe" severity!="Informational" evidence{}.sha256!=null |
+table
+firstEventTime
+computerDnsName
+OS
+severity
+category
+title
+threatFamilyName
+threatName
+evidence{}.detectionStatus
+evidence{}.processCommandLine
+evidence{}.filePath
+evidence{}.fileName
+evidence{}.sha1
+evidence{}.sha256
+|
+sort firstEventTime desc |</query>
+          <earliest>$time_pick.earliest$</earliest>
+          <latest>$time_pick.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">true</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,154 @@
+<form theme="dark">
+  <label>Okta Logs - GCSO</label>
+  <fieldset submitButton="false">
+    <input type="text" token="user" searchWhenChanged="true">
+      <label>Email address</label>
+      <default>*</default>
+    </input>
+    <input type="time" token="time" searchWhenChanged="true">
+      <label>Time</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="source" searchWhenChanged="true">
+      <label>Source IP</label>
+      <default>*</default>
+    </input>
+    <input type="text" token="app" searchWhenChanged="true">
+      <label>App</label>
+      <default>*</default>
+    </input>
+    <input type="text" token="outcome" searchWhenChanged="true">
+      <label>Action outcome</label>
+      <default>*</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Source IP</title>
+      <chart>
+        <search>
+          <query>index=oktalogs user=$user$ src_ip=$source$ outcome.result=$outcome$ app=$app$ | stats Count by src_ip</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>ISP</title>
+      <chart>
+        <search>
+          <query>index=oktalogs user=$user$ src_ip=$source$ outcome.result=$outcome$ app=$app$ | stats Count by securityContext.isp</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Applications</title>
+      <chart>
+        <search>
+          <query>index=oktalogs user=$user$ src_ip=$source$ outcome.result=$outcome$ app=$app$ | stats count by app</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$user$ Information</title>
+      <table>
+        <search>
+          <query>index=oktausers user=$user$ | dedup user | stats count by user, profile.firstName, profile.lastName, profile.officialTitle, profile.department, status | rename user as User, profile.firstName as "First Name", profile.lastName as "Last Name", profile.officialTitle as Title, profile.department as Department, status as Status</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$user$ - Credential Actions</title>
+      <table>
+        <search>
+          <query>index="oktalogs" target{}.alternateId=$user$ eventType="system.agent.ad.*" src_ip=$source$ outcome.result=$outcome$
+| dedup _time, src_ip
+| table _time, src_ip, actor.alternateId, target{}.alternateId, eventType</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$user$ - MFA Factor Events</title>
+      <table>
+        <search>
+          <query>index="oktalogs" target{}.alternateId=$user$ eventType="user.mfa.factor.*" src_ip=$source$ outcome.result=$outcome$
+| dedup src_ip, _time
+| table _time, src_ip, actor.alternateId, target{}.alternateId, eventType, outcome.reason, outcome.result</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$user$ - All Events</title>
+      <table>
+        <search>
+          <query>index="oktalogs" src_ip=$source$ target{}.alternateId=$user$ outcome.result=$outcome$
+| dedup src_ip, _time
+| table _time, src_ip, client.device, securityContext.isp, eventType, actor.alternateId, target{}.alternateId, eventType, outcome.reason, outcome.result</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

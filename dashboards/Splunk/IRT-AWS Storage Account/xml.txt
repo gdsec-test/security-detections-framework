@@ -1,0 +1,140 @@
+<form theme="dark">
+  <label>IRT - AWS Storage Account</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="principalUser" searchWhenChanged="true">
+      <label>User</label>
+      <suffix>*</suffix>
+    </input>
+    <input type="text" token="sourceIPAddress" searchWhenChanged="true">
+      <label>SourceIP</label>
+      <suffix>*</suffix>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>AWS Events by User</title>
+      <table>
+        <title>AWS Storage Events</title>
+        <search>
+          <query>index="aws_cloudtrail" (aws_account_id=539225272086 OR aws_account_id=763338924548 OR aws_account_id=745293682974) (principalUser=$principalUser$)
+| rename errorCode as Status, environment as Environment, aws_account_id as AccountID, eventName as Event, eventTime as TimeStamp, userName as User, principalUser as PrincipalUser,sourceIPAddress as SourceIP
+| stats count by Status, Environment, AccountID, User, PrincipalUser, Event, SourceIP, TimeStamp
+| sort by Environment, User</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>AWS Events by IP Address</title>
+        <search>
+          <query>index="aws_cloudtrail" (aws_account_id=539225272086 OR aws_account_id=763338924548 OR aws_account_id=745293682974) (sourceIPAddress=$sourceIPAddress$)
+| rename errorCode as Status, environment as Environment, aws_account_id as AccountID, eventName as Event, eventTime as TimeStamp, userName as User, principalUser as PrincipalUser,sourceIPAddress as SourceIP
+| stats count by Status, Environment, AccountID, User, PrincipalUser, Event, SourceIP, TimeStamp
+| sort by Environment, User</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Top 10 Users/Roles using S3 - Dev-Private Env</title>
+      <table>
+        <search>
+          <query>index="aws_cloudtrail" (environment=dev-private aws_account_id=763338924548) "requestParameters.bucketName"="gd-respstorag-*-forensic-storage"
+| rename userName as User
+| top limit=10 User</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Top 10 Users/Roles using S3 - Dev Env</title>
+      <table>
+        <search>
+          <query>index="aws_cloudtrail" (environment=dev aws_account_id=539225272086) "requestParameters.bucketName"="gd-respstorag-*-forensic-storage"
+| rename userName as User
+| top limit=10 User</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>All S3 Events - All Env</title>
+      <chart>
+        <search>
+          <query>index="aws_cloudtrail" (aws_account_id=539225272086 OR aws_account_id=763338924548) (environment=dev OR environment=dev-private) "requestParameters.bucketName"="gd-respstorag-*-forensic-storage"
+| timechart count by eventName</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Successful IAM Events - All Env</title>
+      <table>
+        <search>
+          <query>index="aws_cloudtrail" (aws_account_id=539225272086 OR aws_account_id=763338924548) (environment=dev-private OR environment=dev) app="iam.amazonaws.com" NOT ((userName = AWSServiceRoleForTrustedAdvisor AND sourceIPAddress = trustedadvisor.amazonaws.com) OR (userName = GD-AuditFramework-TaskRole) OR (userName = ServiceCatalogLaunchConstraintRole AND sourceIPAddress = servicecatalog.amazonaws.com) OR (userName = AccountAutomationServiceRole AND sourceIPAddress = cloudformation.amazonaws.com)) errorCode=success
+| fillnull value="-"
+| rename environment as Environment, aws_account_id as AccountID, eventName as Event, userName as User, principalUser as PrincipalUser, sourceIPAddress as SourceIP
+| stats count by Environment, AccountID, User, PrincipalUser, Event, SourceIP
+| sort by Environment, User</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Unsuccessful IAM Events - All Env</title>
+      <table>
+        <search>
+          <query>index="aws_cloudtrail" (aws_account_id=539225272086 OR aws_account_id=763338924548) (environment=dev-private OR environment=dev) app="iam.amazonaws.com" NOT ((userName = AWSServiceRoleForTrustedAdvisor AND sourceIPAddress = trustedadvisor.amazonaws.com) OR (userName = GD-AuditFramework-TaskRole) OR (userName = ServiceCatalogLaunchConstraintRole AND sourceIPAddress = servicecatalog.amazonaws.com) OR (userName = AccountAutomationServiceRole AND sourceIPAddress = cloudformation.amazonaws.com)) errorCode!=success
+| fillnull value="-"
+| rename environment as Environment, aws_account_id as AccountID, eventName as Event, userName as User, principalUser as PrincipalUser, sourceIPAddress as SourceIP
+| stats count by Environment, AccountID, User, PrincipalUser, Event, SourceIP
+| sort by Environment, User</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

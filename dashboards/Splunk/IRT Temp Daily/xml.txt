@@ -1,0 +1,208 @@
+<form theme="dark">
+  <label>IRT - Temp Daily</label>
+  <fieldset submitButton="false">
+    <input type="time" token="timeSelector">
+      <label></label>
+      <default>
+        <earliest>-6h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+        <p>
+          <strong>Odd Factor Resets</strong>
+          <br/>This panel is monitoring for users with excessive MFA Factor Resets within Okta. Because this is a key indicator from our persistent social engineerng actor any new values present in this panel require an immediate call-out.</p>
+      </html>
+    </panel>
+    <panel>
+      <html>
+        <p>
+          <strong>Bad AD Tools</strong>
+          <br/>This panel is monitoring for instances of known-bad AD tools being used within our environment. Because this is a key indicator from our persistent social engineerng actor any new values present in this panel require an immediate call-out.</p>
+          <span style="color:#33cc33;">An Alert for this activity is enabled.</span>
+      </html>
+    </panel>
+    <panel>
+      <html>
+        <p>
+          <strong>Unauthorized China VPN</strong>
+          <br/>This panel is monitoring for users VPN logons from users in the China region. We do not expect to see ANY logons from this group at this time (the exception "swang2" has been filter from view). If any events are seen:</p>
+      <ol>
+          <li>Remediate the identified user account.</li>
+          <li>Notify the IR team per on-call process.</li>
+          <li>Begin review of user's Okta app access.</li>
+        </ol>
+        <span style="color:#f00;">User "ifan" is exempt from enforcement until 7/2 - Please do not remediate, but continue to monitor any new access attempts.<br/></span>
+        <span style="color:#33cc33;">An Alert for this activity is enabled.</span>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Odd Factor Resets</title>
+      <table>
+        <search>
+          <query>index="oktalogs" displayMessage="Reset*" "actor.alternateId"!="02d769kuqxc6A@godaddy.com" "actor.alternateId"!="02d769kuqxc6B@godaddy.com" | where 'actor.id'!='target{}.id' | dedup _time, src_ip | stats count by date_mday, date_month, actor.alternateId, target{}.alternateId | where count &gt; 2</query>
+          <earliest>$timeSelector.earliest$</earliest>
+          <latest>$timeSelector.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Bad AD Tools</title>
+      <table>
+        <search>
+          <query>index="windows_events" (EventID="4648" (passwordcontrol.exe OR Hyena_x64 OR stuc.exe)) OR (EventID=4104 ("DomainPasswordSpray" OR "dafthack")) | table _time, Computer, SubjectUserName, TargetUserName, process, action, Path | sort -_time</query>
+          <earliest>$timeSelector.earliest$</earliest>
+          <latest>$timeSelector.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Unauthorized VPN China</title>
+      <table>
+        <search>
+          <query>index="on_prem" gd_fluentd_name=SECURITY.CORP.*.VPN.PROD SYSTEM user NOT swang2 | iplocation OriginIp | where Country="China" | table _time, user_name, Country, Description, OriginIp</query>
+          <earliest>$timeSelector.earliest$</earliest>
+          <latest>$timeSelector.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>All Factor Resets</title>
+      <table>
+        <search>
+          <query>index="oktalogs" displayMessage="Reset*" "actor.alternateId"!="02d769kuqxc6A@godaddy.com" "actor.alternateId"!="02d769kuqxc6B@godaddy.com" | where 'actor.id'!='target{}.id' | dedup _time, src_ip | stats count by date_mday, date_month, actor.alternateId, target{}.alternateId</query>
+          <earliest>$timeSelector.earliest$</earliest>
+          <latest>$timeSelector.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Okta Admin Access</title>
+      <table>
+        <search>
+          <query>index=oktalogs displayMessage="User accessing Okta admin app" | table user| join user [search index=oktausers earliest=-90d@d | table user, profile.title, profile.department] |
+dedup user | table user, profile.title, profile.department</query>
+          <earliest>$timeSelector.earliest$</earliest>
+          <latest>$timeSelector.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Okta Profile Activations</title>
+      <table>
+        <search>
+          <query>index="oktalogs" eventType="user.lifecycle.activate" | dedup _time, eventType | table _time, actor.alternateId, target{}.alternateId, displayMessage, eventType, outcome.result</query>
+          <earliest>$timeSelector.earliest$</earliest>
+          <latest>$timeSelector.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Okta Factor Activations</title>
+      <table>
+        <search>
+          <query>index="oktalogs" eventType="user.mfa.factor.activate" | dedup _time, eventType | table _time, actor.alternateId, eventType, outcome.result, outcome.reason</query>
+          <earliest>-6h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Radius Success w/o P3VM Events</title>
+      <table>
+        <search>
+          <query>((index="windows_events" EventID="4624" Computer="P3VM*") OR (index="oktalogs" eventType="user.authentication.auth_via_radius" NOT target{}.alternateId="AWS Workspaces RADIUS" outcome.result="SUCCESS"))
+| eval oktaUser=mvindex(split(mvindex('target{}.alternateId',0),"@"),0)
+| eval Radius=mvindex('target{}.alternateId',1)
+| eval username=coalesce(TargetUserName, oktaUser)
+| search [search index="oktalogs" eventType="user.authentication.auth_via_radius" NOT (target{}.alternateId="AWS Workspaces RADIUS" OR target{}.alternateId="HeritageVPN") NOT [search index="windows_events" EventID="4624" Computer="P3VM*" NOT (user="SYSTEM" OR user="*$$")
+    | eval target=user."@godaddy.com"
+    | rename target as target{}.alternateId
+    | stats count by target{}.alternateId
+    | fields - count]
+| eval username=mvindex(split(mvindex('target{}.alternateId',0),"@"),0)
+| stats count by username
+| fields - count]
+| dedup _time, index
+| table _time, username, eventType, debugContext.debugData.factorType, Radius, EventID, Computer, index</query>
+          <earliest>$timeSelector.earliest$</earliest>
+          <latest>$timeSelector.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

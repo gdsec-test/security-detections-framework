@@ -1,0 +1,235 @@
+<form theme="dark">
+  <label>Customer API Key Adds</label>
+  <description>SEC0134259</description>
+  <fieldset submitButton="true">
+    <input type="time" token="time" searchWhenChanged="true">
+      <label>Timespan</label>
+      <default>
+        <earliest>-72h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="ip">
+      <label>IP Address</label>
+    </input>
+  </fieldset>
+  <row>
+        <panel>
+      <html>
+        <p>
+          <strong>Customer API Key Adds</strong>
+          <br/>SEC0134259 - This panel is monitoring for potential bulk Developer API key adds to customer accounts. If a hit is seen in the > 5 key panel GCSO should do the following:</p>
+      <ol>
+          <li>Blackhole the IP in the <a href="https://protect.int.gdcorp.tools/blackholes" target="_blank">Protect</a> tool.</li>
+          <li>Notify the IR team in the #internal-gcso channel</li>
+        </ol>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>IPs with &gt; 5 API Key Adds</title>
+      <table>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.APP.SSO.PROD" add_apikey
+| rex field=_raw "\"id\"\:\"(?&lt;account&gt;.*?)\""
+| rex field=_raw "\"outcome\"\:\ \"(?&lt;outcome&gt;.*?)\""
+| rex field=_raw "\"action\"\:\ \"(?&lt;action&gt;.*?)\""
+| rex field=_raw "\"ip\"\:\ \"(?&lt;ip&gt;.*?)\""
+| stats count by ip
+| where count &gt; 5</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>IPs Above Critical Limit (50)</title>
+      <table>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.APP.SSO.PROD" add_apikey
+| rex field=_raw "\"id\"\:\"(?&lt;account&gt;.*?)\""
+| rex field=_raw "\"outcome\"\:\ \"(?&lt;outcome&gt;.*?)\""
+| rex field=_raw "\"action\"\:\ \"(?&lt;action&gt;.*?)\""
+| rex field=_raw "\"ip\"\:\ \"(?&lt;ip&gt;.*?)\""
+| stats count by ip
+| where count &gt; 50</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Timechart - IPs of Interest</title>
+      <chart>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.APP.SSO.PROD" add_apikey
+| rex field=_raw "\"ip\"\:\ \"(?&lt;ip&gt;.*?)\""
+| search [search index=on_prem gd_fluentd_name="SECURITY.GEN.APP.SSO.PROD" add_apikey
+    | rex field=_raw "\"id\"\:\"(?&lt;account&gt;.*?)\""
+    | rex field=_raw "\"outcome\"\:\ \"(?&lt;outcome&gt;.*?)\""
+    | rex field=_raw "\"action\"\:\ \"(?&lt;action&gt;.*?)\""
+    | rex field=_raw "\"ip\"\:\ \"(?&lt;ip&gt;.*?)\""
+    | stats count by ip
+    | where count &gt; 5
+    | table ip]
+| timechart count by ip</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>API Key Add Logs by $ip$</title>
+      <table>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.APP.SSO.PROD" "$ip$" "add_apikey"
+| rex field=_raw "\"outcome\"\:.?\"(?&lt;outcome&gt;.*?)\""
+| rex field=_raw "\"action\"\:.?\"(?&lt;action&gt;.*?)\""
+| rex field=_raw "\"ip\"\:.?\"(?&lt;ip&gt;.*?)\""
+| rex field=_raw "\"id\"\:\"(?&lt;account&gt;.*?)\""
+| table _time, account, action, ip, outcome</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>All SSO Account Activity by $ip$</title>
+      <table>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.APP.SSO.PROD" "$ip$" NOT "heartbeat"
+| rex field=_raw "\"outcome\"\:.?\"(?&lt;outcome&gt;.*?)\""
+| rex field=_raw "\"action\"\:.?\"(?&lt;action&gt;.*?)\""
+| rex field=_raw "\"ip\"\:.?\"(?&lt;ip&gt;.*?)\""
+| rex field=_raw "\"user_agent\"\:.?\{\"original\"\:\ \"(?&lt;uagent&gt;.*?)\""
+| rex field=_raw "\"id\"\:\"(?&lt;account&gt;.*?)\""
+| where 'outcome'="success"
+| stats values(*) AS * by _time, action, ip
+| table _time, account, action, ip, outcome, uagent</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>All IP API Adds</title>
+      <chart>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.APP.SSO.PROD" add_apikey
+| rex field=_raw "\"ip\"\:\ \"(?&lt;ip&gt;.*?)\""
+| timechart count by ip usenull=f</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+</form>

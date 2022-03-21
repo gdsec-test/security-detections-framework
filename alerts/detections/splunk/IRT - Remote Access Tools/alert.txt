@@ -1,0 +1,4 @@
+"search index=windows_events (""AnyDesk.exe"" OR ""QuickAssist.exe"") Caller_Domain=JOMAX
+| transaction Caller_User_Name, date_month, date_mday
+| where (like(NewProcessName,""%AnyDesk.exe"") AND like(NewProcessName,""%quickassist.exe""))
+| stats count by _time Caller_User_Name host"

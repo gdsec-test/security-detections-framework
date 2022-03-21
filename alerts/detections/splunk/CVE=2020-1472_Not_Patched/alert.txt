@@ -1,0 +1,5 @@
+"search index=on_prem sourcetype=tanium Vuln_Play_Name=""Vuln_Play_CVE-2020-1472""
+| rex field=_raw ""CVE-2020-1472 Status\"":\""(?<Status>.+)\"",\""Patched""
+| rex field=_raw ""Patched\"":\""(?<Patched>.+)\"",\""FullSecureChannelProtection""
+| search Patched!=""N/A on Linux"" Patched!=""True""
+| table _time Vuln_Play_Name Computer_Name GoDaddy_Serial Status Patched"

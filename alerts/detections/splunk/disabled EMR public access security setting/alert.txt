@@ -1,0 +1,1 @@
+search index="aws_cloudtrail" aws_account_id=* userAgent="AWS ElasticMapReduce Console" aws_account_id=* "requestParameters.blockPublicAccessConfiguration.blockPublicSecurityGroupRules"=false | table _raw

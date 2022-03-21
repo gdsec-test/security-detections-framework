@@ -1,0 +1,51 @@
+"search (index=""oktalogs"" displayMessage=""Send user new device notification email"" OR displayMessage=""Change application password for user"" OR displayMessage=""Send self-service password reset email"" OR displayMessage=""Perform user password reset by AD agent"" client.geographicalContext.country=""*"" actor.displayName!=""IAM Provisioning"" NOT
+    [ search index=""oktausers"" status=ACTIVE ""profile.employeeType""=null ""profile.mobilePhone""=null ""profile.officialTitle""=null
+    | fillnull value=null profile.employeeNumber
+    | search ""profile.employeeNumber""=null
+    | stats count by ""profile.email""
+    | fields profile.email])
+| search NOT user IN (""unknown"", ""system@okta.com"", ""ADService@godaddy.com"")
+| search NOT client.ipAddress IN (""null"", ""132.148.54*"", ""64.202.160*"", ""50.116.41.217"", ""198.58.111.80"", ""192.81.129.227"", ""139.162.220.143"", ""94.156.219.181"", ""78.130.187.154"", ""77.98.3.134"")
+| search NOT profile.city IN (""*Remote*"")
+| search NOT profile.deliveryOffice IN (""*Remote*"")
+| fillnull value=null user
+| eval user=if(user=""null"", profile.email, user)
+| lookup CountryCode.csv Country as client.geographicalContext.country output Alpha-2
+| join type=left user
+    [ search index=oktausers NOT (user=zoomroom@godaddy.com OR user=Spam@godaddy.com OR user=cointest@godaddy.com)
+    | table user profile.city profile.state profile.countryCode
+    | fillnull value=1]
+    | rename Alpha-2 as accessedFrom, profile.countryCode as oktaProfileCountry
+| stats values(displayMessage) as DisplayMessages values(client.ipAddress) as ""IpAddress"" values(securityContext.isp) as ""ISP"" values(client.geographicalContext.country) as SessionCountry values(accessedFrom) as SessionCoCode values(oktaProfileCountry) as oktaProfileCountry count by user
+| search ISP!=""godaddy.com llc""
+| join type=left user
+[search (index=""oktalogs"" outcome.result=""SUCCESS"" OR outcome.result=""ALLOW"" client.geographicalContext.country=""*"" user!=""system@okta.com"" actor.displayName!=""IAM Provisioning"" authenticationContext.credentialProvider!=""YUBIKEY"") debugContext.debugData.deviceFingerprint=*
+| streamstats current=f window=1 global=f last(debugContext.debugData.deviceFingerprint) as last_deviceFingerprint last(client.userAgent.os) as last_OS last(src_ip) as last_src_ip last(securityContext.isp) as last_isp by user
+| rename debugContext.debugData.deviceFingerprint as deviceFingerprint, client.userAgent.os as current_OS
+| where deviceFingerprint!=last_deviceFingerprint
+| table user deviceFingerprint last_deviceFingerprint current_OS last_OS src_ip last_src_ip last_isp]
+| fillnull deviceFingerprint value=""Not New Device""
+| eval Threat_Score=0
+| eval Threat_Score=if(SessionCoCode!=oktaProfileCountry, Threat_Score+10,  Threat_Score)
+| eval Threat_Score=if(ISP!=last_isp, Threat_Score+2, Threat_Score)
+| eval Threat_Score=if(src_ip!=last_src_ip, Threat_Score+1, Threat_Score)
+| eval Threat_Score=if(last_OS!=current_OS, Threat_Score+5, Threat_Score)
+| sort - Threat_Score
+| eval Reasoning="" ""
+| eval Reasoning=if(SessionCoCode!=oktaProfileCountry, Reasoning+"" [New Country]"",  Threat_Score)
+| eval Reasoning=if(ISP!=last_isp, Reasoning+"" [New ISP]"", Reasoning)
+| eval Reasoning=if(src_ip!=last_src_ip, Reasoning+"" [New Source IP]"", Reasoning)
+| eval Reasoning=if(last_OS!=current_OS, Reasoning+"" [New OS]"", Reasoning)
+| fillnull
+| where Threat_Score>5
+| eval message=""Threat_Score="" + Threat_Score + "", Reasoning="" + Reasoning + "", user="" + user + "", IpAddress="" + IpAddress + "", DisplayMessages="" + DisplayMessages  + "", SessionCoCode="" + SessionCoCode +
+"", oktaProfileCountry="" + oktaProfileCountry +
+"", ISP="" + ISP +
+"", last_isp="" + last_isp +
+"", src_ip="" + src_ip +
+"", last_src_ip="" + last_src_ip +
+"", current_OS="" + current_OS +
+"", last_OS="" + last_OS +
+"", deviceFingerprint="" + deviceFingerprint +
+"", last_deviceFingerprint="" + last_deviceFingerprint
+| fields message"

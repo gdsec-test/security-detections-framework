@@ -1,0 +1,6 @@
+"search index=""on_prem"" sourcetype=""tanium"" ""INC4505116 - Bad User Check""=""*""
+| rex field=""INC4505116 - Bad User Check"" ""GRANT ALL PRIVILEGES ON \*\.\* TO '(?<user>.*?)\'""
+| rename ""INC4505116 - Bad User Check"" as grant
+| table _time, user, ""Computer Name"", grant
+| where 'user'!=""root""
+| where 'user'!=""gd-backups101"" AND ""Computer Name""!=""sxb1plvcpnl453677.prod.sxb1.secureserver.net"""

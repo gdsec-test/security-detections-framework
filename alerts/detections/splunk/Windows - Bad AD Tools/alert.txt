@@ -1,0 +1,1 @@
+search index="windows_events" (EventID="4648" (passwordcontrol.exe OR Hyena_x64 OR stuc.exe)) OR (EventID=4104 ("DomainPasswordSpray" OR "dafthack")) | table _time, Computer, SubjectUserName, TargetUserName, process, action, Path | sort -_time

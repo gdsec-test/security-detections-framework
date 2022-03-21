@@ -1,0 +1,9 @@
+"search index=windows_events EventCode=4688 TokenElevationType!=""%%1936""
+    [ search earliest=-1d latest=now (index=windows_events) EventCode=5140
+    | rex mode=sed ""s/\\\\/\\\\\\\\/g"" field=ShareName
+    | rex mode=sed ""s/\*/\\*/g"" field=ShareName
+    | stats count by ShareName
+    | eval ShareName=ShareName + ""*""
+    | rename ShareName as ParentProcessName
+    | fields - count]
+| stats count by ParentProcessName"

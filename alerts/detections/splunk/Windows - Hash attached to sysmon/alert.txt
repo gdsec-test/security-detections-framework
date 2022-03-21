@@ -1,0 +1,5 @@
+"search index=""windows_events"" process=*svchost.exe
+| dedup Computer
+| stats earliest(_time) count by Image, Hashes
+| eventstats sum(count) as total_host
+| eval majority_percent=round((count/total_host)*100,2)"

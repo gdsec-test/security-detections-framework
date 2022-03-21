@@ -1,0 +1,7 @@
+"search index=""aws_syslog"" OR index=windows_events EventCode=1102 Computer!=*imaging-prod.local
+| rex field=_raw ""SubjectUserName>(?<AccountName>\w+)<\/""
+| rex field=_raw ""<SubjectDomainName>(?P<Domain>\w+)<""
+| rex field=Computer ""(?<MachineName>[A-Za-z0-9-]+)\.""
+| eval Summary=""The audit log was cleared.""
+| bucket _time span=1h
+| stats values(Domain) as Domain values(AccountName) as AccountName count by EventCode Summary MachineName"

@@ -1,0 +1,6 @@
+"search index=windows_events EventCode=4624 Source_Workstation!=- Computer!=*DC* (Logon_Type=3) Computer!=*gdhosting.gdg TargetUserName!=*$
+| bucket _time span=1h
+| stats count dc(user) values(TargetUserName) as TargetUserName by Computer _time Source_Workstation
+| trendline sma24(count) as moving_avg_computer
+| eval spike=if(count > 5 * moving_avg_computer, round(count/moving_avg_computer,5)*100, 0)
+| where spike!=0"

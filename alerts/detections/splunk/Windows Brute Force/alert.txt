@@ -1,0 +1,6 @@
+"search index=windows_events EventCode=4625 Status!=0XC000006D user!=-
+| eval Status=upper(Status)
+| lookup Windows_Status_4625.csv Status as Status output Status_Name
+| convert ctime(_time) as time
+| stats count dc(Computer) as Distinct_Computers values(Status_Name) dc(Status) as Count_Status values(time) as time by user Computer Status
+| where count > 3 OR Distinct_Computers > 1 OR Count_Status > 2"

@@ -1,0 +1,218 @@
+<form>
+  <label>GCSO-FIM</label>
+  <fieldset submitButton="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="SERV">
+      <label>Server</label>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="radio" token="ENV">
+      <label>Environment</label>
+      <choice value="AND [| inputlookup PCI_serverlist.csv | rename &quot;Fully qualified domain name&quot; as dvchost | fields dvchost]">PCI</choice>
+      <choice value="dvchost=*PKI*">PKI</choice>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <title>top 20 rules</title>
+        <search>
+          <query>index=on_prem sourcetype=deepsecurity act=* $ENV$ cef* *$SERV$*
+(alert="Microsoft Windows - System .dll or .exe files modified (ATT&amp;CK T1013)"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Database Server - MySQL"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Task Scheduler Entries Modified (ATT&amp;CK T1168)"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="HTTP Server - Apache"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Mal_DLDER"
+OR alert="TROJ_GEN.R002C0PIU20"
+OR alert="Microsoft Windows - Active Directory"
+OR alert="TROJ_GEN.R002C0PJK20"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Trend Micro Deep Security Manager"
+OR alert="PUA.Linux.Wacatac.USELVK120"
+OR alert="Unix - Permissions of log files changed"
+OR alert="PUA.Linux.Malxmr.USELVK120"
+OR alert="Unix - Open Port Monitor"
+OR alert="PHP_EOLBKDOR.A"
+OR alert="TROJ_FRS.VSNTK320"
+OR alert="Coinminer_COINHIVE.SMF2-JS"
+OR alert="Mail Server - Sendmail")
+| top alert limit=20</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <chart>
+        <title>top 20 Untagged Modifications</title>
+        <search>
+          <query>index=on_prem sourcetype=deepsecurity act=* $ENV$ cef* *$SERV$*
+(alert="Microsoft Windows - System .dll or .exe files modified (ATT&amp;CK T1013)"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Database Server - MySQL"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Task Scheduler Entries Modified (ATT&amp;CK T1168)"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="HTTP Server - Apache"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Mal_DLDER"
+OR alert="TROJ_GEN.R002C0PIU20"
+OR alert="Microsoft Windows - Active Directory"
+OR alert="TROJ_GEN.R002C0PJK20"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Trend Micro Deep Security Manager"
+OR alert="PUA.Linux.Wacatac.USELVK120"
+OR alert="Unix - Permissions of log files changed"
+OR alert="PUA.Linux.Malxmr.USELVK120"
+OR alert="Unix - Open Port Monitor"
+OR alert="PHP_EOLBKDOR.A"
+OR alert="TROJ_FRS.VSNTK320"
+OR alert="Coinminer_COINHIVE.SMF2-JS"
+OR alert="Mail Server - Sendmail")
+| top dvchost limit=20</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>index=on_prem sourcetype=deepsecurity act=* *$ENV$ cef* *$SERV$*
+(alert="Microsoft Windows - System .dll or .exe files modified (ATT&amp;CK T1013)"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Database Server - MySQL"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Task Scheduler Entries Modified (ATT&amp;CK T1168)"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="HTTP Server - Apache"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Mal_DLDER"
+OR alert="TROJ_GEN.R002C0PIU20"
+OR alert="Microsoft Windows - Active Directory"
+OR alert="TROJ_GEN.R002C0PJK20"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Trend Micro Deep Security Manager"
+OR alert="PUA.Linux.Wacatac.USELVK120"
+OR alert="Unix - Permissions of log files changed"
+OR alert="PUA.Linux.Malxmr.USELVK120"
+OR alert="Unix - Open Port Monitor"
+OR alert="PHP_EOLBKDOR.A"
+OR alert="TROJ_FRS.VSNTK320"
+OR alert="Coinminer_COINHIVE.SMF2-JS"
+OR alert="Mail Server - Sendmail")
+| top filePath limit=20</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>top 20 File Changes Hostenames W/Count</title>
+        <search>
+          <query>index=on_prem sourcetype=deepsecurity act=* $ENV$ cef* *$SERV$*
+(alert="Microsoft Windows - System .dll or .exe files modified (ATT&amp;CK T1013)"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Database Server - MySQL"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Task Scheduler Entries Modified (ATT&amp;CK T1168)"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="HTTP Server - Apache"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Mal_DLDER"
+OR alert="TROJ_GEN.R002C0PIU20"
+OR alert="Microsoft Windows - Active Directory"
+OR alert="TROJ_GEN.R002C0PJK20"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Trend Micro Deep Security Manager"
+OR alert="PUA.Linux.Wacatac.USELVK120"
+OR alert="Unix - Permissions of log files changed"
+OR alert="PUA.Linux.Malxmr.USELVK120"
+OR alert="Unix - Open Port Monitor"
+OR alert="PHP_EOLBKDOR.A"
+OR alert="TROJ_FRS.VSNTK320"
+OR alert="Coinminer_COINHIVE.SMF2-JS"
+OR alert="Mail Server - Sendmail")
+| top dvchost limit=20</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>1FIM V1</title>
+        <search>
+          <query>index=on_prem sourcetype=deepsecurity act=* $ENV$ cef* *$SERV$*
+(alert="Microsoft Windows - System .dll or .exe files modified (ATT&amp;CK T1013)"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Database Server - MySQL"
+OR alert="Unix - File Attributes Changes In /usr/etc, /usr/lib, /usr/lib64, /usr/libexec And /usr/local Locations"
+OR alert="Task Scheduler Entries Modified (ATT&amp;CK T1168)"
+OR alert="Unix - File attributes changed in /etc location"
+OR alert="HTTP Server - Apache"
+OR alert="Microsoft Windows - System driver files modified"
+OR alert="Mal_DLDER"
+OR alert="TROJ_GEN.R002C0PIU20"
+OR alert="Microsoft Windows - Active Directory"
+OR alert="TROJ_GEN.R002C0PJK20"
+OR alert="Unix - File attributes changed in /lib location"
+OR alert="Trend Micro Deep Security Manager"
+OR alert="PUA.Linux.Wacatac.USELVK120"
+OR alert="Unix - Permissions of log files changed"
+OR alert="PUA.Linux.Malxmr.USELVK120"
+OR alert="Unix - Open Port Monitor"
+OR alert="PHP_EOLBKDOR.A"
+OR alert="TROJ_FRS.VSNTK320"
+OR alert="Coinminer_COINHIVE.SMF2-JS"
+OR alert="Mail Server - Sendmail")
+| table _time alert dvchost filePath act</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,174 @@
+<form theme="light">
+  <label>Microsoft Defender</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="time" token="time_range" searchWhenChanged="true">
+      <label>Time Range</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="search_term" searchWhenChanged="false">
+      <label>Search Term</label>
+      <prefix>*</prefix>
+      <suffix>*</suffix>
+      <default>*</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Defender Logs Ingested - Last 30 Days</title>
+      <chart>
+        <search>
+          <query>index=on_prem source=s3://gd-security-prod-aggregated-logs/fluent-logs/SECURITY/GEN/ALL/DEFENDER/PROD* | timechart span=1d count by index</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Date</option>
+        <option name="charting.axisTitleY.text">Number Of Logs</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Microsoft Defender</title>
+      <table>
+        <search>
+          <query>index=on_prem source=s3://gd-security-prod-aggregated-logs/fluent-logs/SECURITY/GEN/ALL/DEFENDER/PROD* $search_term$ |
+eval _raw="null" |
+eval OS=if(match(investigationState,"UnsupportedOs"),"MacOS","Windows") |
+table
+firstEventTime
+id
+computerDnsName
+OS
+severity
+category
+title
+investigationState
+evidence{}.entityType
+evidence{}.detectionStatus
+detectionSource
+evidence{}.userPrincipalName
+threatName
+evidence{}.filePath
+evidence{}.fileName
+evidence{}.processCommandLine
+evidence{}.sha1
+evidence{}.sha256
+evidence{}.url
+evidence{}.registry*
+* |
+sort firstEventTime desc |</query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+        <format type="color" field="evidence{}.filePath">
+          <colorPalette type="list">[#53A051,#006D9C,#F8BE34,#F1813F,#DC4E41]</colorPalette>
+          <scale type="threshold">0,30,70,100</scale>
+        </format>
+        <format type="color" field="Severity">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="Category">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="Detection Source">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="category">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="severity">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="investigationState">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="detectionSource">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="OS">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Defender - DeeperDive Needed</title>
+      <table>
+        <search>
+          <query>index=on_prem source=s3://gd-security-prod-aggregated-logs/fluent-logs/SECURITY/GEN/ALL/DEFENDER/PROD* |
+eval OS=if(match(investigationState,"UnsupportedOs"),"MacOS","Windows") |
+stats values(*) as * by id |
+eval DeeperDive=if(match(status,"Resolved") OR match(title,"Suspicious connection blocked by network protection"),"No","Yes") |
+table DeeperDive resolvedTime computerDnsName id OS machineId classification relatedUser.userName evidence{}.filePath evidence{}.fileName detectorId incidentId investigationId severity status investigationState title firstEventTime lastEventTime evidence{}.detectionStatus alertCreationTime evidence{}.evidenceCreationTime lastUpdateTime _time assignedTo category threatFamilyName threatName comments{}.comment comments{}.createdBy comments{}.createdTime description detectionSource evidence{}.aadUserId evidence{}.accountName evidence{}.domainName evidence{}.entityType evidence{}.ipAddress evidence{}.parentProcessCreationTime evidence{}.parentProcessFileName evidence{}.parentProcessFilePath evidence{}.parentProcessId evidence{}.processCommandLine evidence{}.processCreationTime evidence{}.processId evidence{}.registryHive evidence{}.registryKey evidence{}.registryValue evidence{}.registryValueType evidence{}.sha1 evidence{}.sha256 evidence{}.url evidence{}.userPrincipalName evidence{}.userSid mitreTechniques{} relatedUser relatedUser.domainName |
+sort computerDnsName, id |
+search DeeperDive="Yes" AND category="Malware"</query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="wrap">false</option>
+        <format type="color" field="OS">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="evidence{}.parentProcessFileName">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="evidence{}.parentProcessFilePath">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="classification">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Defender Events - Top 10 Logs Per Device In Last 7 Day</title>
+      <chart>
+        <search>
+          <query>index=on_prem source=s3://gd-security-prod-aggregated-logs/fluent-logs/SECURITY/GEN/ALL/DEFENDER/PROD* | stats count by computerDnsName | sort -count | head 10</query>
+          <earliest>-7d@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Device Name</option>
+        <option name="charting.axisTitleY.text">Number Of Logs</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+</form>

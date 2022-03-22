@@ -1,0 +1,122 @@
+<form theme="light">
+  <label>Microsoft Email Messages</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="time" token="time_range" searchWhenChanged="true">
+      <label>Time Range</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="search_term" searchWhenChanged="false">
+      <label>Search Term</label>
+      <prefix>*</prefix>
+      <suffix>*</suffix>
+      <default>*</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Microsoft Email Message Logs Ingested - Last 30 Days</title>
+      <chart>
+        <search>
+          <query>index=on_prem gd_fluentd_name=SECURITY.GEN.ALL.EXOLOGS | timechart span=1d count by index</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Date</option>
+        <option name="charting.axisTitleY.text">Number Of Logs</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Daily Actions Taken</title>
+      <chart>
+        <search>
+          <query>index=on_prem gd_fluentd_name=SECURITY.GEN.ALL.EXOLOGS | search Status="Delivered" OR Status="FilteredAsSpam" OR Status="Quarantined" | timechart span=1d count by Status</query>
+          <earliest>-7d@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Day</option>
+        <option name="charting.axisTitleY.text">Number of Emails</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Entries Per Log Ingested</title>
+      <chart>
+        <search>
+          <query>index=on_prem gd_fluentd_name=SECURITY.GEN.ALL.EXOLOGS | stats count by LogFilePrefix</query>
+          <earliest>-60m@m</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.text">File Name</option>
+        <option name="charting.axisTitleY.text">Number Of Entries</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Microsoft Email Message Logs</title>
+      <table>
+        <search>
+          <query>index=on_prem gd_fluentd_name=SECURITY.GEN.ALL.EXOLOGS $search_term$ | table
+Received,Status,RecipientAddress,SenderAddress,Subject,FromIP,ToIP,* |
+sort Received desc |
+rename Received as "Date\Time Received"</query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <format type="color" field="evidence{}.filePath">
+          <colorPalette type="list">[#53A051,#006D9C,#F8BE34,#F1813F,#DC4E41]</colorPalette>
+          <scale type="threshold">0,30,70,100</scale>
+        </format>
+        <format type="color" field="Severity">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="Category">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="Detection Source">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="Status">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+</form>

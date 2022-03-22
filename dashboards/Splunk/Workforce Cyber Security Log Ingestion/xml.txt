@@ -1,0 +1,226 @@
+<dashboard>
+  <label>Workforce Cybersecurity Log Ingestion</label>
+  <row>
+    <panel>
+      <chart>
+        <title>Defender Logs - Last 30 Days</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.DEFENDER.PROD*" | timechart span=1d count by raw</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Date</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Defender Logs - Last 24hrs</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.DEFENDER.PROD*" | timechart span=1hr count by raw</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Microsoft O365 Management Logs - Last 30 Days</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" | timechart span=1d count by raw</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Date</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Microsoft O365 Management Logs - Last 24hrs</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" | timechart span=1h count by raw</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Exchange Online Messages</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name=SECURITY.GEN.ALL.EXOLOGS | timechart span=1d count by raw</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Date</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Exchange Online Messages - Last 24hrs</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name=SECURITY.GEN.ALL.EXOLOGS | timechart span=1hr count by raw</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>SafeLink Logs</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name=SECURITY.GEN.ALL.SAFELINKLOG | timechart span=1d count by raw</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Date</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>SafeLink Logs - Last 24hrs</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name=SECURITY.GEN.ALL.SAFELINKLOG | timechart span=1hr count by raw</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Trend Micro Deep Security Logs</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="*DEEPSECURITY*" | timechart span=1d count by raw</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Date</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Trend Micro Deep Security Logs - Last 24hrs</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="*DEEPSECURITY*" | timechart span=1h count by raw</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>CarbonBlack Logs - Last 30 Days</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.CARBONBLACK.PROD*" | timechart span=1d count by raw</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Date</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>CarbonBlack Logs - Last 24hrs</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.CARBONBLACK.PROD*" | timechart span=1h count by raw</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Number of Logs</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</dashboard>

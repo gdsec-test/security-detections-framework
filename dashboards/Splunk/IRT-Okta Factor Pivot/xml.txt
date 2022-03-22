@@ -1,0 +1,214 @@
+<form theme="dark">
+  <label>IRT - Okta Factor Pivot</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="time" token="Timeframe">
+      <label>Timeframe</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="user">
+      <label>User</label>
+    </input>
+    <input type="text" token="factorId">
+      <label>Factor ID</label>
+      <default></default>
+    </input>
+    <input type="text" token="suspectIp">
+      <label>Suspect IP</label>
+      <default>*</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Factors for $user$</title>
+      <table>
+        <search>
+          <query>index="oktalogs" user=$user$* (eventType="user.authentication.auth_via_mfa" OR eventType="user.mfa.factor.*")
+| rex field=debugContext.debugData.requestUri  "\/factors\/(?&lt;FactorID&gt;.*?)\/verify"
+| rex field=debugContext.debugData.requestUri  "\/factors\/(?&lt;FactorID&gt;.*?)\/lifecycle"
+| table _time, user, FactorID, displayMessage, eventType, authenticationContext.credentialProvider, outcome.reason, src_ip
+| dedup eventType ,FactorID</query>
+          <earliest>$Timeframe.earliest$</earliest>
+          <latest>$Timeframe.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>App List by Factor $factorId$</title>
+      <table>
+        <search>
+          <query>index="oktalogs"  [ search index="oktalogs" "debugContext.debugData.requestUri"="/api/v1/authn/factors/$factorId$/verify" outcome.result="SUCCESS" user=$user$* src_ip=$suspectIp$
+| stats count by authenticationContext.externalSessionId
+| fields - count]
+| bucket _time span=1d
+| stats count by src_ip, app, _time, outcome.result, user
+| sort _time</query>
+          <earliest>$Timeframe.earliest$</earliest>
+          <latest>$Timeframe.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">true</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>App Access Graph by Factor $factorId$</title>
+      <chart>
+        <search>
+          <query>index="oktalogs"  [ search index="oktalogs" "debugContext.debugData.requestUri"="/api/v1/authn/factors/$factorId$/verify" outcome.result="SUCCESS" user=$user$* src_ip=$suspectIp$ | stats count by authenticationContext.externalSessionId | fields - count]  app!=NULL | bucket _time span=1h  | timechart  count by app</query>
+          <earliest>$Timeframe.earliest$</earliest>
+          <latest>$Timeframe.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Okta Factors for $user$ - Grouped Activities</title>
+      <table>
+        <search>
+          <query>index="oktalogs" (eventType="user.mfa.factor.*" OR eventType="user.authentication.auth_via_mfa") outcome.result="SUCCESS" target{}.alternateId="$user$*"
+| rex field=debugContext.debugData.requestUri  "\/factors\/(?&lt;FID&gt;.*)\/?"
+| eval factorId=mvindex(split(FID,"/"),0)
+| transaction factorId
+| table _time, actor.alternateId, target{}.alternateId, factorId, displayMessage, eventType, authenticationContext.credentialProvider, outcome.reason, src_ip</query>
+          <earliest>$Timeframe.earliest$</earliest>
+          <latest>$Timeframe.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Factor Events for $user$</title>
+      <chart>
+        <search>
+          <query>index="oktalogs" (eventType="user.mfa.factor.*" OR eventType="user.authentication.auth_via_mfa") outcome.result="SUCCESS" target{}.alternateId="$user$*"
+| rex field=debugContext.debugData.requestUri  "\/factors\/(?&lt;FID&gt;.*)\/?"
+| eval factorId=mvindex(split(FID,"/"),0)
+| where 'factorId'!="null"
+| timechart count by factorId limit=100</query>
+          <earliest>$Timeframe.earliest$</earliest>
+          <latest>$Timeframe.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisLabelsY.majorUnit">50</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$user$ Counts by Factor</title>
+      <table>
+        <search>
+          <query>index="oktalogs" (eventType="user.mfa.factor.*" OR eventType="user.authentication.auth_via_mfa") outcome.result="SUCCESS" target{}.alternateId="v_mchetna*"
+| rex field=debugContext.debugData.requestUri  "\/factors\/(?&lt;FID&gt;.*)\/?"
+| eval factorId=mvindex(split(FID,"/"),0)
+| where 'factorId'!="null"
+| stats count by factorId
+| sort - count</query>
+          <earliest>-60d@d</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

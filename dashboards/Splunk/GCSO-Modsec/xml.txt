@@ -1,0 +1,133 @@
+<form>
+  <label>GCSO-Modsec</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="radio" token="ENV">
+      <label>Environment</label>
+      <choice value="| inputlookup pki_servers.csv | rex field=fqdn &quot;(?&lt;hostname&gt;.+?)\.&quot; | fields hostname | eval hostname=lower(hostname)">PKI</choice>
+      <choice value="| inputlookup pci_servers.csv | rex field=fqdn &quot;(?&lt;hostname&gt;.+?)\.&quot; | fields hostname | eval hostname=lower(hostname)">PCI</choice>
+      <choice value="*">No Filter</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="text" token="filter" searchWhenChanged="false">
+      <label>Filter</label>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>event_times</title>
+        <search>
+          <query>index=on_prem product=MODSEC modsecurity_crs_20_protocol_violations.conf $ENV$ $filter$ | timechart count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <single>
+        <title>Total Events</title>
+        <search>
+          <query>index=on_prem product=MODSEC modsecurity_crs_20_protocol_violations.conf $ENV$ $filter$ | stats dc(_time)</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Top Protocol Violations</title>
+        <search>
+          <query>index=on_prem modsecurity_crs_20_protocol_violations.conf $ENV$ $filter$
+| stats count by client, Id, Msg
+| sort - count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Top Protocol Anomalies</title>
+        <search>
+          <query>index=on_prem modsecurity_crs_21_protocol_anomalies.conf
+| stats count by client, Id, Msg
+| sort - count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>index=on_prem product=MODSEC modsecurity_crs_20_protocol_violations.conf $ENV$ $filter$ | table _time cent_host _raw sourcetype | dedup _raw</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>QSC/NEMO Compute over time</title>
+        <search>
+          <query>index=on_prem modsecurity_crs_21_protocol_anomalies.conf product=MODSEC $ENV$ $filter$ | timechart count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <single>
+        <title>Total IIS Alerts</title>
+        <search>
+          <query>index=on_prem product=MODSEC modsecurity_crs_21_protocol_anomalies.conf $ENV$ $filter$ | stats dc(_time)</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>QSC/Nemo compute alerts</title>
+        <search>
+          <query>index=on_prem product=MODSEC modsecurity_crs_21_protocol_anomalies.conf $ENV$ $filter$ | table _time cent_host _raw sourcetype | dedup _raw</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+      </table>
+    </panel>
+  </row>
+</form>

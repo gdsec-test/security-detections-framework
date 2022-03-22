@@ -1,0 +1,86 @@
+<form>
+  <label>GCSO-Windows Logons</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="filter" searchWhenChanged="false">
+      <label>Filter</label>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="radio" token="ENV">
+      <label>Environment</label>
+      <choice value="[| inputlookup pki_servers.csv | search sys_class_name=&quot;Windows Server&quot; | rex field=fqdn &quot;(?&lt;Computer&gt;.+?)\.&quot; | fields Computer | eval Computer=lower(Computer)]">PKI</choice>
+      <choice value="[| inputlookup pci_servers.csv | search sys_class_name=&quot;Windows Server&quot; | rex field=fqdn &quot;(?&lt;Computer&gt;.+?)\.&quot; | fields Computer | eval Computer=lower(Computer)]">PCI</choice>
+      <choice value="Computer=*">ALL</choice>
+      <default>Computer=*</default>
+      <initialValue>Computer=*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>Windows Security Logon Events</title>
+        <search>
+          <query>index="windows_events" EventCode=4624 OR EventCode=4625 $filter$ $ENV$ | stats count by EventCode</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <table>
+        <title>Windows Security Logon Events</title>
+        <search>
+          <query>index="windows_events" EventCode=4624 OR EventCode=4625 $filter$ $ENV$ | stats count dc(IpAddress) as Unique_IPs by TargetUserName | sort - count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Failed Logins</title>
+        <search>
+          <query>index="windows_events" EventCode=4625 $filter$ $ENV$ | stats count by Computer IpAddress SubjectUserName TargetUserName  | appendpipe [stats count | where count=0 | eval Computer="No Results to desplay"] | fields - count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Windows Log Clear Events</title>
+        <search>
+          <query>index="aws_syslog" EventId=1102 $ENV$
+| rex field=Description "Security\sID:\s(?&lt;SecurityID&gt;.+)\s"
+| rex field=Description "Account\sName:\s(?&lt;AccountName&gt;.+)\s"
+| rex field=Description "Domain\sName:\s(?&lt;Domain&gt;.+)"
+| rex field=Description "Logon\sID:\s(?&lt;LogonID&gt;.+)"
+| eval Summary="The audit log was cleared."
+| stats count by EventId Summary MachineName LogName SecurityID AccountName Domain LogonID Keywords _time | appendpipe [stats count | where count=0 | eval Computer="No Results to desplay"] | fields - count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,74 @@
+<form theme="dark">
+  <label>FluentD Hosts</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time">
+      <label></label>
+      <default>
+        <earliest>-7d@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>Host count by day</title>
+        <search>
+          <query>index=on_prem (sourcetype=linux_secure OR sourcetype=onprem) gd_fluentd_name=* host!="-"
+| timechart span=1d dc(host)</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <title>Total hosts</title>
+        <search>
+          <query>index=on_prem (sourcetype=linux_secure OR sourcetype=onprem) gd_fluentd_name=* host!="-"
+| stats dc(host) as Distinct_Hosts</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>new host this week</title>
+        <search>
+          <query>index=on_prem (sourcetype=linux_secure OR sourcetype=onprem) gd_fluentd_name=* host!="-"
+| bucket _time span=1w
+| chart dc(host) as host by _time
+| eval this_week=if(_time&gt;relative_time(now(), "-1w@w"), 1, 0)
+| stats sum(eval(if(this_week=="1",host,0))) as "this" sum(eval(if(this_week=="0",host,0))) as "last"
+| eval new_hosts=this-last
+| fields - this, last</query>
+          <earliest>-8d@w</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <table>
+        <title>Host Names</title>
+        <search>
+          <query>index=on_prem (sourcetype=linux_secure OR sourcetype=onprem) gd_fluentd_name=* host!="-"
+| stats values(host) as HostNames</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

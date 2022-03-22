@@ -1,0 +1,165 @@
+<form theme="dark">
+  <label>Okta Logins - IRT</label>
+  <description>To find any suspicious login IP / Location. The results does not include GoDaddy ISP.</description>
+  <fieldset submitButton="true">
+    <input type="text" token="user" searchWhenChanged="true">
+      <label>User Account</label>
+      <suffix>*</suffix>
+    </input>
+    <input type="time" token="time" searchWhenChanged="true">
+      <label>Time</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="source" searchWhenChanged="true">
+      <label>Source IP (Other Users ONLY)</label>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>$user$ - Login details</title>
+      <table>
+        <search>
+          <query>index=oktalogs user=$user$ action=success securityContext.isp!=*godaddy* | stats Count by actor.displayName, src_ip, securityContext.isp, client.geographicalContext.country, client.geographicalContext.city | rename actor.displayName as Username, src_ip as "Source IP", securityContext.isp as ISP, client.geographicalContext.country as Country, client.geographicalContext.city as City</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Applications accessed by $user$</title>
+      <table>
+        <search>
+          <query>index=oktalogs user=$user$ action=success securityContext.isp!=*godaddy* | stats count by src_ip, app</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$user$ Information</title>
+      <table>
+        <search>
+          <query>index=oktausers user=$user$ | dedup user | stats count by user, profile.firstName, profile.lastName, profile.officialTitle, profile.department, profile.deliveryOffice, status | rename user as User, profile.firstName as "First Name", profile.lastName as "Last Name", profile.officialTitle as Title, profile.department as Department, profile.deliveryOffice as Office, status as Status</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Other Users - Login from $source$</title>
+      <table>
+        <title>Enter the Source IP above to get results</title>
+        <search>
+          <query>index=oktalogs user!=$user$ AND user!=0* AND user!=*okta* src_ip=$source$ action=success securityContext.isp!=*godaddy* | table user | dedup user | sort user</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$user$ - Credential Actions</title>
+      <table>
+        <search>
+          <query>index="oktalogs" target{}.alternateId=$user$ eventType="system.agent.ad.*"
+| dedup _time, src_ip
+| table _time, src_ip, actor.alternateId, target{}.alternateId, eventType</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$user$ - MFA Factor Events</title>
+      <table>
+        <search>
+          <query>index="oktalogs" target{}.alternateId=$user$ eventType="user.mfa.factor.*"
+| dedup src_ip, _time
+| table _time, src_ip, actor.alternateId, target{}.alternateId, eventType, outcome.reason</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$user$ Accessed Apps - GoDaddy</title>
+      <table>
+        <search>
+          <query>index=oktalogs user=$user$ action=success securityContext.isp=*godaddy* | stats count by src_ip, app</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>$user$ Okta Logins - GoDaddy</title>
+      <table>
+        <search>
+          <query>index=oktalogs user=$user$ action=success securityContext.isp=*godaddy* | stats Count by actor.displayName, src_ip, securityContext.isp, client.geographicalContext.country, client.geographicalContext.city | rename actor.displayName as Username, src_ip as "Source IP", securityContext.isp as ISP, client.geographicalContext.country as Country, client.geographicalContext.city as City</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

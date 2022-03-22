@@ -1,0 +1,80 @@
+<form>
+  <label>GCSO-Linux Logons</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-4h@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="radio" token="ENV">
+      <label>Environment</label>
+      <choice value="gd_fluentd_name=&quot;*PKI*&quot;">PKI</choice>
+      <choice value="gd_fluentd_name=*PCI*">PCI</choice>
+      <choice value="*">No Filter</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="text" token="filter" searchWhenChanged="false">
+      <label>Filter</label>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>Linux Login Failure top 10</title>
+        <search>
+          <query>index=on_prem sshd eventtype=failed_login $ENV$ $filter$ | rename rhost as IpAddress | rename ip_address as IpAddress | top IpAddress</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <table>
+        <title>Linux Failed Logins</title>
+        <search>
+          <query>index=on_prem sshd eventtype=failed_login $ENV$ $filter$ | rename rhost as ip_address | table _time eventtype hostname ip_address</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Linux - Computer Failure</title>
+        <search>
+          <query>index=on_prem sshd "Failed" "bastion" "publickey" "pam" "password" $ENV$ $filter$ | table _time eventtype hostname IpAddress | appendpipe [stats count | where count=0 | eval hostname="No Results to desplay"] | fields - count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>SQL Failed Logins</title>
+        <search>
+          <query>index=on_prem "Reason: Failed to open the explicitly specified database" "18456" $filter$ | table _raw | appendpipe [stats count | where count=0 | eval _raw="No Results to desplay"] | fields - count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

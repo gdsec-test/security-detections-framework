@@ -1,0 +1,83 @@
+<dashboard>
+  <label>CVEs</label>
+  <description>The riskiest CVEs as determined by RecordedFuture.</description>
+  <row>
+    <panel>
+      <table>
+        <title>Recent High-Risk CVEs from RecordedFuture</title>
+        <search>
+          <query>| inputlookup rf_vulnerability_risklist.csv
+| search Name=CVE-*
+| spath input=EvidenceDetails output=Criticality path=EvidenceDetails{}.Criticality
+| spath input=EvidenceDetails output=CriticalityLabel path=EvidenceDetails{}.CriticalityLabel
+| spath input=EvidenceDetails output=EvidenceString path=EvidenceDetails{}.EvidenceString
+| spath input=EvidenceDetails output=MitigationString path=EvidenceDetails{}.MitigationString
+| spath input=EvidenceDetails output=Rule path=EvidenceDetails{}.Rule
+| spath input=EvidenceDetails output=Timestamp path=EvidenceDetails{}.Timestamp
+| fillnull value="0" MitigationString
+| eval Combine=mvzip(mvzip(mvzip(mvzip(mvzip(Criticality,CriticalityLabel,"---"),EvidenceString,"---"),MitigationString,"---"),Rule,"---"),Timestamp,"---")
+| mvexpand Combine
+| eval split=split(Combine, "---")
+| eval Criticality=mvindex(split, 0)
+| eval CriticalityLabel=mvindex(split, 1)
+| eval EvidenceString=mvindex(split, 2)
+| eval MitigationString=mvindex(split, 3)
+| eval Rule=mvindex(split, 4)
+| eval Timestamp=mvindex(split, 5)
+| fields - split Combine
+| eval Timestamp=strptime(Timestamp, "%Y-%m-%dT%H:%M:%S.%NZ")
+| convert ctime(Timestamp) as _time
+| eval Timesearch=now()-(86400*7)
+| where Timestamp &gt; Timesearch
+| table Name, _time, Criticality, CriticalityLabel, Risk, EvidenceString
+| sort -Risk, -_time</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">row</option>
+        <drilldown>
+          <link target="_blank">https://nvd.nist.gov/vuln/detail/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Recent CVE Attack Patterns</title>
+      <table>
+        <title>Trend Micro</title>
+        <search>
+          <query>index="on_prem" sourcetype=deepsecurity
+[| inputlookup rf_vulnerability_risklist.csv | strcat "*" Name "*" alert | table alert | dedup alert]
+| rex field=alert ".*(?P&lt;CVE&gt;CVE-\d{4}-\d+)"
+| stats count by CVE
+| sort -count</query>
+          <earliest>-7d@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Changes Over Time?</title>
+        <search>
+          <query>index="on_prem" sourcetype=deepsecurity
+[| inputlookup rf_vulnerability_risklist.csv | search Risk&gt;=50 | strcat "*" Name "*" alert | table alert | dedup alert]
+| rex field=alert ".*(?P&lt;CVE&gt;CVE-\d{4}-\d+)"
+| table CVE _time
+| bin _time span=1d
+| stats count by CVE, _time</query>
+          <earliest>-7d@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</dashboard>

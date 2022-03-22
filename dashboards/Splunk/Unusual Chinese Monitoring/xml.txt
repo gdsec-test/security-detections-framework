@@ -1,0 +1,163 @@
+<form theme="dark">
+  <label>Unusual Chinese Monitoring</label>
+  <fieldset submitButton="true">
+    <input type="time" token="time">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <map>
+        <title>China Locations</title>
+        <search>
+          <query>index="oktalogs" client.geographicalContext.country=China
+| geostats latfield=client.geographicalContext.geolocation.lat longfield=client.geographicalContext.geolocation.lon count</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="mapping.map.center">(29.38,104.19)</option>
+        <option name="mapping.map.zoom">4</option>
+        <option name="mapping.type">marker</option>
+      </map>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <input type="radio" token="appResult1" searchWhenChanged="true">
+        <label>Auth Result</label>
+        <choice value="outcome.result=&quot;SUCCESS&quot; OR outcome.result=&quot;ALLOW&quot;">Allowed</choice>
+        <choice value="outcome.result!=&quot;SUCCESS&quot; AND outcome.result!=&quot;ALLOW&quot;">Denied</choice>
+        <default>outcome.result!="SUCCESS" AND outcome.result!="ALLOW"</default>
+        <initialValue>outcome.result!="SUCCESS" AND outcome.result!="ALLOW"</initialValue>
+      </input>
+      <input type="dropdown" token="userLimit" searchWhenChanged="true">
+        <label>Number of Entries</label>
+        <choice value="5">5</choice>
+        <choice value="10">10</choice>
+        <choice value="20">20</choice>
+        <choice value="40">40</choice>
+        <choice value="80">80</choice>
+        <default>5</default>
+        <initialValue>5</initialValue>
+      </input>
+      <chart>
+        <title>Top Users</title>
+        <search>
+          <query>index="oktalogs" client.geographicalContext.country=China user!="system@okta.com" $appResult1$
+| top limit=$userLimit$ user</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <input type="radio" token="appResult" searchWhenChanged="true">
+        <label>Auth Result</label>
+        <choice value="outcome.result=&quot;SUCCESS&quot; OR outcome.result=&quot;ALLOW&quot;">Allowed</choice>
+        <choice value="outcome.result!=&quot;SUCCESS&quot; AND outcome.result!=&quot;ALLOW&quot;">Denied</choice>
+        <default>outcome.result="SUCCESS" OR outcome.result="ALLOW"</default>
+        <initialValue>outcome.result="SUCCESS" OR outcome.result="ALLOW"</initialValue>
+      </input>
+      <chart>
+        <title>Most Used Apps</title>
+        <search>
+          <query>index="oktalogs" client.geographicalContext.country=China user!="system@okta.com" $appResult$
+| stats count by app</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>index="oktalogs" outcome.result="*"
+| stats count by outcome.result
+| rename outcome.result as "Auth Result"
+| sort - count</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Auth Denied Reasons</title>
+        <search>
+          <query>index="oktalogs" client.geographicalContext.country=China user!="system@okta.com" outcome.result!="SUCCESS" AND outcome.result!="ALLOW" outcome.reason!=null
+| stats count by outcome.reason
+| sort - count</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Failed Login Attempts</title>
+        <search>
+          <query>index="oktalogs" client.geographicalContext.country=China user!="system@okta.com" outcome.result!="SUCCESS" AND outcome.result!="ALLOW"
+| stats values(client.ipAddress) as "IpAddress" values(client.userAgent.rawUserAgent) as "UserAgent" count as "Attempts" dc(client.ipAddress) as "DistinctIpAddresses" dc(client.userAgent.rawUserAgent) as "DistinctUserAgents" by user
+| eval condition=if(DistinctIpAddresses&gt;1 AND DistinctUserAgents&gt;1, "true", "false")
+| where condition="true" OR Attempts&gt;50
+| sort - "DistinctIpAddresses" "Attempts"
+| fields - condition</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Source by User and User Agent</title>
+        <search>
+          <query>index="oktalogs" client.geographicalContext.country=China user!="system@okta.com"
+| stats values(user) as "Username" values(outcome.result) as "Auth Result" values(app) as "App" values(client.userAgent.rawUserAgent) as "User Agent" count by client.ipAddress
+| sort - count</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Notes</title>
+      <table>
+        <search>
+          <query>| makeresults
+| eval panel="Failed Login Attempts"
+| eval note="The bad actors reported by the panel were checked against the VPN logs to make sure they never authenticated with the VPN."
+| fields panel note
+| fields - _time</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

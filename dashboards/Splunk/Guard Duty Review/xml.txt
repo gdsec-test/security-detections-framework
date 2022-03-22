@@ -1,0 +1,122 @@
+<form>
+  <label>Guard Duty Review</label>
+  <description>Guard Duty Event Review</description>
+  <fieldset submitButton="false">
+    <input type="time" token="timepicker" searchWhenChanged="true">
+      <label>TimePicker</label>
+      <default>
+        <earliest>-1d@d</earliest>
+        <latest>@d</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="product" searchWhenChanged="true">
+      <label>Product</label>
+      <choice value="*">ALL</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>product</fieldForLabel>
+      <fieldForValue>product</fieldForValue>
+      <search>
+        <query>| inputlookup aws_accounts.csv | dedup product | fields product | sort product</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="dropdown" token="environment" searchWhenChanged="true">
+      <label>Environment</label>
+      <choice value="*">ALL</choice>
+      <fieldForLabel>environment</fieldForLabel>
+      <fieldForValue>environment</fieldForValue>
+      <search>
+        <query>| inputlookup aws_accounts.csv | dedup environment | fields environment</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="dropdown" token="type" searchWhenChanged="true">
+      <label>Type</label>
+      <choice value="">ALL</choice>
+      <fieldForLabel>type</fieldForLabel>
+      <fieldForValue>type</fieldForValue>
+      <search>
+        <query>index=*aws_guardduty | rex field=detail.type (?&lt;type&gt;.+?)\: | dedup type | fields type</query>
+        <earliest>rt-30d</earliest>
+        <latest>rt</latest>
+      </search>
+      <default></default>
+    </input>
+    <input type="dropdown" token="organization" searchWhenChanged="true">
+      <label>Organization</label>
+      <choice value="pci_aws">PCI</choice>
+      <choice value="aws">Non-PCI</choice>
+      <choice value="*">ALL</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>organization</fieldForLabel>
+      <fieldForValue>organization</fieldForValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Guard Duty EC2 Instance Findings</title>
+      <table>
+        <search>
+          <query>index=$organization$_guardduty detail.resource.instanceDetails.instanceId=* detail.type=$type$* | join detail.accountId [ | inputlookup aws_accounts.csv | search product=$product$ environment=$environment$ | rename awsAccountId as detail.accountId ] | rename detail.description as description, detail.region as region, detail.resource.instanceDetails.iamInstanceProfile.arn as instanceProfileArn, detail.resource.instanceDetails.imageDescription as imageDescription, detail.resource.instanceDetails.instanceId as instanceId, detail.resource.instanceDetails.networkInterfaces{}.privateIpAddress as privateIpAddress, detail.service.action.portProbeAction.portProbeDetails{}.localPortDetails.port as port, detail.service.action.portProbeAction.portProbeDetails{}.remoteIpDetails.city.cityName as cityName, detail.service.action.portProbeAction.portProbeDetails{}.remoteIpDetails.country.countryName as countryName, detail.service.action.portProbeAction.portProbeDetails{}.remoteIpDetails.ipAddressV4 as remoteIpAddress, detail.service.action.portProbeAction.portProbeDetails{}.remoteIpDetails.organization.asnOrg as asnOrg, detail.service.additionalInfo.threatName as threatName, detail.type as type
+| table _time product, environment, type, description, region, instanceProfileArn, imageDescription, instanceId, privateIpAddress, port, cityName, countryName, remoteIpAddress, asnOrg, threatName</query>
+          <earliest>$timepicker.earliest$</earliest>
+          <latest>$timepicker.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <condition field="privateIpAddress">
+            <set token="ipaddress">$click.value2$</set>
+            <set token="product">$click.value$</set>
+            <link target="_blank">search?q=index=*aws_vpc_flowlogs%20product=$product$%20environment=$environment$%20(src_ip=$ipaddress$%20OR%20dest_ip=$ipaddress$)&amp;earliest=$timepicker.earliest$&amp;latest=$timepicker.latest$</link>
+          </condition>
+          <condition field="remoteIpAddress">
+            <set token="ipaddress">$click.value2$</set>
+            <set token="product">$click.value$</set>
+            <link target="_blank">search?q=index=*aws_vpc_flowlogs%20product=$product$%20environment=$environment$%20(src_ip=$ipaddress$%20OR%20dest_ip=$ipaddress$)&amp;earliest=$timepicker.earliest$&amp;latest=$timepicker.latest$</link>
+          </condition>
+          <condition field="instanceId">
+            <set token="instanceid">$click.value2$</set>
+            <set token="product">$click.value$</set>
+            <link target="_blank">search?q=index=*aws_config%20resourceId=$instanceid$%20product=$product$%20environment=$environment$%20earliest=-1d</link>
+          </condition>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Guard Duty User Findings</title>
+      <table>
+        <search>
+          <query>index=$organization$_guardduty "detail.resource.accessKeyDetails.accessKeyId"=* detail.type=$type$* | join detail.accountId [ | inputlookup aws_accounts.csv | search product=$product$ environment=$environment$ | rename awsAccountId as detail.accountId ] | rename detail.description as description, detail.region as region, detail.resource.accessKeyDetails.principalId as principalId, detail.resource.accessKeyDetails.userName as userName, detail.service.action.awsApiCallAction.remoteIpDetails.city.cityName as cityName, detail.service.action.awsApiCallAction.remoteIpDetails.country.countryName as countryName, detail.service.action.awsApiCallAction.remoteIpDetails.organization.asnOrg as asnOrg, detail.type as type
+| table product, environment, type, description, region, principalId, userName, cityName, countryName, asnOrg</query>
+          <earliest>$timepicker.earliest$</earliest>
+          <latest>$timepicker.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

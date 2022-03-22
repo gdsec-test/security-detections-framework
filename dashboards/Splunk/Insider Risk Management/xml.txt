@@ -1,0 +1,89 @@
+<form version="1.1">
+  <label>Insider Risk Management</label>
+  <description>Time Picker</description>
+  <fieldset submitButton="true">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>O365 Alerts - By Source</title>
+      <chart>
+        <title>Results based on Time Picker</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" Operation=*Alert* | table CreationTime,Operation,ClientIP,SiteUrl,SourceFileName,SourceRelativeUrl,UserId,UserKey,Workload,Application,DeviceName,FileSize,Id,ObjectId,RecordType,Sensitivity*,* | sort -CreationTime | stats count by Source</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>O365 Alerts - Source &amp; Name</title>
+      <table>
+        <title>Results based on Time Picker</title>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" Operation=*Alert* NOT Name="Admin Submission Result Completed" |
+rename "Data.ttr" as "ActionTaken" |
+eval Name=if(isnull('Name'),AlertDisplayName,Name) |
+eval AlertId=if(isnull('AlertId'),"Id",AlertId) |
+stats values(*) as * by AlertId |
+eval ActionTaken=if(isnull('ActionTaken'),"None",ActionTaken) |
+search NOT AlertId="Id" |
+stats count by Source,ActionTaken,Name |
+sort -count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="totalsRow">true</option>
+        <format type="color" field="Source">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="Name">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="ActionTaken">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <search>
+          <query>index=on_prem gd_fluentd_name="SECURITY.GEN.ALL.MDOLOGS.PROD*" Operation=*Alert* NOT Name="Admin Submission Result Completed" |
+rename "Data.ttr" as "ActionTaken" |
+eval Name=if(isnull('Name'),AlertDisplayName,Name) |
+eval AlertId=if(isnull('AlertId'),"Id",AlertId) |
+stats values(*) as * by AlertId |
+eval ActionTaken=if(isnull('ActionTaken'),"None",ActionTaken) |
+search NOT AlertId="Id" |
+timechart span=1d count by index</query>
+          <earliest>-7d@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

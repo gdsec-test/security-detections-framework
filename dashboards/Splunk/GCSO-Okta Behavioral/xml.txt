@@ -1,0 +1,259 @@
+<form theme="dark">
+  <label>GCSO - Okta Behavioral</label>
+  <fieldset submitButton="true">
+    <input type="time" token="time">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="user">
+      <label>User</label>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <title>Successful logins from RF blacklisted IP addresses</title>
+        <search>
+          <query>index="oktalogs" outcome.result="SUCCESS" OR outcome.result="ALLOW"
+| search NOT user IN ("unknown", "system@okta.com", "ADService@godaddy.com")
+| stats values(user) as user values(eventType) as EventTypes count by client.ipAddress
+| lookup rf_ip_risklist.csv Name as client.ipAddress OUTPUT Risk, RiskString  EvidenceDetails
+| fillnull Risk value=N/A
+| search Risk!=N/A
+| fields - count
+| search user=$user$</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Okta Brute Force</title>
+        <search>
+          <query>index="oktalogs" outcome.result!="SUCCESS" AND outcome.result!="ALLOW"
+| search NOT user IN ("unknown", "system@okta.com", "ADService@godaddy.com")
+| search NOT app IN ("Microsoft Office 365", "GoDaddy SSO", "Slack*", "Okta Admin Console", "Zoom Enterprise")
+| search NOT client.userAgent.rawUserAgent IN ("unknown", "Microsoft Office*", "AppleExchangeWebServices*", "Android-Mail*", "*CalendarAgent*", "Windows-AzureAD-Authentication-Provider/*", "Okta Radius Agent*", "PAN GlobalProtect*", "Jamf%20Connect*", "okta-auth-dotnet*", "SecurityAgentHelper*")
+| search NOT client.ipAddress IN ("null", "132.148.54*", "64.202.160*", "50.116.41.217", "198.58.111.80", "192.81.129.227", "139.162.220.143")
+| bin span=5m _time
+| stats values(client.ipAddress) as "IpAddress" values(client.userAgent.rawUserAgent) as "UserAgent" count as "Attempts" dc(client.ipAddress) as "DistinctIpAddresses" dc(client.userAgent.rawUserAgent) as "DistinctUserAgents" by user _time
+| eval condition=if(DistinctIpAddresses&gt;2 AND DistinctUserAgents&gt;1, "true", "false")
+| where condition="true" OR Attempts&gt;50
+| sort - "DistinctIpAddresses" "Attempts"
+| fields - condition
+| search user=$user$</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Password reset request on new devices coming from overseas and without VPN</title>
+        <search>
+          <query>(index="oktalogs" displayMessage="Send user new device notification email" OR displayMessage="Change application password for user" OR displayMessage="Send self-service password reset email" OR displayMessage="Perform user password reset by AD agent" client.geographicalContext.country="*" actor.displayName!="IAM Provisioning") OR (earliest=-30d latest=now index="oktausers" status=ACTIVE "profile.countryCode"="*" NOT
+    [ search index="oktausers" status=ACTIVE "profile.employeeType"=null "profile.mobilePhone"=null "profile.officialTitle"=null
+    | fillnull value=null profile.employeeNumber
+    | search "profile.employeeNumber"=null
+    | stats count by "profile.email"
+    | fields profile.email])
+| search NOT user IN ("unknown", "system@okta.com", "ADService@godaddy.com")
+| search NOT client.ipAddress IN ("null", "132.148.54*", "64.202.160*", "50.116.41.217", "198.58.111.80", "192.81.129.227", "139.162.220.143", "94.156.219.181", "78.130.187.154", "77.98.3.134")
+| search NOT profile.city IN ("*Remote*")
+| search NOT profile.deliveryOffice IN ("*Remote*")
+| fillnull value=null user
+| eval user=if(user="null", profile.email, user)
+| stats values(displayMessage) as DisplayMessages values(client.ipAddress) as "IpAddress" values(securityContext.isp) as "ISP" values(client.geographicalContext.country) as SessionCountry values(profile.countryCode) as "iso2" count by user
+| fields - count
+| eval nDisplayMessages=mvcount(DisplayMessages)
+| lookup geo_attr_countries iso2 OUTPUT country as OriginalCountry
+| search SessionCountry="*" OriginalCountry="*"
+| eval CountryMatches=if(SessionCountry=OriginalCountry OR SessionCountry="Hong Kong" AND OriginalCountry="China", "true", "false")
+| where CountryMatches="false" AND nDisplayMessages&gt;1
+| mvexpand DisplayMessages
+| where DisplayMessages="Send user new device notification email"
+| fields - iso2 CountryMatches nDisplayMessages DisplayMessages
+| search user=$user$ ISP!=*godaddy*</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Multiple logins in an hour on different cities and ISPs</title>
+        <search>
+          <query>index="oktalogs" outcome.result="SUCCESS" OR outcome.result="ALLOW" "godaddy.com" user="*@godaddy.com"
+| search NOT user IN ("unknown", "system@okta.com", "ADService@godaddy.com")
+| search NOT client.ipAddress IN ("null", "132.148.54*", "64.202.160*", "50.116.41.217", "198.58.111.80", "192.81.129.227", "139.162.220.143", "94.156.219.181", "78.130.187.154", "77.98.3.134")
+| search NOT app IN ("Microsoft Office 365", "GoDaddy SSO", "Slack*", "Okta Admin Console", "Zoom Enterprise", "DRI AfterMarket - Marketing Cloud")
+| search NOT client.userAgent.rawUserAgent IN ("unknown", "Microsoft Office*", "AppleExchangeWebServices*", "Android-Mail*", "*CalendarAgent*", "Windows-AzureAD-Authentication-Provider/*", "Okta Radius Agent*", "PAN GlobalProtect*", "Jamf%20Connect*", "okta-auth-dotnet*", "SecurityAgent*", "Okta-Integrations", "openid-client*", "Jakarta*", "Splunk*", "*Android*", "*iPhone*", "*com.okta*")
+| search NOT securityContext.isp IN ("godaddy.com llc", "go daddy netherlands b.v.", "godaddy.com llc", "heg.com", "host europe gmbh", "euroweb romania s.r.l.")
+| search NOT "request.ipChain{}.geographicalContext.city" IN ("null")
+| search "client.ipAddress"!="*:*"
+| search actor.displayName!="IAM Provisioning"
+| bin span=1h _time
+| stats values(client.ipAddress) as "IpAddress" values(client.userAgent.rawUserAgent) as "UserAgent" values(request.ipChain{}.geographicalContext.city) as "Cities" values(securityContext.isp) as "ISP" count as "Attempts" dc(client.ipAddress) as "DistinctIpAddresses" dc(client.userAgent.rawUserAgent) as "DistinctUserAgents" by user _time
+| eval nCities=mvcount(Cities)
+| eval nISPs=mvcount(ISP)
+| eval condition=if(DistinctIpAddresses&gt;1 AND DistinctUserAgents&gt;1 AND nCities&gt;1 and nISPs&gt;1, "true", "false")
+| where condition="true"
+| sort - "DistinctIpAddresses" "Attempts"
+| fields - condition nCities nISPs
+| search user=$user$</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Users accessing sensitive GoDaddy apps overseas without VPN</title>
+        <search>
+          <query>(index="oktalogs" outcome.result="SUCCESS" OR outcome.result="ALLOW" client.geographicalContext.country="*" user!="system@okta.com" actor.displayName!="IAM Provisioning" authenticationContext.credentialProvider!="YUBIKEY") OR (earliest=-30d latest=now index="oktausers" status=ACTIVE "profile.countryCode"="*" NOT
+    [ search index="oktausers" status=ACTIVE "profile.employeeType"=null "profile.mobilePhone"=null "profile.officialTitle"=null
+    | fillnull value=null profile.employeeNumber
+    | search "profile.employeeNumber"=null
+    | stats count by "profile.email"
+    | fields profile.email])
+| search NOT user IN ("unknown", "system@okta.com", "ADService@godaddy.com")
+| search NOT client.userAgent.rawUserAgent IN ("unknown", "Microsoft Office*", "AppleExchangeWebServices*", "Android-Mail*", "*CalendarAgent*", "Windows-AzureAD-Authentication-Provider/*", "Okta Radius Agent*", "PAN GlobalProtect*", "Jamf%20Connect*", "okta-auth-dotnet*", "SecurityAgent*", "Okta-Integrations", "openid-client*", "Jakarta*", "Splunk*", "*com.okta*")
+| search NOT client.ipAddress IN ("null", "132.148.54*", "64.202.160*", "50.116.41.217", "198.58.111.80", "192.81.129.227", "139.162.220.143", "94.156.219.181", "78.130.187.154", "77.98.3.134")
+| search NOT securityContext.isp IN ("godaddy.com llc", "go daddy netherlands b.v.", "godaddy.com llc", "heg.com", "host europe gmbh", "euroweb romania s.r.l.")
+| search NOT profile.city IN ("*Remote*")
+| search NOT profile.deliveryOffice IN ("*Remote*")
+| fillnull value=null user
+| eval user=if(user="null", profile.email, user)
+| stats values(app) as App values(client.geographicalContext.country) as SessionCountry values(profile.countryCode) as "iso2" count by user
+| fillnull App value=N/A
+| search App!=N/A
+| eval isSensitiveApp=if(match(App, ".*(AWS|Workday|ServiceNow|GoDaddy SSO|GoDaddy Jira|Godaddy CRM|HE Intranet|Github|Salesforce|MediaTemple SSO|PipeDrive|p-Synch).*"), "TRUE", "FALSE")
+| search isSensitiveApp="TRUE"
+| fields - count isSensitiveApp
+| lookup geo_attr_countries iso2 OUTPUT country as OriginalCountry
+| search SessionCountry="*" OriginalCountry="*"
+| eval CountryMatches=if(SessionCountry=OriginalCountry OR SessionCountry="Hong Kong" AND OriginalCountry="China", "true", "false")
+| where CountryMatches="false"
+| fields - iso2 CountryMatches
+| search user=$user$</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Users accessing GoDaddy apps overseas without VPN</title>
+        <search>
+          <query>(index="oktalogs" outcome.result="SUCCESS" OR outcome.result="ALLOW" client.geographicalContext.country="*" user!="system@okta.com" actor.displayName!="IAM Provisioning" authenticationContext.credentialProvider!="YUBIKEY") OR (earliest=-30d latest=now index="oktausers" status=ACTIVE "profile.countryCode"="*" NOT
+    [ search index="oktausers" status=ACTIVE "profile.employeeType"=null "profile.mobilePhone"=null "profile.officialTitle"=null
+    | fillnull value=null profile.employeeNumber
+    | search "profile.employeeNumber"=null
+    | stats count by "profile.email"
+    | fields profile.email])
+| search NOT user IN ("unknown", "system@okta.com", "ADService@godaddy.com")
+| search NOT app IN ("Microsoft Office 365", "GoDaddy SSO", "Slack*", "Okta Admin Console", "Zoom Enterprise", "Adobe", "Pluralsight: Technical Training", "Cornerstone: Learning")
+| search NOT client.userAgent.rawUserAgent IN ("unknown", "Microsoft Office*", "AppleExchangeWebServices*", "Android-Mail*", "*CalendarAgent*", "Windows-AzureAD-Authentication-Provider/*", "Okta Radius Agent*", "PAN GlobalProtect*", "Jamf%20Connect*", "okta-auth-dotnet*", "SecurityAgent*", "Okta-Integrations", "openid-client*", "Jakarta*", "Splunk*", "*com.okta*")
+| search NOT client.ipAddress IN ("null", "132.148.54*", "64.202.160*", "50.116.41.217", "198.58.111.80", "192.81.129.227", "139.162.220.143", "94.156.219.181", "78.130.187.154", "77.98.3.134")
+| search NOT securityContext.isp IN ("godaddy.com llc", "go daddy netherlands b.v.", "godaddy.com llc", "heg.com", "host europe gmbh", "euroweb romania s.r.l.")
+| search NOT profile.city IN ("*Remote*")
+| search NOT profile.deliveryOffice IN ("*Remote*")
+| fillnull value=null user
+| eval user=if(user="null", profile.email, user)
+| stats values(app) as App values(client.geographicalContext.country) as SessionCountry values(profile.countryCode) as "iso2" count by user
+| fillnull App value=N/A
+| search App!=N/A
+| fields - count
+| lookup geo_attr_countries iso2 OUTPUT country as OriginalCountry
+| search SessionCountry="*" OriginalCountry="*"
+| eval CountryMatches=if(SessionCountry=OriginalCountry OR SessionCountry="Hong Kong" AND OriginalCountry="China", "true", "false")
+| where CountryMatches="false"
+| fields - iso2 CountryMatches
+| search user=$user$</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Suspicious repetitive and/or combined actions</title>
+        <search>
+          <query>index="oktalogs"
+| search displayMessage IN ("Rate limit warning", "Rate limit violation", "User attempted unauthorized access to app", "Blacklisted request from*", "Request from suspicious actor", "Max sign in attempts exceeded", "Send user new device notification email")
+| search NOT user IN ("unknown", "system@okta.com", "ADService@godaddy.com")
+| search NOT client.ipAddress IN ("null", "132.148.54*", "64.202.160*", "50.116.41.217", "198.58.111.80", "192.81.129.227", "139.162.220.143", "94.156.219.181", "78.130.187.154", "77.98.3.134")
+| search NOT app IN ("Microsoft Office 365")
+| stats values(src) values(displayMessage) dc(displayMessage) as DistinctMessages count as EventsCount by user
+| where DistinctMessages&gt;1 AND EventsCount&gt;5 OR EventsCount&gt;50
+| sort - DistinctMessages EventsCount
+| search user=$user$</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Failed Okta Attempts Over Time</title>
+        <search>
+          <query>index="oktalogs" outcome.result!="SUCCESS" AND outcome.result!="ALLOW"
+| search NOT user IN ("unknown", "system@okta.com", "ADService@godaddy.com")
+| search NOT app IN ("Microsoft Office 365", "GoDaddy SSO", "Slack*", "Okta Admin Console", "Zoom Enterprise")
+| search NOT client.userAgent.rawUserAgent IN ("unknown", "Microsoft Office*", "AppleExchangeWebServices*", "Android-Mail*", "*CalendarAgent*", "Windows-AzureAD-Authentication-Provider/*", "Okta Radius Agent*", "PAN GlobalProtect*", "Jamf%20Connect*", "okta-auth-dotnet*", "SecurityAgentHelper*")
+| search NOT client.ipAddress IN ("null", "132.148.54*", "64.202.160*", "50.116.41.217", "198.58.111.80", "192.81.129.227", "139.162.220.143")
+| timechart span=5m count</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+    <panel>
+      <table>
+        <title>Top Failed Attempts Source IP Address</title>
+        <search>
+          <query>index="oktalogs" outcome.result!="SUCCESS" AND outcome.result!="ALLOW"
+| search NOT user IN ("unknown", "system@okta.com", "ADService@godaddy.com")
+| search NOT app IN ("Microsoft Office 365", "GoDaddy SSO", "Slack*", "Okta Admin Console", "Zoom Enterprise")
+| search NOT client.userAgent.rawUserAgent IN ("unknown", "Microsoft Office*", "AppleExchangeWebServices*", "Android-Mail*", "*CalendarAgent*", "Windows-AzureAD-Authentication-Provider/*", "Okta Radius Agent*", "PAN GlobalProtect*", "Jamf%20Connect*", "okta-auth-dotnet*", "SecurityAgentHelper*")
+| search NOT client.ipAddress IN ("null", "132.148.54*", "64.202.160*", "50.116.41.217", "198.58.111.80", "192.81.129.227", "139.162.220.143")
+| top src</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="drilldown">cell</option>
+      </table>
+    </panel>
+  </row>
+</form>

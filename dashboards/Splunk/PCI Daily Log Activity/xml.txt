@@ -1,0 +1,58 @@
+<form>
+  <label>PCI Daily Log Activity</label>
+  <fieldset submitButton="true" autoRun="true">
+    <input type="time" token="time" searchWhenChanged="true">
+      <label>Time</label>
+      <default>
+        <earliest>-7d@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>No. of Hosts</title>
+      <chart>
+        <search>
+          <query>index=on_prem sourcetype=onprem (gd_fluentd_name=*linuxsecure* AND gd_fluentd_name=*pci*) | timechart span=1d dc(cent_host) as Hosts</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>No. of security events by Host</title>
+      <chart>
+        <search>
+          <query>index=on_prem sourcetype=onprem (gd_fluentd_name=*linuxsecure* AND gd_fluentd_name=*pci*) | timechart span=1d count by cent_host limit=100</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.text">Hosts</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Events count</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

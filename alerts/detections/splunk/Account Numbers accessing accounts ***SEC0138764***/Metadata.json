@@ -2,7 +2,7 @@
 	"name": {
 		"full": "AAccount Numbers accessing accounts ***SEC0138764***",
 		"environment": "",
-		"platform": "ON_PREM",
+		"platform": "Okta",
 		"attack": ["N/A - Incident Specific", "Credential Access"],
 		"purpose": "Admin App Access"
 	},
@@ -12,6 +12,7 @@
 	"team": "threat",
 	"version": "1.0",
 	"dependencies": "none",
+	"status": "disabled",
 	"lastUpdate": "2021-09-13",
 	"attack": [ "T0000", "TA0006" ],
 	"interval": {

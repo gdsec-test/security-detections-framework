@@ -1,0 +1,25 @@
+{
+	"name": {
+		"full": "CVE=2020-1472_Not_Patched",
+		"environment": "",
+		"platform": "Tanium",
+		"attack": ["N/A - Incident Specific"],
+		"purpose": "Admin App Access"
+	},
+	"description": "splunk portion of tanium to alert if patching has not taken place on individual machines",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2020-12-03",
+	"attack": [ "T0000" ],
+	"interval": {
+		"span": 1,
+		"unit": "week"
+	},
+	"test": {
+		"archive": ""
+	}
+}

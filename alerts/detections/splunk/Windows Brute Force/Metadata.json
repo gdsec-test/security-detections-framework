@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Windows Brute Force",
+		"environment": "",
+		"platform": "Windows",
+		"attack": ["Exploitation for Credential Access", "Brute Force"],
+		"purpose": "brute force"
+	},
+	"description": "Password Brute force attempt",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "Threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-02-04",
+	"attack": [ "T1212", "T1110"],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	},

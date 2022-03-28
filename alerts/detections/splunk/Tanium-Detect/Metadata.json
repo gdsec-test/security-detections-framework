@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Tanium-Detect",
+		"environment": "",
+		"platform": "Tanium",
+		"attack": ["Exfiltration Over Other Network Medium"],
+		"purpose": "Tanium Alerts"
+	},
+	"description": "identify suspicious access to secrets manager",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "IR",
+	"version": "1.0",
+	"dependencies": "Tanium Signals alerts within tanium platform",
+	"status": "disabled",
+	"lastUpdate": "2021-11-23",
+	"attack": [ "T1011"],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	},

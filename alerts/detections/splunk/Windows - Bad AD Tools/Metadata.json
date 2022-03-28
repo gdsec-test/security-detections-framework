@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Windows - Bad AD Tools",
+		"environment": "",
+		"platform": "Windows",
+		"attack": ["Compromise Client Software Binary"],
+		"purpose": "Bad AD Tools"
+	},
+	"description": "comprimised AD tools being used in environment",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "Threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-09-24",
+	"attack": [ "T1554"],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	}

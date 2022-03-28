@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Okta - Brute Force",
+		"environment": "",
+		"platform": "Okta",
+		"attack": ["Exploitation for Credential Access", "Brute Force"],
+		"purpose": "brute force"
+	},
+	"description": "Multiple bad login attempts in a 5 minute time span",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "Threat Research",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-08-04",
+	"attack": [ "T1212", "T1110"],
+	"interval": {
+		"span": 5,
+		"unit": "min"
+	},
+	"test": {
+		"archive": ""
+	},

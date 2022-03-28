@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Windows - Hash attached to sysmon",
+		"environment": "",
+		"platform": "Windows",
+		"attack": ["User Execution: Malicious File"],
+		"purpose": "bad file"
+	},
+	"description": "identify use of malicious file in windows",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "Threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-03-03",
+	"attack": [ "T1204.002"],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	},

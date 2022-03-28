@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Okta - Unusual Profile Activation",
+		"environment": "",
+		"platform": "Okta",
+		"attack": ["Exploitation for Credential Access"],
+		"purpose": "T1212"
+	},
+	"description": "bad actor setting up new profile",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "Threat Research",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-08-04",
+	"attack": [ "T1212"],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	},

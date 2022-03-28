@@ -1,0 +1,23 @@
+{
+	"name": {
+		"full": "Trend Micro MD5 identified in tanium or recorded future",
+		"environment": "",
+		"platform": "Trend-Micro",
+		"attack": "Malicious-File",
+		"purpose": "multiple platforms"
+	},
+	"description": "same bad IOC found in any combination of platforms.",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "threat",
+	"version": "1.2.0",
+	"lastUpdate": "2022-01-04",
+	"attack": [ "T1204.002" ],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": "",
+	}
+}

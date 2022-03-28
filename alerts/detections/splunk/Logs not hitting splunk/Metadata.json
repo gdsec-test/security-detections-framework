@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Logs not hitting splunk",
+		"environment": "",
+		"platform": "splunk",
+		"attack": ["N/A"],
+		"purpose": "Log Tracking"
+	},
+	"description": "to identify a source failing to push logs",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "Product Sec",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-01-04",
+	"attack": [ "T000",],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	},

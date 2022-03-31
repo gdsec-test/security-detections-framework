@@ -9,7 +9,7 @@
 	"description": "SEC0138764, specific incident revolving around the listed accounts. any access need to trigger",
 	"owner": "IR@godaddy.com",
 	"creator": "twhipple1@godaddy.com",
-	"team": "IR",
+	"team": "Incident Response",
 	"version": "1.0",
 	"dependencies": "none",
 	"status": "disabled",

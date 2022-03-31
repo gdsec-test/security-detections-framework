@@ -3,18 +3,18 @@
 		"full": "AAccount Numbers accessing accounts ***SEC0138764***",
 		"environment": "",
 		"platform": "Okta",
-		"attack": ["N/A - Incident Specific", "Credential Access"],
+		"attack": [ "Credential Access"],
 		"purpose": "Admin App Access"
 	},
 	"description": "SEC0138764, specific incident revolving around the listed accounts. any access need to trigger",
-	"owner": "twhipple1@godaddy.com",
+	"owner": "IR@godaddy.com",
 	"creator": "twhipple1@godaddy.com",
-	"team": "threat",
+	"team": "IR",
 	"version": "1.0",
 	"dependencies": "none",
 	"status": "disabled",
 	"lastUpdate": "2021-09-13",
-	"attack": [ "T0000", "TA0006" ],
+	"attack": [ "TA0006" ],
 	"interval": {
 		"span": 1,
 		"unit": "week"

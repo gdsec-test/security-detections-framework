@@ -7,9 +7,9 @@
 		"purpose": "Secuirty index exposed"
 	},
 	"description": "Security index is accessable within splunk by non security roles. ",
-	"owner": "twhipple1@godaddy.com",
+	"owner": "productsecurity@godaddy.com",
 	"creator": "twhipple1@godaddy.com",
-	"team": "threat",
+	"team": "product security",
 	"version": "1.0",
 	"dependencies": "none",
 	"lastUpdate": "2021-09-13",

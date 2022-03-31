@@ -7,7 +7,7 @@
 		"purpose": "Log Tracking"
 	},
 	"description": "to identify a source failing to push logs",
-	"owner": "twhipple1@godaddy.com",
+	"owner": "productsecurity@godaddy.com",
 	"creator": "twhipple1@godaddy.com",
 	"team": "Product Sec",
 	"version": "1.0",

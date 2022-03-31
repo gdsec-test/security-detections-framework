@@ -3,7 +3,7 @@
 		"full": "Tanium-Detect",
 		"environment": "",
 		"platform": "Tanium",
-		"attack": ["Exfiltration Over Other Network Medium"],
+		"attack": ["File access"],
 		"purpose": "Tanium Alerts"
 	},
 	"description": "identify suspicious access to secrets manager",
@@ -14,7 +14,7 @@
 	"dependencies": "Tanium Signals alerts within tanium platform",
 	"status": "disabled",
 	"lastUpdate": "2021-11-23",
-	"attack": [ "T1011"],
+	"attack": [ "DS0022"],
 	"interval": {
 		"span": 1,
 		"unit": "hour"

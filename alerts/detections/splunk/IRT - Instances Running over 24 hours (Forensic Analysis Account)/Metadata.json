@@ -1,0 +1,25 @@
+{
+	"name": {
+		"full": "IRT - Instances Running over 24 hours (Forensic Analysis Account)",
+		"environment": "",
+		"platform": "AWS_cloudtrail",
+		"attack": ["Scheduled Task/Job"],
+		"purpose": "Forensic Analysis"
+	},
+	"description": "identify an AWS instance on specific AWS accounts running for longer than 1 day",
+	"owner": "clopez1@godaddy.com",
+	"creator": "clopez1@godaddy.com",
+	"team": "IR",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2022-02-01",
+	"attack": [ "T1053.005" ],
+	"interval": {
+		"span": 1,
+		"unit": "day"
+	},
+	"test": {
+		"archive": ""
+	}
+}

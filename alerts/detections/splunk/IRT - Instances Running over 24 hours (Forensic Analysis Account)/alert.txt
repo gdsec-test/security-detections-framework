@@ -1,0 +1,4 @@
+"search index=""aws_cloudtrail"" (aws_account_id=197818030129 OR aws_account_id=883229650331 OR aws_account_id=332047608640)(eventName=RunInstances OR eventName=TerminateInstances)
+|spath output=""instances"" ""responseElements.instancesSet.items{}.instanceId""
+|stats values(_time) As ""Start Time"",count,values(eventName) as eventNames by instances
+|where mvcount(eventNames ) <2 AND eventNames=""RunInstances"" | convert ctime(""Start Time"")"

@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Windows - PsExec running in environment",
+		"environment": "",
+		"platform": "Windows",
+		"attack": ["Abuse Elevation Control Mechanism"],
+		"purpose": "PsExec monitoring"
+	},
+	"description": "PsExec shouldnt be running on anyones windows machine without prior auth",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "Threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-04-12",
+	"attack": [ "T1548"],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	},

@@ -1,0 +1,4 @@
+"search index=on_prem sourcetype=deepsecurity TrendMicroDsFileMD5=* [search index=on_prem sourcetype=tanium md5 | rex field=_raw ""(?<MD5>[0-9a-fA-F]{32})"" | stats count by MD5 | fields - count] OR [| inputlookup rf_hash_risklist.csv | rename name as MD5 | fields MD5]
+| stats values(TrendMicroDsFileMD5) as MD5 dc(dvchost) as host_count count by alert
+| where host_count > 0
+| mvexpand MD5"

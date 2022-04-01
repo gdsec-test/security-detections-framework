@@ -1,0 +1,5 @@
+"search index=""aws_cloudtrail"" (aws_account_id=539225272086 OR aws_account_id=763338924548 OR aws_account_id=745293682974) app=secretsmanager.amazonaws.com (eventName=GetSecretValue* OR eventName=CancelRotateSecret* OR eventName=Create* OR eventName=Delete* OR eventName=Put* OR eventName=Remove* OR eventName=Replicate* OR eventName=Restore* OR eventName=Rotate* OR eventName=StopReplication* OR eventName=Update* OR eventName=Validate*) NOT (userName=AccountAutomationServiceRole OR userName=GD-AWS-IAM-Resources-GDAWSServiceAccountDeployRole-* OR userName=SC-*-pp-*-LambdaExecutionRole-* OR user_arn=*GitHubActions)
+| fillnull value=""-""
+| rename errorCode as Status, environment as Environment, aws_account_id as AccountID, eventName as Event, userName as User/Role, principalUser as PrincipalUser, requestParameters.secretId as SecretID, sourceIPAddress as SourceIP, user_type as UserType
+| stats count by _time, Status, Environment, AccountID, UserType, User/Role, PrincipalUser, Event, SecretID, SourceIP
+| sort by Environment, User"

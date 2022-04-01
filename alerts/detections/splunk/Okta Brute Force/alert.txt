@@ -1,0 +1,12 @@
+"search index=""oktalogs"" outcome.result!=""SUCCESS"" AND outcome.result!=""ALLOW""
+| search NOT user IN (""unknown"", ""system@okta.com"", ""ADService@godaddy.com"")
+| search NOT app IN (""Microsoft Office 365"", ""GoDaddy SSO"", ""Slack*"", ""Okta Admin Console"", ""Zoom Enterprise"")
+| search NOT client.userAgent.rawUserAgent IN (""unknown"", ""Microsoft Office*"", ""AppleExchangeWebServices*"", ""Android-Mail*"", ""*CalendarAgent*"", ""Windows-AzureAD-Authentication-Provider/*"", ""Okta Radius Agent*"", ""PAN GlobalProtect*"", ""Jamf%20Connect*"", ""okta-auth-dotnet*"", ""SecurityAgentHelper*"")
+| search NOT client.ipAddress IN (""null"", ""132.148.54*"", ""64.202.160*"", ""50.116.41.217"", ""198.58.111.80"", ""192.81.129.227"", ""139.162.220.143"")
+| bin span=5m _time
+| stats values(client.ipAddress) as ""IpAddress"" values(client.userAgent.rawUserAgent) as ""UserAgent"" count as ""Attempts"" dc(client.ipAddress) as ""DistinctIpAddresses"" dc(client.userAgent.rawUserAgent) as ""DistinctUserAgents"" by user _time
+| eval condition=if(DistinctIpAddresses>2 AND DistinctUserAgents>1, ""true"", ""false"")
+| where condition=""true"" OR Attempts>50
+| sort - ""DistinctIpAddresses"" ""Attempts""
+| fields - condition
+| search user=*"

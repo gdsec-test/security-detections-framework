@@ -1,0 +1,25 @@
+{
+	"name": {
+		"full": "disabled EMR public access security setting",
+		"environment": "",
+		"platform": "AWS_Cloudtrail",
+		"attack": ["Modify Authentication Process"],
+		"purpose": "Network Denial of Service"
+	},
+	"description": "Block public access is an account level configuration that helps you centrally manage public network access to Amazon EMR clusters in a Region. When account users launch clusters in the Region where you have enabled block public access configuration, Amazon EMR checks the port rules defined in the configuration and compare it with inbound traffic rules specified in the security groups associated with the clusters. If these security groups have inbound rules that open ports to the public IP address but these ports are not configured as exceptions in block public access configuration, Amazon EMR will fail the cluster creation and send an exception to the user.",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com"
+	"team": "threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-06-29",
+	"attack": [ "T1498" ],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	}
+}

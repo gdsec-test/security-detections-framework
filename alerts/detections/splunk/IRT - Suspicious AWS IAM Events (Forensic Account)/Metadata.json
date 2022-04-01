@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "IRT - Suspicious AWS IAM Events (Forensic Account)",
+		"environment": "",
+		"platform": "AWS_cloudtrail",
+		"attack": ["Valid Accounts: Cloud Accounts"],
+		"purpose": "Forensic Analysis"
+	},
+	"description": "identify an AWS account with unusual privlage access",
+	"owner": "clopez1@godaddy.com",
+	"creator": "clopez1@godaddy.com",
+	"team": "IR",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2022-02-01",
+	"attack": [ "T1078.004",],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	},

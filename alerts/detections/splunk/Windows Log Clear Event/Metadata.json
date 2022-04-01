@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Windows - Log Clear Ebent",
+		"environment": "",
+		"platform": "Windows",
+		"attack": ["Abuse Elevation Control Mechanism"],
+		"purpose": "log clear"
+	},
+	"description": "attempt to delete logs from specific machine",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "Threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-02-04",
+	"attack": [ "T1548"],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	},

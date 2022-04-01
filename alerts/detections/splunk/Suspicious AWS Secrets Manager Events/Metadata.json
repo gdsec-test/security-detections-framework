@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Suspicious AWS Secrets Manager Events",
+		"environment": "",
+		"platform": "AWS_cloudtrail",
+		"attack": ["Credentials from Password Stores"],
+		"purpose": "Forensic Analysis"
+	},
+	"description": "identify suspicious access to secrets manager",
+	"owner": "clopez1@godaddy.com",
+	"creator": "clopez1@godaddy.com",
+	"team": "IR",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2022-02-01",
+	"attack": [ "T1555"],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	}

@@ -1,0 +1,7 @@
+" tstats latest(_time) as latest where index=* earliest=-30h by gd_fluentd_name
+| eval duration = case(match(gd_fluentd_name, ""SSO""), ""-24h"",1==1, ""-24h""),
+recent = if(latest > relative_time(now(),duration),1,0),
+realLatest = strftime(latest,""%c""),
+hours_since_last_log = round((latest-now())/60/60,2)
+| where recent=0
+| fields - recent"

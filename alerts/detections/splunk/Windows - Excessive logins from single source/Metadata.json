@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Windows - Excessive logins from single source",
+		"environment": "",
+		"platform": "Windows",
+		"attack": ["Brute Force: Password Spraying"],
+		"purpose": "password spraying"
+	},
+	"description": "comprimised AD tools being used in environment",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "Threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"status": "disabled",
+	"lastUpdate": "2021-04-12",
+	"attack": [ "T1110.003"],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	},

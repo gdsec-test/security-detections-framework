@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "Tanium-Detect",
+		"environment": "",
+		"platform": "Tanium",
+		"attack": ["File Access"],
+		"purpose": "Tanium Alerts"
+	},
+	"description": "Specific to SEC0129734",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "IR",
+	"version": "1.0",
+	"dependencies": "Tanium Signals alerts within tanium platform",
+	"status": "disabled",
+	"lastUpdate": "2021-11-23",
+	"attack": [ "DS0022"],
+	"interval": {
+		"span": 15,
+		"unit": "minute"
+	},
+	"test": {
+		"archive": ""
+	},

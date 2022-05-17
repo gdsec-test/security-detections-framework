@@ -1,0 +1,22 @@
+{
+	"name": {
+		"full": "HyenaInstaller",
+		"environment": "",
+		"platform": "Windows",
+		"attack": "T1087.002",
+		"purpose": "Find attempts to install the Hyena utility"
+	},
+	"description": "Identifies the Hyena utility installer regardless of language or architecture",
+	"owner": "Threat Research",
+	"creator": "Courtney Falk (cfalk)",
+	"team": "Threat Research",
+	"version": "1.0.0",
+	"lastUpdate": "2002-05-17",
+	"attack": [ "TNNN" ],
+	"cves": [ "T1087.002" ],
+	"interval": {},
+	"test": {
+		"archive": "",
+		"exception": ""
+	}
+}

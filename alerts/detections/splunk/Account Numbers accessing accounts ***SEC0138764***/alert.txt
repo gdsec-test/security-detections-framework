@@ -1,8 +1,0 @@
-"search index=on_prem
-client.user.name=323839396
-OR client.user.name=30145019
-OR client.user.name=357208769
-OR client.user.name=204744433
-OR client.user.name=194970534
-OR client.user.name=186204997
-| convert ctime(_time) as eventTime | stats values(user_agent.original) as user_agent.original values(client.user.name) as client.user.name values(eventTime) as eventTime count by source.address"

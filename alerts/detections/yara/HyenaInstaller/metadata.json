@@ -12,8 +12,7 @@
 	"team": "Threat Research",
 	"version": "1.0.0",
 	"lastUpdate": "2002-05-17",
-	"attack": [ "TNNN" ],
-	"cves": [ "T1087.002" ],
+	"attack": [ "T1087.002" ],
 	"interval": {},
 	"test": {
 		"archive": "",

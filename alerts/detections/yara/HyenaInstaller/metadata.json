@@ -11,9 +11,8 @@
 	"creator": "Courtney Falk (cfalk)",
 	"team": "Threat Research",
 	"version": "1.0.0",
-	"lastUpdate": "2002-05-17",
-	"attack": [ "TNNN" ],
-	"cves": [ "T1087.002" ],
+	"lastUpdate": "2022-05-17",
+	"attack": [ "T1087.002" ],
 	"interval": {},
 	"test": {
 		"archive": "",

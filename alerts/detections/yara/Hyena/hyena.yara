@@ -1,4 +1,4 @@
-rule HyenaInstaller {
+rule Hyena {
 
 meta:
   author = "Courtney Falk (cfalk)"
@@ -10,9 +10,10 @@ meta:
 strings:
   $company = "SystemTools Software Inc"
   $companyUrl = "www.systemtools.com"
-  $originalFile = /Hyena_(English|Spanish|French|German)_x(86|64)\.exe/
-  $installShield = "InstallShield"
-  $installScript = "InstallScript"
+  $withVersion = /Hyena v\d+?\.\d+?.\d+?.\d+?/
+  $symbolsPath = /\\x(86|64)\\Hyena (English|Spanish|French|German) Release\\hyena_x(86|64)\.pdb/
+  $import1 = "WNetGetConnection"
+  $import2 = "ShellExecute"
 
 condition:
   all of them

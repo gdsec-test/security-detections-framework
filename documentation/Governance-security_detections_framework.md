@@ -117,7 +117,8 @@ In case a member leaves, the [offboarding](#offboarding) procedure is applied.
 | Sarah Neiswonger| 07/27/2021 |
 | Jonathan Wade  | 07/26/2021     |  
 | [Thomas Whipple](https://github.com/twhipple1-godaddy)    | 07/26/2021     |  
-| [Jason White](https://github.com/jwhite-godaddy)          | 07/26/2021     | 
+| Benjamin Smith | 06/02/2022
+| Andrea Grey    | 06/02/2022
 
 
 

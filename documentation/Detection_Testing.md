@@ -78,4 +78,4 @@ If we have a log output example, we can use the 'makeresults' function to create
    
 ## Tanium Testing
 
-[TBD]
+Tanium alerts will be flagged with a dev tag sent to SIEM without forwarding to Servicenow. in doing so, we will gain the ability to monitor alert frequency, correlation, as well as identify necessary tuning prior to enabling the detection to production.  

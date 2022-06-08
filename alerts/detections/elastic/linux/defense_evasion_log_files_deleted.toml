@@ -1,0 +1,60 @@
+[metadata]
+creation_date = "2020/11/03"
+maturity = "production"
+updated_date = "2022/03/31"
+
+[rule]
+author = ["Elastic"]
+description = """
+Identifies the deletion of sensitive Linux system logs. This may indicate an attempt to evade detection or destroy
+forensic evidence on a system.
+"""
+from = "now-9m"
+index = ["auditbeat-*", "logs-endpoint.events.*"]
+language = "eql"
+license = "Elastic License v2"
+name = "System Log File Deletion"
+note = """## Config
+
+If enabling an EQL rule on a non-elastic-agent index (such as beats) for versions <8.2, events will not define `event.ingested` and default fallback for EQL rules was not added until 8.2, so you will need to add a custom pipeline to populate `event.ingested` to @timestamp for this rule to work.
+"""
+references = [
+    "https://www.fireeye.com/blog/threat-research/2020/11/live-off-the-land-an-overview-of-unc1945.html",
+]
+risk_score = 47
+rule_id = "aa895aea-b69c-4411-b110-8d7599634b30"
+severity = "medium"
+tags = ["Elastic", "Host", "Linux", "Threat Detection", "Defense Evasion"]
+timestamp_override = "event.ingested"
+type = "eql"
+
+query = '''
+file where event.type == "deletion" and 
+  file.path : 
+    (
+    "/var/run/utmp", 
+    "/var/log/wtmp", 
+    "/var/log/btmp", 
+    "/var/log/lastlog", 
+    "/var/log/faillog",
+    "/var/log/syslog", 
+    "/var/log/messages", 
+    "/var/log/secure", 
+    "/var/log/auth.log"
+    )
+'''
+
+
+[[rule.threat]]
+framework = "MITRE ATT&CK"
+[[rule.threat.technique]]
+id = "T1070"
+name = "Indicator Removal on Host"
+reference = "https://attack.mitre.org/techniques/T1070/"
+
+
+[rule.threat.tactic]
+id = "TA0005"
+name = "Defense Evasion"
+reference = "https://attack.mitre.org/tactics/TA0005/"
+

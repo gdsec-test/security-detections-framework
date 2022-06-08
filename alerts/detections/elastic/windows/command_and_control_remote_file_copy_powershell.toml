@@ -1,0 +1,105 @@
+[metadata]
+creation_date = "2020/11/30"
+maturity = "production"
+updated_date = "2022/04/13"
+
+[rule]
+author = ["Elastic"]
+description = "Identifies powershell.exe being used to download an executable file from an untrusted remote destination."
+from = "now-9m"
+index = ["winlogbeat-*", "logs-endpoint.events.*", "logs-windows.*"]
+language = "eql"
+license = "Elastic License v2"
+name = "Remote File Download via PowerShell"
+note = """## Triage and analysis
+
+### Investigating Remote File Download via PowerShell
+
+Attackers commonly transfer tooling or malware from external systems into a compromised environment using the command
+and control channel. However, they can also abuse signed utilities to drop these files.
+
+PowerShell is one of system administrators' main tools for automation, report routines, and other tasks. This makes it
+available for use in various environments and creates an attractive way for attackers to execute code and perform
+actions. This rule correlates network and file events to detect downloads of executable and script files performed using
+PowerShell.
+
+#### Possible investigation steps
+
+- Investigate the process execution chain (parent process tree).
+- Identify the user account that performed the action and whether it should perform this kind of action.
+- Consider whether the user needs PowerShell to complete its tasks.
+- Investigate other alerts associated with the user/host during the past 48 hours.
+- Check the reputation of the domain or IP address used to host the downloaded file.
+- Retrieve the file and determine if it is malicious:
+  - Use a private sandboxed malware analysis system to perform analysis.
+    - Observe and collect information about the following activities:
+      - Attempts to contact external domains and addresses.
+      - File and registry access, modification, and creation activities.
+      - Service creation and launch activities.
+      - Scheduled tasks creation.
+  - Use the PowerShell Get-FileHash cmdlet to get the SHA-256 hash value of the file.
+    - Search for the existence and reputation of this file in resources like VirusTotal, Hybrid-Analysis, CISCO Talos, Any.run, etc.
+
+### False positive analysis
+
+- Administrators can use PowerShell legitimately to download executable and script files. Analysts can dismiss the alert
+if the Administrator is aware of the activity and the triage has not identified suspicious or malicious files.
+
+### Response and remediation
+
+- Initiate the incident response process based on the outcome of the triage.
+- Isolate the involved host to prevent further post-compromise behavior.
+- If the triage identified malware, search the environment for additional compromised hosts.
+  - Implement any temporary network rules, procedures, and segmentation required to contain the malware.
+  - Immediately block the IoCs identified.
+- Remove and block malicious artifacts identified on the triage.
+- Disable the involved accounts, or restrict their ability to log on remotely.
+- Reset passwords for the user account and other potentially compromised accounts (email, services, CRMs, etc.).
+- Investigate the initial attack vector.
+"""
+risk_score = 47
+rule_id = "33f306e8-417c-411b-965c-c2812d6d3f4d"
+severity = "medium"
+tags = ["Elastic", "Host", "Windows", "Threat Detection", "Command and Control"]
+type = "eql"
+
+query = '''
+sequence by host.id, process.entity_id with maxspan=30s
+  [network where process.name : ("powershell.exe", "pwsh.exe", "powershell_ise.exe") and network.protocol == "dns" and
+   not dns.question.name : ("localhost", "*.microsoft.com", "*.azureedge.net", "*.powershellgallery.com", "*.windowsupdate.com", "metadata.google.internal") and 
+   not user.domain : "NT AUTHORITY"]
+    [file where process.name : "powershell.exe" and event.type == "creation" and file.extension : ("exe", "dll", "ps1", "bat") and 
+   not file.name : "__PSScriptPolicy*.ps1"]
+'''
+
+
+[[rule.threat]]
+framework = "MITRE ATT&CK"
+[[rule.threat.technique]]
+id = "T1105"
+name = "Ingress Tool Transfer"
+reference = "https://attack.mitre.org/techniques/T1105/"
+
+
+[rule.threat.tactic]
+id = "TA0011"
+name = "Command and Control"
+reference = "https://attack.mitre.org/tactics/TA0011/"
+[[rule.threat]]
+framework = "MITRE ATT&CK"
+[[rule.threat.technique]]
+id = "T1059"
+name = "Command and Scripting Interpreter"
+reference = "https://attack.mitre.org/techniques/T1059/"
+[[rule.threat.technique.subtechnique]]
+id = "T1059.001"
+name = "PowerShell"
+reference = "https://attack.mitre.org/techniques/T1059/001/"
+
+
+
+[rule.threat.tactic]
+id = "TA0002"
+name = "Execution"
+reference = "https://attack.mitre.org/tactics/TA0002/"
+

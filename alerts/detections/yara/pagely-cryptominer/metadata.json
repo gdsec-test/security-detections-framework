@@ -1,0 +1,22 @@
+{
+	"name": {
+		"full": "",
+		"environment": "",
+		"platform": "",
+		"attack": "",
+		"purpose": ""
+	},
+	"description": "A collection of Pagely YARA rules for cryptominers",
+	"owner": "",
+	"creator": "Luke Leal",
+	"team": "Pagely",
+	"version": "1.0.0",
+	"lastUpdate": "2022-06-10",
+	"attack": [ "TNNN" ],
+	"cves": [ "CVE-YYYY-NNNN" ],
+	"interval": {},
+	"test": {
+		"archive": "",
+		"exception": ""
+	}
+}

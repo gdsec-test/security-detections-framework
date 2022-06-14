@@ -1,0 +1,22 @@
+{
+	"name": {
+		"full": "",
+		"environment": "",
+		"platform": "",
+		"attack": "",
+		"purpose": ""
+	},
+	"description": "A collection of all current Sucuri YARA rules in one place",
+	"owner": "",
+	"creator": "Rodrigo Escobar",
+	"team": "Sucuri",
+	"version": "1.0.0",
+	"lastUpdate": "2022-06-13",
+	"attack": [ "TNNN" ],
+	"cves": [ "CVE-YYYY-NNNN" ],
+	"interval": {},
+	"test": {
+		"archive": "",
+		"exception": ""
+	}
+}

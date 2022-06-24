@@ -19,8 +19,8 @@
 | Removing outdated detections    | C | R  | A   | IC |
 | Setting up governance meetings  |   | R  | AC |  |
 | Assign tasks from governace meetings | I | CI | RA | |
-| Review false positive report    |   | R  | AC | I |
-| Repository permissions problem	| RAC |  |  I |   |
+| Review false positive report    |   | R  | AC | I | 
+| Repository permissions problem	| RAC |  |  I |   | 
 
 ### Definitions
 * [Detection Owner](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#detection-owners)

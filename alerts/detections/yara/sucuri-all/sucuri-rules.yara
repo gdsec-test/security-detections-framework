@@ -4143,7 +4143,6 @@ rule html_defaced_generic_009 : defaced
         $trigger and $html_defaced_generic_009_r0 and not $html_defaced_generic_009_w1 and not $html_defaced_generic_009_w2 and not $html_defaced_generic_009_w3 and not $html_defaced_generic_009_w4 and not $html_defaced_generic_009_w5 and not $html_defaced_generic_009_w6 and not $html_defaced_generic_009_w7 and not $html_defaced_generic_009_w8 and not $html_defaced_generic_009_w9 and not $html_defaced_generic_009_w10 and not $html_defaced_generic_009_w11 and not $html_defaced_generic_009_w12 and not $html_defaced_generic_009_w13 and not $html_defaced_generic_009_w14 and not $html_defaced_generic_009_w15 and not $html_defaced_generic_009_w16 and not $html_defaced_generic_009_w17 and not $html_defaced_generic_009_w18 and not $html_defaced_generic_009_w19 and $html_defaced_generic_009_r20
 }
 
-// MANUAL FIX NECESSARY
 rule html_defaced_generic_010 : defaced
 {
     strings:
@@ -4157,9 +4156,10 @@ rule html_defaced_generic_010 : defaced
         $html_defaced_generic_010_w6 = "New York Times hacked"
         $html_defaced_generic_010_w7 = "### Hacked by SDIC: M17n,"
         $html_defaced_generic_010_w8 = "HACKED BY BE REBEL TO WORK WITH WEBPACK"
+        $html_defaced_generic_010_w9 = "Web Application Firewall stops you from getting hacked by identifying malicious traffic, blocking attackers before they can access your website"
         $html_defaced_generic_010_r9 = /(^|\n).{0,50}[Hh][Aa4][Cc][Kk][Ee3][Dd][\s_][Bb][Yy][\s_]/
     condition:
-        $trigger and $html_defaced_generic_010_r0 and not $html_defaced_generic_010_w1 and not $html_defaced_generic_010_w2 and not $html_defaced_generic_010_w3 and not $html_defaced_generic_010_w4 and not $html_defaced_generic_010_w5 and not $html_defaced_generic_010_w6 and not $html_defaced_generic_010_w7 and not $html_defaced_generic_010_w8 and $html_defaced_generic_010_r9
+        $trigger and $html_defaced_generic_010_r0 and not $html_defaced_generic_010_w1 and not $html_defaced_generic_010_w2 and not $html_defaced_generic_010_w3 and not $html_defaced_generic_010_w4 and not $html_defaced_generic_010_w5 and not $html_defaced_generic_010_w6 and not $html_defaced_generic_010_w7 and not $html_defaced_generic_010_w8 and $html_defaced_generic_010_r9 and not $html_defaced_generic_010_w9
 }
 
 // MANUAL FIX NECESSARY

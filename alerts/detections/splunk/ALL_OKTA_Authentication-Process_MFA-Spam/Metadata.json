@@ -1,0 +1,24 @@
+{
+	"name": {
+		"full": "ALL_OKTA_Authentication-Process_MFA-Spam",
+		"environment": "ALL",
+		"platform": "OKTA",
+		"attack": ["Modify Authentication Process", "External-Remote-Services"],
+		"purpose": "MFA-Spam"
+	},
+	"description": "spamming MFA without successful authentication, this pattern of attack has been used in a social engineering campaign usually followed by a phone call to the user to pose as IT attempting to change their credentials",
+	"owner": "twhipple1@godaddy.com",
+	"creator": "twhipple1@godaddy.com",
+	"team": "threat",
+	"version": "1.0",
+	"dependencies": "none",
+	"lastUpdate": "2022-09-19",
+	"attack": [ "T1556.004", "T1133" ],
+	"interval": {
+		"span": 1,
+		"unit": "hour"
+	},
+	"test": {
+		"archive": ""
+	}
+}

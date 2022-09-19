@@ -1,0 +1,13 @@
+index=oktalogs "authenticationContext.authenticationStep"=0 eventType!="user.authentication.verify" result=CHALLENGE
+| stats min(_time) as firstTime max(_time) as lastTime Values(outcome.reason) as Outcome count by user client.ipAddress
+| where count >= 15
+| join user
+    [ search index=oktalogs eventType="user.authentication.verify"
+    | stats latest(_time) as lastSuccessfulLogin count by user client.ipAddress
+    | fields - count
+    | rename client.ipAddress as lastSuccessfulIP]
+| rename client.ipAddress as ip
+| where ip!=lastSuccessfulIP OR (ip=lastSuccessfulIP AND NOT lastSuccessfulLogin < lastTime)
+| convert timeformat="%Y-%m-%d %H:%M:%S" ctime(firstTime) ctime(lastTime) ctime(lastSuccessfulLogin)
+| eval reason=if(ip=lastSuccessfulIP, "15+ MFA requests followed by success", "MFA request from different source than last successful log on")
+| fields - outcome

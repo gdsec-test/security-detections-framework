@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0d98a2ae-9380-4a91-9168-f066092f5647" name="Default Changelist" comment="adding OKTA MFA Spamming alert" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="ProjectId" id="26lBjNppbsrVsW5va0epffJwpRl" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="HTML&#10;TEXT" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../.." />
+      <recent name="$PROJECT_DIR$/../../" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/alerts/detections/splunk/ALL_OKTA_Authentication-Process_MFA-Spam" />
+      <recent name="$PROJECT_DIR$/alerts/detections/elastic/JSON Export/rules" />
+      <recent name="$PROJECT_DIR$/alerts/detections/elastic/JSON Export" />
+      <recent name="$PROJECT_DIR$/alerts/detections/elastic" />
+      <recent name="$PROJECT_DIR$/alerts/detections" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0d98a2ae-9380-4a91-9168-f066092f5647" name="Default Changelist" comment="" />
+      <created>1647988426757</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1647988426757</updated>
+    </task>
+    <task id="LOCAL-00001" summary="metadata push">
+      <created>1648144548845</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1648144548846</updated>
+    </task>
+    <task id="LOCAL-00002" summary="metadata push">
+      <created>1648485888764</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1648485888764</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fixing metadata errors">
+      <created>1648744178087</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1648744178087</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fixing metadata errors">
+      <created>1648744558354</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1648744558354</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fixing Elastic rule Push">
+      <created>1652801851186</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1652801851186</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Scripted Rules export with MITRE data">
+      <created>1652822854131</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1652822854131</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fixing astrix issue">
+      <created>1654708568834</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1654708568835</updated>
+    </task>
+    <task id="LOCAL-00008" summary="adding OKTA MFA Spamming alert">
+      <created>1663621535630</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1663621535630</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="metadata push" />
+    <MESSAGE value="fixing metadata errors" />
+    <MESSAGE value="fixing Elastic rule Push" />
+    <MESSAGE value="Scripted Rules export with MITRE data" />
+    <MESSAGE value="fixing astrix issue" />
+    <MESSAGE value="adding OKTA MFA Spamming alert" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding OKTA MFA Spamming alert" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-3413" y="-104" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1651794259673">
+      <screen x="-3840" y="-234" width="1920" height="981" />
+    </state>
+    <state x="-3413" y="-104" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.-234.1920.1057/0.23.1792.1097/-3840.-234.1920.981@-3840.-234.1920.981" timestamp="1651794259673" />
+    <state x="-1204" y="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1648744415542">
+      <screen x="-1920" y="-234" width="1920" height="981" />
+    </state>
+    <state x="-1204" y="201" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.-234.1920.1057/0.23.1792.1097/-3840.-234.1920.1057@-1920.-234.1920.1057" timestamp="1647988488620" />
+    <state x="-1204" y="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.-234.1920.981/0.23.1792.1097/-3840.-234.1920.1057@-1920.-234.1920.981" timestamp="1648744415542" />
+  </component>
+</project>

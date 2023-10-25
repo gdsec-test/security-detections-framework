@@ -1,6 +1,6 @@
 # Incident Detection Lifecycle 
 
-Draft Document for Working Efforts - [IRT-507](https://jira.godaddy.com/browse/IRT-507)
+
 
 # Table of Contents
 
@@ -38,8 +38,12 @@ Draft Document for Working Efforts - [IRT-507](https://jira.godaddy.com/browse/I
 
 # Creation
 
+Requests for Creation can be sent to ![Detections Intake Page](https://godaddy-corp.atlassian.net/secure/CreateIssue.jspa?pid=32819&issuetype=8)
+
 The first part of creating a detection is to identify where the detection method will be most beneficial considering:
 
+- What tools are best suited for identifying the event
+- What logs are required to track the event
 - The rules which will be triggered based on the targeted event.
 - The Logic that will drive the events to be considered.
 - The action that will be taken when the logic and or conditions are met.
@@ -60,12 +64,13 @@ Exceptions will be made to the lifecycle and will be decided by management. Wher
 
 Testing of a detection will also include an effort to continuously define the logic and baseline to ensure it is tuned properly for the best possible results.
 
-For explination in how to test a detection counsult [Detection Testing](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Detection_Testing.md)
 
 # Implementation
 
-Once a detection is deployed; the relevant teams should be informed to start monitoring the relevant performance and alerts. When required, the teams must also be briefed on the SOPs when the detections are triggered. GCSO (Global Cyber Security Operations) or the monitoring team must also be alerted about the new detection and provided with a playbook to handle future alerts.
+Once a detection is deployed; the relevant teams should be informed to start monitoring the relevant performance and alerts. When required, the teams must also be briefed on the SOPs when the detections are triggered. 
 
+- GCSO (Global Cyber Security Operations) or the monitoring team must also be alerted about the new detection and provided with a playbook to handle future alerts.
+- Incident Response or other Escalating Athorities should be notified as well.
 
 # Maintenance & Review
 
@@ -75,6 +80,8 @@ Infrastructure environments do not stay the same for long, they are constantly e
 - The detection is still required.
 - The detection needs to be updated. 
 - The right detections are in place.
+
+A Quarterly cadence for alert review should be established to review all items listed above
 
 If a detection is identified as no longer required, the relevant teams must be informed before the detection is updated or removed.
 
@@ -96,22 +103,23 @@ The final life cycle of a detection involves the removal of a detection form it 
 
 ## Tuning 
 
+Tuning is a constant and ongoing project for many use-cases. As such the detections team will regularly adapt necessary changes to improve 
+
 ### Tuning Request
 
-A request can be sent to the rule owner directly at any point through an email with the following items
+A request can be sent to the rule owner directly at any point through a Jira Ticket with the following items
 
 * Rule name
 *	Example Service Now Ticket or Report
 *	List of items or pattern to be tuned out of the alert
 
-As many rule owners may be busy, they will have a standard sprint cycle to get back to the request. 
+see ![Detections Intake Page](https://godaddy-corp.atlassian.net/secure/CreateIssue.jspa?pid=32819&issuetype=8) for requests. 
 
 ### Montly Review
 
-A report generated from Service Now listing all events flagged as false positive with their name, ticket number, and closed by should be generated and sent to the governance team. 
+A dashboard generated from Mission Control listing all events flagged as false positive with their name, ticket number, and closed by should be reviewed by detections team.
 
-If any event is closed as false positive with the same reasoning more than a handful of times, the detection logic will need the tunning added, or reworked to reduce the number of events generated for GCSO. [Governance Comittee](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Governance-security_detections_framework.md#current-membership-alphabetical) will review and assign the work out as needed to the various rule owners. 
-
+If any event is closed as false positive with the same reasoning more than a handful of times, the detection logic will need the tunning added, or reworked to reduce the number of events generated for GCSO. 
 
 
 ## Emergency Detections

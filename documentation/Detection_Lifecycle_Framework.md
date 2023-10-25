@@ -33,7 +33,7 @@
 
 # Lifecycle
 
-![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Lifecycle.png)
+[](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Lifecycle.png)
 
 # Creation
 
@@ -50,6 +50,8 @@ The first part of creating a detection is to identify where the detection method
 Once the above have been considered it is important to identify teams within Security with ownership of the preferred tool / skillset to bring the detection(s) alive. The choice of tool should be one that can help design and map with the framework of choice as well as provide the ability to prioritize and focus on threats faced by the business. If an individual finds themselves capable of creating a detection, it is still mandatory to contact the tool owners for awareness, technical guidance, and updates to all additions and deletions of detections.
 
 As part of the creation stage, it is also vital to check with other tool owners to identify similar detections that could potentially be phased out or used as an enhancement for a new detection as well as to avoid duplicates.
+
+-----Knowlede object naming convention
 
 # Testing
 
@@ -112,9 +114,9 @@ A request can be sent to the rule owner directly at any point through a Jira Tic
 *	Example Service Now Ticket or Report
 *	List of items or pattern to be tuned out of the alert
 
-see ![Detections Intake Page](https://godaddy-corp.atlassian.net/secure/CreateIssue.jspa?pid=32819&issuetype=8) for requests. 
+see [Detections Intake Page](https://godaddy-corp.atlassian.net/secure/CreateIssue.jspa?pid=32819&issuetype=8) for requests. 
 
-### Montly Review
+### Monthly Review
 
 A dashboard generated from Mission Control listing all events flagged as false positive with their name, ticket number, and closed by should be reviewed by detections team.
 

@@ -9,7 +9,6 @@
 * [Creation](#Creation)
 * [Testing](#Testing)
 * [Implementation](#Implementation)
-  * [ORR Meeting](#ORR-Meeting)
 * [Maintenance & Review](#Maintenance-&-review)
 * [Retirement](#Retirement)
 * [Removal](#Removal)

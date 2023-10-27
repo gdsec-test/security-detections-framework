@@ -33,7 +33,7 @@
 
 # Lifecycle
 
-[](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/archive/Lifecycle.png)
+![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/archive/Lifecycle.png)
 
 # Creation
 

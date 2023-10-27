@@ -76,6 +76,6 @@ If we have a log output example, we can use the 'makeresults' function to create
    This creates a JSON field with the required log data, and then SPATH's out the fields within the data. then we can apply our search query after the data is cashed and apply our logic against it. 
    
    
-## Tanium Testing
+## SentinelOne Testing
 
-Tanium alerts will be flagged with a dev tag sent to SIEM without forwarding to Servicenow. in doing so, we will gain the ability to monitor alert frequency, correlation, as well as identify necessary tuning prior to enabling the detection to production.  
+TBD

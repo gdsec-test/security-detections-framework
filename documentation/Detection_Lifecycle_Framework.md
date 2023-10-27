@@ -33,7 +33,7 @@
 
 # Lifecycle
 
-[](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Lifecycle.png)
+[](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/archive/Lifecycle.png)
 
 # Creation
 
@@ -65,6 +65,7 @@ Exceptions will be made to the lifecycle and will be decided by management. Wher
 
 Testing of a detection will also include an effort to continuously define the logic and baseline to ensure it is tuned properly for the best possible results.
 
+Specific examples of how to test can be found [here](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/archive/Emergency%20Detections.png)
 
 # Implementation
 
@@ -116,7 +117,7 @@ A request can be sent to the rule owner directly at any point through a Jira Tic
 
 see [Detections Intake Page](https://godaddy-corp.atlassian.net/secure/CreateIssue.jspa?pid=32819&issuetype=8) for requests. 
 
-### Monthly Review
+### Review
 
 A dashboard generated from Mission Control listing all events flagged as false positive with their name, ticket number, and closed by should be reviewed by detections team.
 
@@ -125,7 +126,7 @@ If any event is closed as false positive with the same reasoning more than a han
 
 ## Emergency Detections
 
-![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/Emergency%20Detections.png)
+![](https://github.com/gdcorp-infosec/security-detections-framework/blob/main/documentation/archive/Emergency%20Detections.png)
 
 Emergency detections may need to be implemented to support high-priority activities such as threat hunting or incident response. Due to the urgency of these activities, it may not be possible to undergo the standard onboarding process for these detections. However, effort should be made to ensure that detections made in these situations are eventually put through the appropriate rigor to prevent them from becoming orphaned detections.
 
